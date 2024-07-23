@@ -1,0 +1,9 @@
+{
+  auto_https off
+  admin off
+}
+
+:3000 {
+  root * /var/lib/opsmaru-site/dist
+  file_server
+}
