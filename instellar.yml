@@ -1,0 +1,51 @@
+dependencies:
+  build:
+    - nodejs-current
+    - npm
+  runtime:
+    - caddy
+    - bash
+    - curl
+    - s6
+    - jq
+    - ca-certificates
+    - opsmaru-site-openrc
+
+stack: alpine/3.19
+
+build:
+  command: |
+    npm install
+    npm run build
+  destinations:
+    - dist
+    - Caddyfile
+
+run:
+  name: opsmaru-site
+  services:
+    - binary: caddy
+      name: web
+      path: /usr/sbin
+      start:
+        call: run --config /var/lib/opsmaru-site/Caddyfile
+
+hook:
+  post-deinstall: |
+    rc-service opsmaru-site stop
+    rc-update del opsmaru-site
+  post-install: |
+    rc-update add opsmaru-site
+  post-upgrade: |
+    rc-service opsmaru-site start
+  pre-upgrade: |
+    rc-service opsmaru-site stop
+
+kits:
+  - description: static site server
+    main: true
+    name: web
+    ports:
+      - main: true
+        name: web
+        target: 3000
