@@ -18,6 +18,7 @@ defmodule OpsmaruWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/our-product/pricing", PageController, :pricing
   end
 
   # Other scopes may use custom stacks.

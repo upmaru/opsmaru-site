@@ -6,5 +6,7 @@ defmodule OpsmaruWeb.PageHTML do
   """
   use OpsmaruWeb, :html
 
+  alias OpsmaruWeb.BaseComponents
+
   embed_templates "page_html/*"
 end

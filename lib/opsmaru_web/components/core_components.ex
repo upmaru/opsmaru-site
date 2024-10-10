@@ -17,7 +17,7 @@ defmodule OpsmaruWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import OpsmaruWeb.Gettext
+  use Gettext, backend: OpsmaruWeb.Gettext
 
   @doc """
   Renders a modal.

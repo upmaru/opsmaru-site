@@ -43,7 +43,7 @@ defmodule OpsmaruWeb do
         layouts: [html: OpsmaruWeb.Layouts]
 
       import Plug.Conn
-      import OpsmaruWeb.Gettext
+      use Gettext, backend: OpsmaruWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule OpsmaruWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import OpsmaruWeb.CoreComponents
-      import OpsmaruWeb.Gettext
+      use Gettext, backend: OpsmaruWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
