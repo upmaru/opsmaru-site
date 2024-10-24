@@ -7,7 +7,8 @@ const path = require("path");
 
 module.exports = {
   content: [
-    "./js/**/*.js",
+    "./js/**/*.jsx",
+    "./components/**/*.jsx",
     "../lib/opsmaru_web.ex",
     "../lib/opsmaru_web/**/*.*ex",
   ],

@@ -93,7 +93,7 @@
           <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
             <div class="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
               <div class="relative h-80 shrink-0">
-                <div class={"h-80 bg-[url(#{~p"/images/screenshots/infrastructure.png"})] bg-[size:978px_345px] bg-[left_-8px_top_-12px] bg-no-repeat"}>
+                <div class="h-80 bg-[url(/images/screenshots/infrastructure.png)] bg-[size:978px_345px] bg-[left_-8px_top_-12px] bg-no-repeat">
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
                 </div>
@@ -211,6 +211,22 @@
             <div class="z-10 lg:col-span-2 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
               <div class="relative h-80 shrink-0"></div>
               <div class="relative p-10"></div>
+            </div>
+            <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
+              <div id="broadcast-graphics" class="relative h-80 shrink-0" phx-hook="MountBroadcast"></div>
+              <div class="relative p-10">
+                <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 dark:text-slate-400">
+                  <%= gettext("Broadcasted Upgrade") %>
+                </h3>
+                <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 dark:text-white">
+                  <%= gettext("Push updates to your buyers") %>
+                </p>
+                <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 dark:text-slate-400">
+                  <%= gettext("Opsmaru handles upgrades to multiple installations of your applications seamlessly.") %>
+                </p>
+              </div>
+            </div>
+            <div class="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
             </div>
           </div>
         </div>
