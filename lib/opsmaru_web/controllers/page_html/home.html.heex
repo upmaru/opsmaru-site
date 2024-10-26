@@ -282,6 +282,40 @@
               </BaseComponents.link>
             </div>
           </div>
+          <div class="pb-16">
+            <div class="group/row relative isolate pt-[calc(theme(spacing.2)+1px)] last:pb-[calc(theme(spacing.2)+1px)]">
+              <div class="absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2">
+                <div class="absolute inset-x-0 top-0 border-t border-slate-950/5"></div>
+                <div class="absolute inset-x-0 top-2 border-t border-slate-950/5"></div>
+              </div>
+              <div class="grid grid-cols-2 gap-y-10 pb-6 lg:grid-cols-6 lg:gap-8">
+                <div class="col-span-2 flex">
+                  <div class="pt-6 lg:pb-6 group/item relative">
+                    <svg
+                      viewBox="0 0 15 15"
+                      aria-hidden="true"
+                      class="hidden group-first/item:block absolute size-[15px] fill-black/10 -top-2 -left-2"
+                    >
+                      <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
+                    </svg>
+                    <svg
+                      viewBox="0 0 15 15"
+                      aria-hidden="true"
+                      class="absolute size-[15px] fill-black/10 -top-2 -right-2"
+                    >
+                      <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
+                    </svg>
+                    <a href={~p"/"} class="space-x-3 flex">
+                      <img src={~p"/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
+                      <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
