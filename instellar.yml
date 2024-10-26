@@ -1,0 +1,79 @@
+dependencies:
+  build:
+    - elixir
+    - npm
+  runtime:
+    - bash
+    - curl
+    - s6
+    - jq
+    - ca-certificates
+    - opsmaru-site-openrc
+  trace: true
+
+stack: alpine/3.19
+
+run:
+  commands:
+    - binary: opsmaru-site
+      call: eval 'Opsmaru-site.Release.Tasks.migrate'
+      name: migrate
+    - binary: opsmaru-site
+      call: remote
+      name: console
+    - binary: tail
+      call: -f -n 100 /var/log/opsmaru-site/current
+      name: logs
+      path: /usr/bin
+  name: opsmaru-site
+  services:
+    - binary: opsmaru-site
+      name: web
+      start:
+        call: start
+
+hook:
+  post-deinstall: |
+    rc-service opsmaru-site stop
+    rc-update del opsmaru-site
+  post-install: |
+    rc-update add opsmaru-site
+    rc-service opsmaru-site migrate
+  post-upgrade: |
+    rc-service opsmaru-site migrate
+    rc-service opsmaru-site start
+  pre-upgrade: |
+    rc-service opsmaru-site stop
+
+build:
+  command: |
+    export MIX_ENV=prod
+
+    mix local.hex --force
+    mix local.rebar --force
+    mix do deps.get --only prod
+
+    # npm --prefix ./assets install ./assets
+
+    # Comment out mix assets.deploy for non phoenix apps
+    mix assets.deploy
+
+    mix release
+  destinations:
+    - _build/prod/rel/opsmaru-site/*
+
+kits:
+  - description: Web service
+    main: true
+    name: web
+    ports:
+      - main: true
+        name: web
+        target: 4000
+    variables:
+      - default_value: 'true'
+        key: PHX_SERVER
+      - driver: generic/secret
+        driver_options:
+          length: 128
+        key: SECRET_KEY_BASE
