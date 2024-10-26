@@ -25,6 +25,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import { Broadcast } from "../components/broadcast";
+import { Slider } from "../components/slider";
 
 let Hooks = {};
 
@@ -34,6 +35,15 @@ Hooks.MountBroadcast = {
     const root = createRoot(domNode);
 
     root.render(<Broadcast />);
+  },
+};
+
+Hooks.MountSlider = {
+  mounted() {
+    const domNode = this.el;
+    const root = createRoot(domNode);
+
+    root.render(<Slider />);
   },
 };
 
