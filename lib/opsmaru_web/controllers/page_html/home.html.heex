@@ -1,7 +1,7 @@
 <div class="overflow-hidden">
   <div class="relative">
     <div class={[
-      "absolute inset-2 bottom-0 rounded-4xl ring-1 ring-inset ring-black/5",
+      "absolute inset-2 bottom-0 rounded-4xl ring-1 ring-inset ring-slate-950/5",
       "bg-[linear-gradient(115deg,var(--tw-gradient-stops))] from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 sm:bg-[linear-gradient(145deg,var(--tw-gradient-stops))]"
     ]}>
     </div>
@@ -40,10 +40,10 @@
           </div>
         </header>
         <div class="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
-          <h1 class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
+          <h1 class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-slate-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
             <%= gettext("Monetize your web application.") %>
           </h1>
-          <p class="mt-8 max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
+          <p class="mt-8 max-w-lg text-xl/7 font-medium text-slate-950/75 sm:text-2xl/8">
             <%= gettext(
               "Opsmaru helps you setup the infrastructure that enables you to sell instances of your application."
             ) %>
@@ -340,6 +340,82 @@
                         </.link>
                       </li>
                     </ul>
+                  </div>
+                  <div>
+                    <h3 class="text-sm/6 font-medium text-slate-950/50">
+                      <%= gettext("Support") %>
+                    </h3>
+                    <ul class="mt-6 space-y-4 text-sm/6">
+                      <li>
+                        <a href="https://discord.gg/9ecvvKfBnp" target="_blank">
+                          <%= gettext("Discord") %>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 class="text-sm/6 font-medium text-slate-950/50">
+                      <%= gettext("Legal") %>
+                    </h3>
+                    <ul class="mt-6 space-y-4 text-sm/6">
+                      <li>
+                        <.link navigate={~p"/legal/privacy-policy"}>
+                          <%= gettext("Privacy Policy") %>
+                        </.link>
+                      </li>
+                      <li>
+                        <.link navigate={~p"/legal/terms-of-service"}>
+                          <%= gettext("Terms of Service") %>
+                        </.link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between group/row relative isolate pt-[calc(theme(spacing.2)+1px)] last:pb-[calc(theme(spacing.2)+1px)]">
+              <div class="absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2">
+                <div class="absolute inset-x-0 top-0 border-t border-slate-950/5"></div>
+                <div class="absolute inset-x-0 top-2 border-t border-slate-950/5"></div>
+                <div class="absolute inset-x-0 bottom-0 hidden border-b border-slate-950/5 group-last/row:block">
+                </div>
+                <div class="absolute inset-x-0 bottom-2 hidden border-b border-slate-950/5 group-last/row:block">
+                </div>
+              </div>
+              <div>
+                <div class="py-3 group/item relative">
+                  <svg
+                    viewBox="0 0 15 15"
+                    aria-hidden="true"
+                    class="hidden group-first/item:block absolute size-[15px] fill-slate-950/10 -top-2 -left-2"
+                  >
+                    <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
+                  </svg>
+                  <svg
+                    viewBox="0 0 15 15"
+                    aria-hidden="true"
+                    class="absolute size-[15px] fill-slate-950/10 -top-2 -right-2"
+                  >
+                    <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
+                  </svg>
+                  <svg
+                    viewBox="0 0 15 15"
+                    aria-hidden="true"
+                    class="hidden group-last/row:group-first/item:block absolute size-[15px] fill-slate-950/10 -bottom-2 -left-2"
+                  >
+                    <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
+                  </svg>
+                  <svg
+                    viewBox="0 0 15 15"
+                    aria-hidden="true"
+                    class="hidden group-last/row:block absolute size-[15px] fill-slate-950/10 -bottom-2 -right-2"
+                  >
+                    <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
+                  </svg>
+                  <div class="text-sm/6 text-gray-950">
+                    © <!-- -->
+                    <%= Date.utc_today().year %>
+                    <!-- -->Upmaru, Inc.
                   </div>
                 </div>
               </div>

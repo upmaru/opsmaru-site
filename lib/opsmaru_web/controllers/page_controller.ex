@@ -10,4 +10,12 @@ defmodule OpsmaruWeb.PageController do
   def pricing(conn, _params) do
     render(conn, :pricing)
   end
+
+  def privacy(conn, _params) do
+    render(conn, :privacy)
+  end
+
+  def terms(conn, _params) do
+    render(conn, :terms)
+  end
 end

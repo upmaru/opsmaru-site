@@ -19,6 +19,8 @@ defmodule OpsmaruWeb.Router do
 
     get "/", PageController, :home
     get "/our-product/pricing", PageController, :pricing
+    get "/legal/privacy-policy", PageController, :privacy
+    get "/legal/terms-of-service", PageController, :terms
 
     get "/blog", PostController, :index
   end
