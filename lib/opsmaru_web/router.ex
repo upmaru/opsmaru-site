@@ -19,6 +19,8 @@ defmodule OpsmaruWeb.Router do
 
     get "/", PageController, :home
     get "/our-product/pricing", PageController, :pricing
+
+    get "/blog", PostController, :index
   end
 
   # Other scopes may use custom stacks.
