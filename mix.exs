@@ -57,6 +57,15 @@ defmodule Opsmaru.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
 
+      # Cache
+      {:nebulex, "~> 2.6"},
+      {:shards, "~> 1.1"},
+      {:decorator, "~> 1.4"},
+      {:telemetry, "~> 1.0"},
+
+      # Stripe
+      {:stripity_stripe, "~> 3.2.0"},
+
       # Data
       {:ecto, "~> 3.12"}
     ]

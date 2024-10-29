@@ -8,7 +8,18 @@ defmodule OpsmaruWeb.PageController do
   end
 
   def pricing(conn, _params) do
-    render(conn, :pricing)
+    query = "active: 'true' AND metadata['app']: 'instellar'"
+
+    {:ok, %Stripe.SearchResult{data: prices}} =
+      Stripe.Price.search(%{query: query}, expand: ["data.product"])
+
+    prices =
+      Enum.filter(prices, fn price ->
+        price.recurring.interval == "month"
+      end)
+      |> Enum.sort_by(fn price -> price.unit_amount end)
+
+    render(conn, :pricing, prices: prices)
   end
 
   def privacy(conn, _params) do

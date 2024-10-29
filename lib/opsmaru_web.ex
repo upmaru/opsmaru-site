@@ -85,6 +85,9 @@ defmodule OpsmaruWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import OpsmaruWeb.CoreComponents
+
+      alias OpsmaruWeb.BaseComponents
+
       use Gettext, backend: OpsmaruWeb.Gettext
 
       # Shortcut for generating JS commands

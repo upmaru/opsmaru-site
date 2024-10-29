@@ -7,38 +7,7 @@
     </div>
     <div class="relative px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-7xl">
-        <header class="pt-12 sm:pt-16">
-          <div>
-            <div class="relative flex justify-between group/row isolate pt-[calc(theme(spacing.2)+1px)] last:pb-[calc(theme(spacing.2)+1px)]">
-              <div class="absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2">
-                <div class="absolute inset-x-0 top-0 border-t border-black/5"></div>
-                <div class="absolute inset-x-0 top-2 border-t border-black/5"></div>
-                <div class="absolute inset-x-0 bottom-0 hidden border-b border-black/5 group-last/row:block">
-                </div>
-                <div class="absolute inset-x-0 bottom-2 hidden border-b border-black/5 group-last/row:block">
-                </div>
-              </div>
-              <div class="relative flex gap-6">
-                <BaseComponents.nav class="py-3 group/item relative">
-                  <a href={~p"/"} class="space-x-3 flex">
-                    <img src={~p"/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
-                    <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
-                  </a>
-                </BaseComponents.nav>
-              </div>
-              <nav class="relative hidden lg:flex">
-                <BaseComponents.nav class="relative flex group/item">
-                  <a
-                    href={~p"/our-product/pricing"}
-                    class="flex items-center px-4 py-3 text-base font-medium text-gray-950 bg-blend-multiply hover:bg-black/[2.5%]"
-                  >
-                    <%= gettext("Pricing") %>
-                  </a>
-                </BaseComponents.nav>
-              </nav>
-            </div>
-          </div>
-        </header>
+        <BaseComponents.header />
         <div class="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
           <h1 class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-slate-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
             <%= gettext("Monetize your web application.") %>
@@ -49,12 +18,12 @@
             ) %>
           </p>
           <div class="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <BaseComponents.link href="/auth/users/log_in">
+            <BaseComponents.button href="/auth/users/log_in">
               <%= gettext("Get started") %>
-            </BaseComponents.link>
-            <BaseComponents.link href={~p"/our-product/pricing"} variant={:secondary}>
+            </BaseComponents.button>
+            <BaseComponents.button href={~p"/our-product/pricing"} variant={:secondary}>
               <%= gettext("See pricing") %>
-            </BaseComponents.link>
+            </BaseComponents.button>
           </div>
         </div>
       </div>
@@ -277,9 +246,9 @@
               ) %>
             </p>
             <div class="mt-6">
-              <BaseComponents.link href="/auth/users/log_in">
+              <BaseComponents.button href="/auth/users/log_in">
                 <%= gettext("Get started") %>
-              </BaseComponents.link>
+              </BaseComponents.button>
             </div>
           </div>
           <div class="pb-16">

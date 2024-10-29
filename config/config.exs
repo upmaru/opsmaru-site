@@ -30,6 +30,10 @@ config :opsmaru, OpsmaruWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :opsmaru, Opsmaru.Mailer, adapter: Swoosh.Adapters.Local
 
+config :stripity_stripe,
+  api_version: "2022-11-15",
+  api_key: System.get_env("STRIPE_SECRET")
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
