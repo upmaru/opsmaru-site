@@ -63,8 +63,9 @@ defmodule Opsmaru.MixProject do
       {:decorator, "~> 1.4"},
       {:telemetry, "~> 1.0"},
 
-      # Stripe
+      # Commerce
       {:stripity_stripe, "~> 3.2.0"},
+      {:money, "~> 1.13.1"},
 
       # Data
       {:ecto, "~> 3.12"}
