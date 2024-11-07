@@ -20,6 +20,11 @@ if System.get_env("PHX_SERVER") do
   config :opsmaru, OpsmaruWeb.Endpoint, server: true
 end
 
+config :opsmaru, Opsmaru.Sanity,
+  token: System.get_env("SANITY_TOKEN"),
+  project_id: System.get_env("SANITY_PROJECT_ID"),
+  dataset: System.get_env("SANITY_DATASET")
+
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

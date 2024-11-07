@@ -21,6 +21,12 @@ config :opsmaru, OpsmaruWeb.Endpoint,
   pubsub_server: Opsmaru.PubSub,
   live_view: [signing_salt: "+XDN9vu0"]
 
+config :opsmaru, Opsmaru.Cache,
+  primary: [
+    gc_interval: 3_600_000,
+    backend: :shards
+  ]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

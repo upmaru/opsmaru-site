@@ -67,6 +67,10 @@ defmodule Opsmaru.MixProject do
       {:stripity_stripe, "~> 3.2.0"},
       {:money, "~> 1.13.1"},
 
+      # Content
+      {:sanity, "~> 2.0"},
+      {:mdex, "~> 0.2"},
+
       # Data
       {:ecto, "~> 3.12"}
     ]

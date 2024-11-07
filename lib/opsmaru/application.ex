@@ -13,6 +13,7 @@ defmodule Opsmaru.Application do
       {Phoenix.PubSub, name: Opsmaru.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Opsmaru.Finch},
+      {Opsmaru.Cache, []},
       # Start a worker by calling: Opsmaru.Worker.start_link(arg)
       # {Opsmaru.Worker, arg},
       # Start to serve requests, typically the last entry
