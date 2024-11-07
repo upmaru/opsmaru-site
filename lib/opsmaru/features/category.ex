@@ -3,6 +3,7 @@ defmodule Opsmaru.Features.Category do
   import Ecto.Changeset
 
   embedded_schema do
+    field :index, :integer
     field :name, :string
 
     embeds_many :features, Feature do
@@ -16,7 +17,7 @@ defmodule Opsmaru.Features.Category do
     params = Map.put(params, "id", id)
 
     category
-    |> cast(params, ~w(id name)a)
+    |> cast(params, ~w(id index name)a)
     |> cast_embed(:features, with: &feature_changeset/2)
   end
 

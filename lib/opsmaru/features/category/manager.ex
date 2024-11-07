@@ -15,6 +15,7 @@ defmodule Opsmaru.Features.Category.Manager do
     |> case do
       %Sanity.Response{body: %{"result" => categories}} ->
         Enum.map(categories, &Category.parse/1)
+        |> Enum.sort_by(& &1.index, :asc)
 
       error ->
         error
