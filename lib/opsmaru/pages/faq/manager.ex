@@ -12,11 +12,11 @@ defmodule Opsmaru.Pages.FAQ.Manager do
   *[_type == "pageFaq"]{..., faq -> {question, answer}}
   """
 
+  @decorate cacheable(cache: Cache, key: {:faqs, page_slug}, opts: [ttl: @ttl])
   def list(%Page{slug: page_slug} = page) do
     @base_query
     |> Sanity.query(%{"page.slug.current" => page_slug}, perspective: "published")
     |> Sanity.request!(request_opts())
-    |> IO.inspect()
     |> case do
       %Sanity.Response{body: %{"result" => faqs}} ->
         Enum.map(faqs, &FAQ.parse/1)
