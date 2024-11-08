@@ -1,11 +1,14 @@
 defmodule Opsmaru.Content.Product.Manager do
+  use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Cache
   alias Opsmaru.Content.Product
 
-  def list(options \\ []) do
-    cache? = Keyword.get(options, :cache)
+  @ttl :timer.hours(1)
 
+  @decorate cacheable(cache: Cache, key: :products, opts: [ttl: @ttl])
+  def list(_options \\ []) do
     stripe_products = load_stripe_products()
 
     sanity_query = ~S"""

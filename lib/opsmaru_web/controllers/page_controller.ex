@@ -3,6 +3,8 @@ defmodule OpsmaruWeb.PageController do
 
   alias Opsmaru.Content
   alias Opsmaru.Features
+  alias Opsmaru.Products
+  alias Opsmaru.Pages
 
   def home(conn, _params) do
     # The home page is often custom made,
@@ -11,21 +13,28 @@ defmodule OpsmaruWeb.PageController do
   end
 
   def pricing(conn, _params) do
-    prices_query = "active: 'true' AND metadata['app']: 'instellar'"
-
-    {:ok, %Stripe.SearchResult{data: prices}} =
-      Stripe.Price.search(%{query: prices_query}, expand: ["data.product"])
-
     prices =
-      Enum.filter(prices, fn price ->
+      Content.list_prices()
+      |> Enum.filter(fn price ->
         price.recurring.interval == "month"
       end)
       |> Enum.sort_by(fn price -> price.unit_amount end)
 
+    page = Content.show_page("pricing")
+    faqs = Pages.list_faqs(page)
+
     products = Content.list_products()
     categories = Features.list_categories()
+    product_features = Products.list_features()
 
-    render(conn, :pricing, prices: prices, products: products, categories: categories)
+    render(conn, :pricing,
+      page: page,
+      faqs: faqs,
+      prices: prices,
+      products: products,
+      categories: categories,
+      product_features: product_features
+    )
   end
 
   def privacy(conn, _params) do

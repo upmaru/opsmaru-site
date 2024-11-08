@@ -71,6 +71,12 @@ defmodule Opsmaru.MixProject do
       {:sanity, "~> 2.0"},
       {:mdex, "~> 0.2"},
 
+      # Insterra
+      {:insterra_bridge, github: "upmaru/insterra-bridge", branch: "develop"},
+
+      # HTTP
+      {:req, "~> 0.5.7"},
+
       # Data
       {:ecto, "~> 3.12"}
     ]

@@ -105,12 +105,17 @@
             </div>
           </th>
         </tr>
-        <tr :for={feature <- category.features} class="border-b border-gray-100 last:border-none">
-          <th class="px-0 py-4 text-sm/6 font-normal text-gray-600">
-            <%= feature.description %>
-          </th>
-        </tr>
+        <PricingComponents.matrix
+          products={@products}
+          features={category.features}
+          product_features={@product_features}
+        />
       </tbody>
     </table>
+  </div>
+</div>
+<div class="px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl lg:max-w-7xl">
+    <PricingComponents.faq section={Enum.find(@page.sections, & &1.slug == "pricing-faq")} faqs={@faqs} />
   </div>
 </div>

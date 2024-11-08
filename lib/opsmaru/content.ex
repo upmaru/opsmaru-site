@@ -1,7 +1,7 @@
 defmodule Opsmaru.Content do
   alias __MODULE__.Post
 
-  defdelegate list_posts,
+  defdelegate list_posts(options \\ []),
     to: Post.Manager,
     as: :list
 
@@ -15,9 +15,21 @@ defmodule Opsmaru.Content do
     to: Product.Manager,
     as: :list
 
-  alias __MODULE__.Feature
+  alias __MODULE__.Page
 
-  defdelegate list_features,
-    to: Feature.Manager,
+  defdelegate show_page(slug),
+    to: Page.Manager,
+    as: :show
+
+  alias __MODULE__.Price
+
+  defdelegate list_prices,
+    to: Price.Manager,
+    as: :list
+
+  alias __MODULE__.FAQ
+
+  defdelegate list_faqs(page),
+    to: FAQ.Manager,
     as: :list
 end

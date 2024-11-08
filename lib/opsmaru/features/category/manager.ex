@@ -1,16 +1,26 @@
 defmodule Opsmaru.Features.Category.Manager do
+  use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Cache
   alias Opsmaru.Features.Category
 
-  def list(options \\ [cache: true]) do
-    cache? = Keyword.get(options, :cache)
+  @ttl :timer.hours(1)
 
-    query = ~S"""
-    *[_type == "featureCategory"]{..., "features": *[ _type == "feature" && references(^._id) ]{...}}
-    """
+  @base_query ~S"""
+  *[_type == "featureCategory"]{
+    ...,
+    "features": *[ _type == "feature" && references(^._id) ]
+    {
+      ...
+    }
+  }
+  """
 
-    Sanity.query(query, %{}, perspective: "published")
+  @decorate cacheable(cache: Cache, key: :feature_categories, opts: [ttl: @ttl])
+  def list(_options \\ []) do
+    @base_query
+    |> Sanity.query(%{}, perspective: "published")
     |> Sanity.request!(request_opts())
     |> case do
       %Sanity.Response{body: %{"result" => categories}} ->

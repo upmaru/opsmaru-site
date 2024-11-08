@@ -1,67 +1,44 @@
 defmodule Opsmaru.Content.Post.Manager do
+  use Nebulex.Caching
   import Opsmaru.Sanity
 
   alias Opsmaru.Cache
   alias Opsmaru.Content.Post
 
-  def list(options \\ [cache: true]) do
-    cache? = Keyword.get(options, :cache)
+  @ttl :timer.hours(1)
 
-    Sanity.query(
-      ~S"""
-      *[_type == "post"]
-      """,
-      %{}
-    )
+  @base_query ~S"""
+  *[_type == "post"]{..., "content": content.asset -> url}
+  """
+
+  @decorate cacheable(cache: Cache, key: :posts, opts: [ttl: @ttl])
+  def list(_options \\ []) do
+    @base_query
+    |> Sanity.query(%{}, perspective: "published")
     |> Sanity.request!(request_opts())
     |> case do
       %Sanity.Response{body: %{"result" => posts}} ->
-        posts =
-          Enum.map(posts, fn post_params ->
-            Post.parse(post_params)
-          end)
-
-        if cache? do
-          Enum.map(posts, fn post ->
-            {{:posts, post.slug}, post}
-          end)
-          |> Enum.into(%{})
-          |> Cache.put_all()
-        end
-
-        posts
+        Enum.map(posts, fn post_params ->
+          Post.parse(post_params)
+        end)
 
       error ->
         error
     end
   end
 
+  @decorate cacheable(cache: Cache, key: {:posts, slug}, opts: [ttl: @ttl])
   def show(slug) do
-    Cache.get({:posts, slug})
-    |> case do
-      nil ->
-        fetch(slug)
-
-      post ->
-        post
-    end
-  end
-
-  def fetch(slug) do
-    Sanity.query(
-      ~S"""
-      *[_type == "post"]
-      """,
-      %{"slug" => slug}
-    )
+    @base_query
+    |> Sanity.query(%{"slug" => slug}, perspective: "published")
     |> Sanity.request!(request_opts())
     |> case do
       %Sanity.Response{body: %{"result" => [post_params]}} ->
         post = Post.parse(post_params)
 
-        Cache.put({:posts, post.slug}, post)
+        full_content = Req.get!(post.content).body
 
-        post
+        %{post | content: full_content}
 
       error ->
         error
