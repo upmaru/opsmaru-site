@@ -17,13 +17,18 @@ defmodule OpsmaruWeb.Router do
   scope "/", OpsmaruWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    get "/our-product", PageController, :product
-    get "/our-product/pricing", PageController, :pricing
-    get "/legal/privacy-policy", PageController, :privacy
-    get "/legal/terms-of-service", PageController, :terms
+    live_session :default, on_mount: [{OpsmaruWeb.NavigationHook, :main}] do
+      live "/", HomeLive
+      live "/our-product/pricing", PricingLive
+    end
 
-    get "/blog", PostController, :index
+    # get "/", PageController, :home
+    # get "/our-product", PageController, :product
+    # get "/our-product/pricing", PageController, :pricing
+    # get "/legal/privacy-policy", PageController, :privacy
+    # get "/legal/terms-of-service", PageController, :terms
+
+    # get "/blog", PostController, :index
   end
 
   # Other scopes may use custom stacks.
