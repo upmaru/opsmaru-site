@@ -13,17 +13,14 @@ defmodule Opsmaru.Pages.FAQ.Manager do
   """
 
   @decorate cacheable(cache: Cache, key: {:faqs, page_slug}, opts: [ttl: @ttl])
-  def list(%Page{slug: page_slug} = page) do
-    @base_query
-    |> Sanity.query(%{"page.slug.current" => page_slug}, perspective: "published")
-    |> Sanity.request!(request_opts())
-    |> case do
-      %Sanity.Response{body: %{"result" => faqs}} ->
-        Enum.map(faqs, &FAQ.parse/1)
-        |> Enum.sort_by(& &1.index, :asc)
+  def list(%Page{slug: page_slug}) do
+    %Sanity.Response{body: %{"result" => faqs}} =
+      @base_query
+      |> Sanity.query(%{"page.slug.current" => page_slug}, perspective: "published")
+      |> Sanity.request!(request_opts())
 
-      error ->
-        error
-    end
+    faqs
+    |> Enum.map(&FAQ.parse/1)
+    |> Enum.sort_by(& &1.index, :asc)
   end
 end

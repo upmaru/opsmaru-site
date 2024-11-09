@@ -18,6 +18,7 @@ defmodule OpsmaruWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/our-product", PageController, :product
     get "/our-product/pricing", PageController, :pricing
     get "/legal/privacy-policy", PageController, :privacy
     get "/legal/terms-of-service", PageController, :terms

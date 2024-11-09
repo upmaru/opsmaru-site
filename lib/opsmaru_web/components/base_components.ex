@@ -2,11 +2,16 @@ defmodule OpsmaruWeb.BaseComponents do
   use Phoenix.Component
   use OpsmaruWeb, :verified_routes
 
+  alias Opsmaru.Content
   alias Opsmaru.Commerce
 
   alias OpsmaruWeb.CoreComponents
 
+  alias Phoenix.LiveView.JS
+
   use Gettext, backend: OpsmaruWeb.Gettext
+
+  attr :navigation, Content.Navigation, required: true
 
   def header(assigns) do
     ~H"""
@@ -30,15 +35,41 @@ defmodule OpsmaruWeb.BaseComponents do
             </.nav>
           </div>
           <nav class="relative hidden lg:flex">
-            <.nav class="relative flex group/item">
+            <.nav :for={link <- @navigation.links} class="relative flex group/item">
               <.link
-                navigate={~p"/our-product/pricing"}
-                class="flex items-center px-4 py-3 text-base font-medium text-gray-950 bg-blend-multiply data-[hover]:bg-black/[2.5%]"
+                navigate={link.path}
+                class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]"
               >
-                <%= gettext("Pricing") %>
+                <%= link.title %>
               </.link>
             </.nav>
           </nav>
+          <button
+            phx-click={
+              JS.toggle(
+                to: "#mobile-nav",
+                in: {"transition-all transform ease-out duration-300", "opacity-0", "opacity-100"}
+              )
+            }
+            class="flex size-12 items-center justify-center self-center rounded-lg hover:bg-black/5 lg:hidden"
+          >
+            <CoreComponents.icon name="hero-bars-2" class="h-6 w-6" />
+          </button>
+        </div>
+      </div>
+      <div id="mobile-nav" class="hidden lg:hidden">
+        <div class="flex flex-col gap-6 py-4">
+          <.link
+            :for={link <- @navigation.links}
+            navigate={link.path}
+            class="text-base font-medium text-slate-950"
+          >
+            <%= link.title %>
+          </.link>
+        </div>
+        <div class="absolute left-1/2 w-screen -translate-x-1/2">
+          <div class="absolute inset-x-0 top-0 border-t border-black/5" />
+          <div class="absolute inset-x-0 top-2 border-t border-black/5" />
         </div>
       </div>
     </header>

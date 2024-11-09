@@ -1,4 +1,10 @@
 defmodule Opsmaru.Content do
+  alias __MODULE__.Navigation
+
+  defdelegate list_nagivations(options \\ []),
+    to: Navigation.Manager,
+    as: :list
+
   alias __MODULE__.Post
 
   defdelegate list_posts(options \\ []),
@@ -25,11 +31,5 @@ defmodule Opsmaru.Content do
 
   defdelegate list_prices,
     to: Price.Manager,
-    as: :list
-
-  alias __MODULE__.FAQ
-
-  defdelegate list_faqs(page),
-    to: FAQ.Manager,
     as: :list
 end

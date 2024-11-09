@@ -1,8 +1,5 @@
 defmodule OpsmaruWeb.PricingComponents do
-  use Phoenix.Component
-  import OpsmaruWeb.CoreComponents
-
-  use OpsmaruWeb, :verified_routes
+  use OpsmaruWeb, :html
 
   alias Opsmaru.Products
   alias Opsmaru.Content
@@ -32,7 +29,9 @@ defmodule OpsmaruWeb.PricingComponents do
       <div class="mx-auto mb-32 mt-16 max-w-xl space-y-12">
         <dl :for={faq <- @faqs}>
           <dt class="text-sm font-semibold"><%= faq.question %></dt>
-          <dd class="mt-4 text-sm/6 text-slate-600 prose prose-a:text-cyan-500"><%= Phoenix.HTML.raw(MDEx.to_html!(faq.answer)) %></dd>
+          <dd class="mt-4 text-sm/6 text-slate-600 prose prose-a:text-cyan-500">
+            <%= Phoenix.HTML.raw(MDEx.to_html!(faq.answer)) %>
+          </dd>
         </dl>
       </div>
     </section>

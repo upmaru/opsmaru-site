@@ -22,8 +22,8 @@ defmodule Opsmaru.Content.Post.Manager do
           Post.parse(post_params)
         end)
 
-      error ->
-        error
+      other ->
+        other
     end
   end
 

@@ -7,29 +7,23 @@ defmodule Opsmaru.Content.Page.Manager do
 
   @ttl :timer.hours(1)
 
-  @base_query ~S"""
-  *[_type == "page"]{
-    ...,
-    "sections": *[ _type == "pageSection" && references(^._id) ]{
-      ...,
-      "contents": *[ _type == "pageContent" && references(^._id) ]{
-        ...
-      }
-    }
-  }
-  """
-
   @decorate cacheable(cache: Cache, key: {:pages, slug}, opts: [ttl: @ttl])
   def show(slug) do
-    @base_query
-    |> Sanity.query(%{"slug" => slug}, perspective: "published")
-    |> Sanity.request!(request_opts())
-    |> case do
-      %Sanity.Response{body: %{"result" => [page_params]}} ->
-        Page.parse(page_params)
+    %Sanity.Response{body: %{"result" => page_params}} =
+      ~S"""
+      *[_type == "page" && slug.current == $slug][0]{
+        ...,
+        "sections": *[ _type == "pageSection" && references(^._id) ]{
+          ...,
+          "contents": *[ _type == "pageContent" && references(^._id) ]{
+            ...
+          }
+        }
+      }
+      """
+      |> Sanity.query(%{"slug" => slug}, perspective: "published")
+      |> Sanity.request!(request_opts())
 
-      other ->
-        other
-    end
+    Page.parse(page_params)
   end
 end
