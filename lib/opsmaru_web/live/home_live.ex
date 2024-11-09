@@ -17,7 +17,7 @@ defmodule OpsmaruWeb.HomeLive do
   end
 
   attr :mobile_nav_active, :boolean, default: false
-  attr :navigation, Content.Navigation, required: true
+  attr :main_nav, Content.Navigation, required: true
 
   def render(assigns) do
     ~H"""
@@ -30,7 +30,7 @@ defmodule OpsmaruWeb.HomeLive do
         </div>
         <div class="relative px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
-            <BaseComponents.header navigation={@navigation} mobile_nav_active={@mobile_nav_active} />
+            <BaseComponents.header navigation={@main_nav} mobile_nav_active={@mobile_nav_active} />
             <div class="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
               <h1 class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-slate-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
                 <%= gettext("Monetize your web application.") %>

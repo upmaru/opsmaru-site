@@ -10,7 +10,7 @@ defmodule OpsmaruWeb.NavigationHook do
       |> Enum.find(&(&1.slug == "main"))
 
     socket =
-      assign_new(socket, :navigation, fn -> navigation end)
+      assign_new(socket, :main_nav, fn -> navigation end)
       |> assign(:mobile_nav_active, false)
 
     socket = attach_hook(socket, :toggle, :handle_event, &handle_event/3)

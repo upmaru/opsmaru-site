@@ -31,6 +31,8 @@ defmodule OpsmaruWeb.PricingLive do
     {:ok, socket}
   end
 
+  attr :main_nav, Content.Navigation, required: true
+
   def render(assigns) do
     ~H"""
     <div>
