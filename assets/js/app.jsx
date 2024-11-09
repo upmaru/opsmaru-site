@@ -26,6 +26,7 @@ import { createRoot } from "react-dom/client";
 
 import { Broadcast } from "../components/broadcast";
 import { Slider } from "../components/slider";
+import { MobileNav } from "../components/mobile-nav";
 
 let Hooks = {};
 
@@ -44,6 +45,19 @@ Hooks.MountSlider = {
     const root = createRoot(domNode);
 
     root.render(<Slider />);
+  },
+};
+
+Hooks.MountMobileNav = {
+  mounted() {
+    const domNode = this.el;
+    const root = createRoot(domNode);
+
+    let { links } = this.el.dataset;
+
+    links = JSON.parse(links);
+
+    root.render(<MobileNav links={links} />);
   },
 };
 
