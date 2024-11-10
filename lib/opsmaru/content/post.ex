@@ -2,13 +2,25 @@ defmodule Opsmaru.Content.Post do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @valid_attrs ~w(id title slug content published_at)a
+  @valid_attrs ~w(
+    id
+    title
+    slug
+    cover
+    blurb
+    content
+    featured
+    published_at
+  )a
 
   embedded_schema do
     field :title, :string
     field :slug, :string
+    field :cover, :string
 
+    field :blurb, :string
     field :content, :string
+    field :featured, :boolean
 
     field :published_at, :date
   end
