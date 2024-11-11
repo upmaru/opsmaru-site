@@ -10,7 +10,8 @@ defmodule Opsmaru.Content.Post.Manager do
   @base_query ~S"""
   *[_type == "post"]{
     ...,
-    "cover": cover.asset -> url,
+    author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
+    "cover": {"url": cover.asset -> url, "alt": cover.alt},
     "content": content.asset -> url
   }
   """
@@ -32,7 +33,8 @@ defmodule Opsmaru.Content.Post.Manager do
       ~S"""
       *[_type == "post" && featured == $featured][0..3] | order(_createdAt desc) {
         ...,
-        "cover": cover.asset -> url,
+        author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
+        "cover": {"url": cover.asset -> url, "alt": cover.alt},
         "content": content.asset -> url
       }
       """

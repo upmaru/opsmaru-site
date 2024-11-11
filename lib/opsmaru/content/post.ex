@@ -2,11 +2,12 @@ defmodule Opsmaru.Content.Post do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Opsmaru.Content.Image
+
   @valid_attrs ~w(
     id
     title
     slug
-    cover
     blurb
     content
     featured
@@ -16,7 +17,14 @@ defmodule Opsmaru.Content.Post do
   embedded_schema do
     field :title, :string
     field :slug, :string
-    field :cover, :string
+
+    embeds_one :cover, Image
+
+    embeds_one :author, Author do
+      field :name, :string
+
+      embeds_one :avatar, Image
+    end
 
     field :blurb, :string
     field :content, :string
@@ -36,6 +44,21 @@ defmodule Opsmaru.Content.Post do
     post
     |> cast(params, @valid_attrs)
     |> validate_required(@valid_attrs)
+    |> cast_embed(:cover)
+    |> cast_embed(:author, with: &author_changeset/2)
+  end
+
+  defp author_changeset(author, params) do
+    %{"_id" => id} = params
+
+    params =
+      params
+      |> Map.put("id", id)
+
+    author
+    |> cast(params, ~w(id name)a)
+    |> validate_required(~w(id name)a)
+    |> cast_embed(:avatar)
   end
 
   def parse(params) do

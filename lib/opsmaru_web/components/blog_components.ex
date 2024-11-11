@@ -3,6 +3,7 @@ defmodule OpsmaruWeb.BlogComponents do
 
   alias Opsmaru.Pages
   alias Opsmaru.Content
+  alias Opsmaru.Content.Image
 
   attr :section, Pages.Section
 
@@ -38,7 +39,9 @@ defmodule OpsmaruWeb.BlogComponents do
       <div class="px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="text-2xl font-medium tracking-tight"><%= gettext("Featured") %></h2>
-          <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-3"></div>
+          <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <.featured_post :for={post <- @posts} post={post} />
+          </div>
         </div>
       </div>
     </div>
@@ -50,6 +53,33 @@ defmodule OpsmaruWeb.BlogComponents do
   def featured_post(assigns) do
     ~H"""
     <div class="relative flex flex-col rounded-3xl bg-white p-2 shadow-md shadow-black/5 ring-1 ring-black/5">
+      <img
+        class="aspect-[3/2] w-full rounded-2xl object-cover"
+        alt={@post.cover.alt}
+        src={Image.url(@post.cover, w: 600)}
+      />
+      <div class="flex flex-1 flex-col p-8">
+        <div class="text-sm/5 text-gray-700">
+          <%= Calendar.strftime(@post.published_at, "%a, %B %d, %Y") %>
+        </div>
+        <div class="mt-2 text-base/7 font-medium">
+          <.link navigate={~p"/blog/#{@post.slug}"}>
+            <span class="absolute inset-0"></span>
+            <%= @post.title %>
+          </.link>
+        </div>
+        <div class="mt-2 flex-1 text-sm/6 text-gray-500">
+          <%= @post.blurb %>
+        </div>
+        <div class="mt-6 flex items-center gap-3">
+          <img
+            class="aspect-square size-6 rounded-full object-cover"
+            alt={@post.author.avatar.alt}
+            src={Image.url(@post.author.avatar, w: 64)}
+          />
+          <div class="text-sm/5 text-gray-700"><%= @post.author.name %></div>
+        </div>
+      </div>
     </div>
     """
   end
