@@ -19,14 +19,18 @@ defmodule OpsmaruWeb.BlogComponents do
       |> assign(:description, description)
 
     ~H"""
-    <div class="mx-auto max-w-2xl lg:max-w-7xl">
-      <h2 class="mt-16 font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-        <%= @h2.body %>
-      </h2>
-      <h1 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-        <%= @title.body %>
-      </h1>
-      <p class="mt-6 max-w-3xl text-2xl font-medium text-gray-500"><%= @description.body %></p>
+    <div class="px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:max-w-7xl">
+        <h2 class="mt-16 font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
+          <%= @h2.body %>
+        </h2>
+        <h1 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
+          <%= @title.body %>
+        </h1>
+        <p class="mt-6 max-w-3xl text-2xl font-medium text-gray-500">
+          <%= @description.body %>
+        </p>
+      </div>
     </div>
     """
   end
@@ -78,6 +82,42 @@ defmodule OpsmaruWeb.BlogComponents do
             src={Image.url(@post.author.avatar, w: 64)}
           />
           <div class="text-sm/5 text-gray-700"><%= @post.author.name %></div>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  attr :post, Content.Post, required: true
+
+  def post_listing(assigns) do
+    ~H"""
+    <div class="relative grid grid-cols-1 border-b border-b-gray-100 py-10 first:border-t first:border-t-gray-200 max-sm:gap-3 sm:grid-cols-3">
+      <div>
+        <div class="text-sm/5 max-sm:text-gray-700 sm:font-medium">
+          <%= Calendar.strftime(@post.published_at, "%a, %B %d, %Y") %>
+        </div>
+        <div class="mt-2.5 flex items-center gap-3">
+          <img
+            class="aspect-square size-6 rounded-full object-cover"
+            alt={@post.author.name}
+            src={Image.url(@post.author.avatar, w: 64)}
+          />
+          <div class="text-sm/5 text-gray-700"><%= @post.author.name %></div>
+        </div>
+      </div>
+      <div class="sm:col-span-2 sm:max-w-2xl">
+        <h2 class="text-sm/5 font-medium"><%= @post.title %></h2>
+        <p class="mt-3 text-sm/6 text-gray-500"><%= @post.blurb %></p>
+        <div class="mt-4">
+          <.link
+            class="flex items-center gap-1 text-sm/5 font-medium"
+            navigate={~p"/blog/#{@post.slug}"}
+          >
+            <span class="absolute inset-0"></span>
+            <%= gettext("Read more") %>
+            <.icon name="hero-chevron-right" class="h-4 w-4 text-slate-400" />
+          </.link>
         </div>
       </div>
     </div>

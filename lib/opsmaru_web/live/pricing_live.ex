@@ -31,6 +31,7 @@ defmodule OpsmaruWeb.PricingLive do
     {:ok, socket}
   end
 
+  attr :mobile_nav_active, :boolean, default: false
   attr :main_nav, Content.Navigation, required: true
 
   def render(assigns) do

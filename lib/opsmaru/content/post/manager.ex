@@ -8,7 +8,7 @@ defmodule Opsmaru.Content.Post.Manager do
   @ttl :timer.hours(1)
 
   @base_query ~S"""
-  *[_type == "post"]{
+  *[_type == "post"] | order(published_at desc){
     ...,
     author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
     "cover": {"url": cover.asset -> url, "alt": cover.alt},
