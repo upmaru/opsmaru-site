@@ -19,7 +19,10 @@ defmodule OpsmaruWeb.Router do
 
     live_session :default, on_mount: [{OpsmaruWeb.NavigationHook, :main}] do
       live "/", HomeLive
+
       live "/blog", BlogLive.Index
+      live "/blog/:id", BlogLive
+
       live "/our-product/pricing", PricingLive
     end
 

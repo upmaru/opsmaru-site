@@ -30,7 +30,7 @@ defmodule OpsmaruWeb.PricingComponents do
         <dl :for={faq <- @faqs}>
           <dt class="text-sm font-semibold"><%= faq.question %></dt>
           <dd class="mt-4 text-sm/6 text-slate-600 prose prose-a:text-cyan-500">
-            <%= Phoenix.HTML.raw(MDEx.to_html!(faq.answer)) %>
+            <%= raw(MDEx.to_html!(faq.answer)) %>
           </dd>
         </dl>
       </div>

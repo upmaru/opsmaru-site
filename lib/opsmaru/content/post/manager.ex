@@ -28,6 +28,7 @@ defmodule Opsmaru.Content.Post.Manager do
     end)
   end
 
+  @decorate cacheable(cache: Cache, key: {:posts, :featured}, opts: [ttl: @ttl])
   def featured(_options \\ []) do
     query =
       ~S"""
@@ -51,19 +52,22 @@ defmodule Opsmaru.Content.Post.Manager do
 
   @decorate cacheable(cache: Cache, key: {:posts, slug}, opts: [ttl: @ttl])
   def show(slug) do
-    @base_query
-    |> Sanity.query(%{"slug" => slug}, perspective: "published")
-    |> Sanity.request!(request_opts())
-    |> case do
-      %Sanity.Response{body: %{"result" => [post_params]}} ->
-        post = Post.parse(post_params)
+    query = ~S"""
+    *[_type == "post" && slug.current == $slug][0]{
+      ...,
+      author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
+      "cover": {"url": cover.asset -> url, "alt": cover.alt},
+      "content": content.asset -> url
+    }
+    """
 
-        full_content = Req.get!(post.content).body
+    %Sanity.Response{body: %{"result" => post_params}} =
+      query
+      |> Sanity.query(%{"slug" => slug}, perspective: "published")
+      |> Sanity.request!(request_opts())
 
-        %{post | content: full_content}
-
-      error ->
-        error
-    end
+    post = Post.parse(post_params)
+    full_content = Req.get!(post.content).body
+    %{post | content: full_content}
   end
 end
