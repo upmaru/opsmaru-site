@@ -11,6 +11,10 @@ defmodule Opsmaru.Content do
     to: Post.Manager,
     as: :list
 
+  defdelegate posts_count(options \\ []),
+    to: Post.Manager,
+    as: :count
+
   defdelegate featured_posts(options \\ []),
     to: Post.Manager,
     as: :featured
