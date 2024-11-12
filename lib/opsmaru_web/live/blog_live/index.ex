@@ -48,6 +48,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
             <BlogComponents.post_listing :for={post <- @posts} post={post} />
           </div>
           <BlogComponents.pagination
+            :if={@pages > 1}
             pages={@pages}
             current_page={@current_page}
             current_path={@current_path}
