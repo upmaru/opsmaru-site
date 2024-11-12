@@ -28,11 +28,13 @@ defmodule Opsmaru.Content.Post.Manager do
     end)
   end
 
-  @decorate cacheable(cache: Cache, key: {:posts, :featured}, opts: [ttl: @ttl])
-  def featured(_options \\ []) do
+  @decorate cacheable(cache: Cache, key: {:posts, :featured, options}, opts: [ttl: @ttl])
+  def featured(options \\ []) do
+    limit = Keyword.get(options, :limit, 3)
+
     query =
       ~S"""
-      *[_type == "post" && featured == $featured][0..3] | order(_createdAt desc) {
+      *[_type == "post" && featured == $featured][0...$limit] | order(published_at desc) {
         ...,
         author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
         "cover": {"url": cover.asset -> url, "alt": cover.alt},
@@ -42,7 +44,7 @@ defmodule Opsmaru.Content.Post.Manager do
 
     %Sanity.Response{body: %{"result" => posts}} =
       query
-      |> Sanity.query(%{"featured" => true}, perspective: "published")
+      |> Sanity.query(%{"featured" => true, "limit" => limit}, perspective: "published")
       |> Sanity.request!(request_opts())
 
     Enum.map(posts, fn post_params ->

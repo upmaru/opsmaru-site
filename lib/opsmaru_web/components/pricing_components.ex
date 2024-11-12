@@ -8,6 +8,7 @@ defmodule OpsmaruWeb.PricingComponents do
   use Gettext, backend: OpsmaruWeb.Gettext
 
   attr :section, Pages.Section, required: true
+  attr :faqs, :list, required: true
 
   def faq(assigns) do
     h2 = match_content(assigns.section.contents, "pricing-faq-h2")

@@ -4,6 +4,8 @@ defmodule OpsmaruWeb.BlogLive do
   alias Opsmaru.Content
   alias Opsmaru.Content.Image
 
+  import OpsmaruWeb.MarkdownHelper
+
   def mount(%{"id" => slug}, _session, socket) do
     post = Content.show_post(slug)
 
@@ -50,12 +52,8 @@ defmodule OpsmaruWeb.BlogLive do
                   alt={@post.cover.alt}
                   src={Image.url(@post.cover, w: 1024)}
                 />
-                <div class="prose prose-slate prose-h2:font-medium lg:prose-lg">
-                  <%= raw(
-                    MDEx.to_html!(@post.content,
-                      features: [syntax_highlight_theme: "tokyonight_moon"]
-                    )
-                  ) %>
+                <div class="prose prose-slate prose-img:rounded-2xl prose-h2:font-medium lg:prose-lg">
+                  <%= raw(render_markdown(@post.content)) %>
                 </div>
                 <div class="mt-10">
                   <.link

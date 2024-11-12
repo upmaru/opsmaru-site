@@ -4,8 +4,6 @@ defmodule OpsmaruWeb.BlogLive.Index do
   alias Opsmaru.Content
   alias Opsmaru.Pages
 
-  alias Opsmaru.Content.Image
-
   alias OpsmaruWeb.BlogComponents
 
   def mount(_params, _session, socket) do

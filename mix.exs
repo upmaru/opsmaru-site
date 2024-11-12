@@ -69,7 +69,7 @@ defmodule Opsmaru.MixProject do
 
       # Content
       {:sanity, "~> 2.0"},
-      {:mdex, "~> 0.2"},
+      {:mdex, github: "leandrocp/mdex", branch: "main"},
 
       # Insterra
       {:insterra_bridge, github: "upmaru/insterra-bridge", branch: "develop"},
