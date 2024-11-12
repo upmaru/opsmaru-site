@@ -131,9 +131,11 @@ defmodule OpsmaruWeb.BlogComponents do
   def pagination(assigns) do
     ~H"""
     <div class="mt-6 flex items-center justify-between gap-2">
-      <.link patch={if @current_page in [1, 2], do: ~p"/blog", else: ~p"/blog?page=#{@current_page - 1}"}
-             class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
-             data-disabled={if @current_page == 1, do: true}>
+      <.link
+        patch={if @current_page in [1, 2], do: ~p"/blog", else: ~p"/blog?page=#{@current_page - 1}"}
+        class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
+        data-disabled={if @current_page == 1, do: true}
+      >
         <.icon name="hero-chevron-left-solid" class="h-3 w-3 mr-1 text-slate-900" />
         <%= gettext("Previous page") %>
       </.link>
@@ -148,9 +150,13 @@ defmodule OpsmaruWeb.BlogComponents do
           </.link>
         <% end %>
       </div>
-      <.link patch={if @current_page == @pages, do: @current_path, else: ~p"/blog?page=#{@current_page + 1}"}
-            class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
-            data-disabled={if @current_page == @pages, do: true}>
+      <.link
+        patch={
+          if @current_page == @pages, do: @current_path, else: ~p"/blog?page=#{@current_page + 1}"
+        }
+        class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
+        data-disabled={if @current_page == @pages, do: true}
+      >
         <%= gettext("Next page") %>
         <.icon name="hero-chevron-right-solid" class="h-3 w-3 ml-1 text-slate-900" />
       </.link>

@@ -31,13 +31,16 @@ defmodule Opsmaru.Content.Post.Manager do
 
     %Sanity.Response{body: %{"result" => posts}} =
       @base_query
-      |> Sanity.query(%{
-        start_index: start_index,
-        end_index: end_index,
-        category: category,
-        last_id: last_id,
-        last_published_at: last_published_at
-      }, perspective: "published")
+      |> Sanity.query(
+        %{
+          start_index: start_index,
+          end_index: end_index,
+          category: category,
+          last_id: last_id,
+          last_published_at: last_published_at
+        },
+        perspective: "published"
+      )
       |> Sanity.request!(request_opts())
 
     Enum.map(posts, fn post_params ->
@@ -70,7 +73,7 @@ defmodule Opsmaru.Content.Post.Manager do
     end)
   end
 
-  @spec show(String.t) :: %Post{}
+  @spec show(String.t()) :: %Post{}
   @decorate cacheable(cache: Cache, key: {:posts, slug}, opts: [ttl: @ttl])
   def show(slug) do
     query = ~S"""
@@ -93,7 +96,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %{post | content: full_content}
   end
 
-  @spec count(Keyword.t) :: integer
+  @spec count(Keyword.t()) :: integer
   def count(options \\ []) do
     category = Keyword.get(options, :category)
 

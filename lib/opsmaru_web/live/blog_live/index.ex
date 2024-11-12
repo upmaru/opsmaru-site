@@ -47,7 +47,11 @@ defmodule OpsmaruWeb.BlogLive.Index do
           <div class="mt-6">
             <BlogComponents.post_listing :for={post <- @posts} post={post} />
           </div>
-          <BlogComponents.pagination pages={@pages} current_page={@current_page} current_path={@current_path} />
+          <BlogComponents.pagination
+            pages={@pages}
+            current_page={@current_page}
+            current_path={@current_path}
+          />
         </div>
       </div>
     </div>
@@ -64,12 +68,13 @@ defmodule OpsmaruWeb.BlogLive.Index do
     page = String.to_integer(page)
     last_post = List.last(assigns.posts)
 
-    last_post = if last_post do
-      last_post
-    else
-      Content.list_posts(end_index: @per_page, category: category)
-      |> List.last()
-    end
+    last_post =
+      if last_post do
+        last_post
+      else
+        Content.list_posts(end_index: @per_page, category: category)
+        |> List.last()
+      end
 
     last_id = last_post.id
     last_published_at = last_post.published_at
@@ -117,7 +122,6 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:category, category)
       |> assign(:posts_count, posts_count)
       |> assign(:pages, ceil(posts_count / @per_page))
-
 
     {:noreply, socket}
   end

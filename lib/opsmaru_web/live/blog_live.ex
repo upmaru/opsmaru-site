@@ -45,9 +45,11 @@ defmodule OpsmaruWeb.BlogLive do
                 <div class="text-sm/5 text-slate-700"><%= @post.author.name %></div>
               </div>
               <div class="flex flex-wrap gap-2">
-                <.link :for={category <- @post.categories}
-                       class="rounded-full border border-dotted border-slate-300 bg-slate-50 px-2 text-sm/6 font-medium text-slate-500"
-                       navigate={~p"/blog?category=#{category.slug}"}>
+                <.link
+                  :for={category <- @post.categories}
+                  class="rounded-full border border-dotted border-slate-300 bg-slate-50 px-2 text-sm/6 font-medium text-slate-500"
+                  navigate={~p"/blog?category=#{category.slug}"}
+                >
                   <%= category.name %>
                 </.link>
               </div>
