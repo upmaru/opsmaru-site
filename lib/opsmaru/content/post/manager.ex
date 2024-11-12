@@ -45,7 +45,7 @@ defmodule Opsmaru.Content.Post.Manager do
     end)
   end
 
-  @decorate cacheable(cache: Cache, key: {:posts, :featured, options}, opts: [ttl: @ttl])
+  @decorate cacheable(cache: Cache, key: {:featured_posts, options}, opts: [ttl: @ttl])
   def featured(options \\ []) do
     limit = Keyword.get(options, :limit, 3)
 
