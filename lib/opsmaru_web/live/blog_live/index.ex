@@ -12,8 +12,6 @@ defmodule OpsmaruWeb.BlogLive.Index do
     page = Content.show_page("blog")
     header_section = Enum.find(page.sections, &(&1.slug == "blog-header"))
     featured_posts = Content.featured_posts()
-    posts_count = Content.posts_count()
-    posts = Content.list_posts(end_index: @per_page)
 
     socket =
       socket
@@ -21,10 +19,10 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:page, page)
       |> assign(:header_section, header_section)
       |> assign(:featured_posts, featured_posts)
-      |> assign(:posts_count, posts_count)
-      |> assign(:posts, posts)
-      |> assign(:pages, ceil(posts_count / @per_page))
+      |> assign(:posts_count, 0)
+      |> assign(:posts, [])
       |> assign(:current_page, 1)
+      |> assign(:pages, 1)
 
     {:ok, socket}
   end
@@ -33,15 +31,16 @@ defmodule OpsmaruWeb.BlogLive.Index do
   attr :header_section, Pages.Section, required: true
   attr :featured_posts, :list, required: true
   attr :posts_count, :integer, required: true
-  attr :pages, :integer, required: true
+  attr :pages, :integer, default: 1
   attr :current_page, :integer, default: 1
   attr :posts, :list, default: []
+  attr :category, :string, default: nil
 
   def render(assigns) do
     ~H"""
     <div>
       <BlogComponents.header section={@header_section} />
-      <BlogComponents.featured :if={@current_page == 1} posts={@featured_posts} />
+      <BlogComponents.featured :if={@current_page == 1 && is_nil(@category)} posts={@featured_posts} />
       <div class="mt-16 pb-24 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <div class="flex flex-wrap items-center justify-between gap-2"></div>
@@ -55,11 +54,22 @@ defmodule OpsmaruWeb.BlogLive.Index do
     """
   end
 
-  def handle_params(%{"page" => page}, _url, %{assigns: assigns} = socket) do
+  def handle_params(%{"page" => page} = params, _url, %{assigns: assigns} = socket) do
+    category = Map.get(params, "category")
+
+    posts_count = Content.posts_count(category: category)
+
     current_path = ~p"/blog?page=#{page}"
 
     page = String.to_integer(page)
     last_post = List.last(assigns.posts)
+
+    last_post = if last_post do
+      last_post
+    else
+      Content.list_posts(end_index: @per_page, category: category)
+      |> List.last()
+    end
 
     last_id = last_post.id
     last_published_at = last_post.published_at
@@ -80,20 +90,34 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:current_page, page)
       |> assign(:current_path, current_path)
       |> assign(:posts, posts)
+      |> assign(:posts_count, posts_count)
+      |> assign(:pages, ceil(posts_count / @per_page))
 
     {:noreply, socket}
   end
 
-  def handle_params(_params, _url, socket) do
-    current_path = ~p"/blog"
+  def handle_params(params, _url, socket) do
+    category = Map.get(params, "category")
 
-    posts = Content.list_posts(end_index: @per_page)
+    current_path =
+      if category do
+        ~p"/blog?category=#{category}"
+      else
+        ~p"/blog"
+      end
+
+    posts = Content.list_posts(end_index: @per_page, category: category)
+    posts_count = Content.posts_count(category: category)
 
     socket =
       socket
       |> assign(:current_page, 1)
       |> assign(:current_path, current_path)
       |> assign(:posts, posts)
+      |> assign(:category, category)
+      |> assign(:posts_count, posts_count)
+      |> assign(:pages, ceil(posts_count / @per_page))
+
 
     {:noreply, socket}
   end

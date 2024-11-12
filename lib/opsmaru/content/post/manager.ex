@@ -98,7 +98,10 @@ defmodule Opsmaru.Content.Post.Manager do
     category = Keyword.get(options, :category)
 
     query = ~S"""
-    count(*[_type == "post" && (featured != true || defined($category))])
+    count(*[_type == "post"
+      && (featured != true || defined($category))
+      && select(defined($category) => $category in categories[] -> slug.current, true)
+    ])
     """
 
     %Sanity.Response{body: %{"result" => posts_count}} =
