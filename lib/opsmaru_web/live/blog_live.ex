@@ -42,10 +42,17 @@ defmodule OpsmaruWeb.BlogLive do
                   alt={@post.author.name}
                   src={Image.url(@post.author.avatar, w: 64)}
                 />
-                <div class="text-sm/5 text-gray-700"><%= @post.author.name %></div>
+                <div class="text-sm/5 text-slate-700"><%= @post.author.name %></div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <.link :for={category <- @post.categories}
+                       class="rounded-full border border-dotted border-slate-300 bg-slate-50 px-2 text-sm/6 font-medium text-slate-500"
+                       navigate={~p"/blog?category=#{category.slug}"}>
+                  <%= category.name %>
+                </.link>
               </div>
             </div>
-            <div class="text-gray-700">
+            <div class="text-slate-700">
               <div class="max-w-2xl xl:mx-auto">
                 <img
                   class="mb-10 aspect-[3/2] w-full rounded-2xl object-cover shadow-xl"
