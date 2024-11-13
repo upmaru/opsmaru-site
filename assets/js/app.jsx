@@ -41,6 +41,27 @@ function mountCategories() {
   root.render(<Categories categories={categories} selected={selected} />);
 }
 
+function mountSlider() {
+  const domNode = this.el;
+  const root = createRoot(domNode);
+
+  let { description } = this.el.dataset;
+
+
+  root.render(<Slider description={description} />);
+}
+
+function mountMobileNav() {
+  const domNode = this.el;
+  const root = createRoot(domNode);
+
+  let { links } = this.el.dataset;
+
+  links = JSON.parse(links);
+
+  root.render(<MobileNav links={links} />);
+}
+
 let Hooks = {};
 
 Hooks.MountBroadcast = {
@@ -53,28 +74,13 @@ Hooks.MountBroadcast = {
 };
 
 Hooks.MountSlider = {
-  mounted() {
-    const domNode = this.el;
-    const root = createRoot(domNode);
-
-    let { description } = this.el.dataset;
-
-
-    root.render(<Slider description={description} />);
-  },
+  mounted: mountSlider,
+  updated: mountSlider,
 };
 
 Hooks.MountMobileNav = {
-  mounted() {
-    const domNode = this.el;
-    const root = createRoot(domNode);
-
-    let { links } = this.el.dataset;
-
-    links = JSON.parse(links);
-
-    root.render(<MobileNav links={links} />);
-  },
+  mounted: mountMobileNav,
+  updated: mountMobileNav,
 };
 
 Hooks.MountPlayer = {
