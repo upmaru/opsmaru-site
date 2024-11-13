@@ -68,9 +68,7 @@ defmodule Opsmaru.Content.Post.Manager do
       |> Sanity.query(%{featured: true, limit: limit}, perspective: "published")
       |> Sanity.request!(request_opts())
 
-    Enum.map(posts, fn post_params ->
-      Post.parse(post_params)
-    end)
+    Enum.map(posts, &Post.parse/1)
   end
 
   @spec show(String.t()) :: %Post{}
@@ -96,15 +94,29 @@ defmodule Opsmaru.Content.Post.Manager do
     %{post | content: full_content}
   end
 
-  def categories(options \\ []) do
-    query = ~s"""
-    *[_type == "postCategory"
-      && count(*[_type == "post" && defined(slug.current) && ^._id in categories[]._ref]) > 0
-    ] | order(name asc){...}
+  @spec feed() :: [%Post{}]
+  @decorate cacheable(cache: Cache, key: :posts_feed, opts: [ttl: :timer.hours(24)])
+  def feed do
+    query = ~S"""
+    *[_type == "post" && defined(slug.current)] | order(featured, published_at desc) {
+     ...,
+      author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
+      categories[] -> {...},
+      "cover": {"url": cover.asset -> url, "alt": cover.alt},
+      "content": content.asset -> url
+    }
     """
+
+    %Sanity.Response{body: %{"result" => posts}} =
+      query
+      |> Sanity.query(%{}, perspective: "published")
+      |> Sanity.request!(request_opts())
+
+    Enum.map(posts, &Post.parse/1)
   end
 
   @spec count(Keyword.t()) :: integer
+  @decorate cacheable(cache: Cache, key: {:posts_count, options}, opts: [ttl: :timer.hours(24)])
   def count(options \\ []) do
     category = Keyword.get(options, :category)
 

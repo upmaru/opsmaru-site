@@ -19,6 +19,10 @@ defmodule Opsmaru.Content do
     to: Post.Manager,
     as: :featured
 
+  defdelegate posts_feed,
+    to: Post.Manager,
+    as: :feed
+
   defdelegate show_post(slug),
     to: Post.Manager,
     as: :show

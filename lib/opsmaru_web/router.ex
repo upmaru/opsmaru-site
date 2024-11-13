@@ -17,7 +17,10 @@ defmodule OpsmaruWeb.Router do
   scope "/", OpsmaruWeb do
     pipe_through :browser
 
-    live_session :default, on_mount: [{OpsmaruWeb.NavigationHook, :main}] do
+    get "/blog/rss.xml", Blog.RssController, :index
+
+    live_session :default,
+      on_mount: [{OpsmaruWeb.NavigationHook, :main}] do
       live "/", HomeLive
 
       live "/blog", BlogLive.Index

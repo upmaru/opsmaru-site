@@ -47,7 +47,11 @@ defmodule OpsmaruWeb.BlogLive.Index do
       <div class="mt-16 pb-24 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div id="categories" data-categories={Jason.encode!(@categories)} phx-update="ignore" phx-hook="MountCategories"></div>
+            <div id="categories" data-categories={Jason.encode!(@categories)} data-selected={@category} phx-hook="MountCategories"></div>
+            <.link href={~p"/blog/rss.xml"} class="gap-1 inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40">
+              <.icon name="hero-rss" class="w-4 h-4" />
+              <%= gettext("RSS Feed") %>
+            </.link>
           </div>
           <div class="mt-6">
             <BlogComponents.post_listing :for={post <- @posts} post={post} />
@@ -103,6 +107,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:posts, posts)
       |> assign(:posts_count, posts_count)
       |> assign(:pages, ceil(posts_count / @per_page))
+      |> assign(:category, category)
 
     {:noreply, socket}
   end
