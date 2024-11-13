@@ -88,12 +88,20 @@ defmodule Opsmaru.Content.Post.Manager do
 
     %Sanity.Response{body: %{"result" => post_params}} =
       query
-      |> Sanity.query(%{"slug" => slug}, perspective: "published")
+      |> Sanity.query(%{slug: slug}, perspective: "published")
       |> Sanity.request!(request_opts())
 
     post = Post.parse(post_params)
     full_content = Req.get!(post.content).body
     %{post | content: full_content}
+  end
+
+  def categories(options \\ []) do
+    query = ~s"""
+    *[_type == "postCategory"
+      && count(*[_type == "post" && defined(slug.current) && ^._id in categories[]._ref]) > 0
+    ] | order(name asc){...}
+    """
   end
 
   @spec count(Keyword.t()) :: integer

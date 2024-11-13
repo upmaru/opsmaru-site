@@ -3,6 +3,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
 
   alias Opsmaru.Content
   alias Opsmaru.Pages
+  alias Opsmaru.Posts
 
   alias OpsmaruWeb.BlogComponents
 
@@ -12,6 +13,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
     page = Content.show_page("blog")
     header_section = Enum.find(page.sections, &(&1.slug == "blog-header"))
     featured_posts = Content.featured_posts()
+    categories = Posts.list_categories()
 
     socket =
       socket
@@ -23,6 +25,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:posts, [])
       |> assign(:current_page, 1)
       |> assign(:pages, 1)
+      |> assign(:categories, categories)
 
     {:ok, socket}
   end
@@ -43,7 +46,9 @@ defmodule OpsmaruWeb.BlogLive.Index do
       <BlogComponents.featured :if={@current_page == 1 && is_nil(@category)} posts={@featured_posts} />
       <div class="mt-16 pb-24 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
-          <div class="flex flex-wrap items-center justify-between gap-2"></div>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div id="categories" data-categories={Jason.encode!(@categories)} phx-update="ignore" phx-hook="MountCategories"></div>
+          </div>
           <div class="mt-6">
             <BlogComponents.post_listing :for={post <- @posts} post={post} />
           </div>

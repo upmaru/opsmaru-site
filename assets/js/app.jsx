@@ -27,6 +27,7 @@ import { createRoot } from "react-dom/client";
 import { Broadcast } from "../components/broadcast";
 import { Slider } from "../components/slider";
 import { MobileNav } from "../components/mobile-nav";
+import { Categories } from '../components/categories';
 
 let Hooks = {};
 
@@ -60,6 +61,19 @@ Hooks.MountMobileNav = {
     root.render(<MobileNav links={links} />);
   },
 };
+
+Hooks.MountCategories = {
+  mounted() {
+    const domNode = this.el;
+    const root = createRoot(domNode);
+
+    let { categories, selected } = this.el.dataset;
+
+    categories = JSON.parse(categories);
+
+    root.render(<Categories categories={categories} selected={selected} />);
+  }
+}
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
