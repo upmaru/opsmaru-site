@@ -22,7 +22,7 @@ defmodule Opsmaru.Content.Page.Manager do
       }
       """
       |> Sanity.query(%{"slug" => slug}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     Page.parse(page_params)
   end

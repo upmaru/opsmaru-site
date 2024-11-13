@@ -10,6 +10,7 @@ defmodule OpsmaruWeb.HomeLive do
     page = Content.show_page("home")
     hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
     logos = Content.list_logos()
+    demo_movie = Content.show_movie("home-demo")
 
     socket =
       socket
@@ -17,12 +18,15 @@ defmodule OpsmaruWeb.HomeLive do
       |> assign(:page, page)
       |> assign(:hero_section, hero_section)
       |> assign(:logos, logos)
+      |> assign(:demo_movie, demo_movie)
+      |> assign(:demo_movie_active, false)
 
     {:ok, socket, layout: false}
   end
 
   attr :mobile_nav_active, :boolean, default: false
   attr :main_nav, Content.Navigation, required: true
+  attr :demo_movie, Content.Movie, required: true
 
   def render(assigns) do
     ~H"""
@@ -67,11 +71,11 @@ defmodule OpsmaruWeb.HomeLive do
                     class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-black/10"
                   />
                   <div class="absolute transition inset-0 flex items-center justify-center bg-slate-950/20 rounded-[var(--radius)]">
-                    <button phx-click={show_modal("demo-video")}>
+                    <button phx-click={show_demo_video()}>
                       <.icon name="hero-play-solid" class="absolute transition-transform inset-0 w-24 h-24 hover:scale-110 m-auto text-white" />
                     </button>
-                    <.modal id="demo-video">
-                      <p>Something</p>
+                    <.modal id="demo-video" on_cancel={hide_demo_video()}>
+                      <div :if={@demo_movie_active} id="demo-video-player" data-movie={Jason.encode!(@demo_movie)} phx-hook="MountPlayer"></div>
                     </.modal>
                   </div>
                 </div>
@@ -254,5 +258,24 @@ defmodule OpsmaruWeb.HomeLive do
       <BaseComponents.footer />
     </div>
     """
+  end
+
+  @impl true
+  def handle_event("activate", %{"component" => "demo-video"}, socket) do
+    {:noreply, assign(socket, demo_movie_active: true)}
+  end
+
+  def handle_event("deactivate", %{"component" => "demo-video"}, socket) do
+    {:noreply, assign(socket, demo_movie_active: false)}
+  end
+
+  defp show_demo_video do
+    JS.push("activate", value: %{"component" => "demo-video"})
+    |> show_modal("demo-video")
+  end
+
+  def hide_demo_video do
+    JS.push("deactivate", value: %{"component" => "demo-video"})
+    |> hide_modal("demo-video")
   end
 end

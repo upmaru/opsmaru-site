@@ -13,7 +13,7 @@ defmodule Opsmaru.Posts.Category.Manager do
     %Sanity.Response{body: %{"result" => categories}} =
       query
       |> Sanity.query(%{}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     Enum.map(categories, &Category.parse/1)
   end

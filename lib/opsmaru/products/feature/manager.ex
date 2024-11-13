@@ -17,7 +17,7 @@ defmodule Opsmaru.Products.Feature.Manager do
   def list(_options \\ []) do
     @base_query
     |> Sanity.query(%{}, perspective: "published")
-    |> Sanity.request!(request_opts())
+    |> Sanity.request!(sanity_request_opts())
     |> case do
       %Sanity.Response{body: %{"result" => features}} ->
         Enum.map(features, &Feature.parse/1)

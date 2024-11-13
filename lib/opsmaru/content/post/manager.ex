@@ -41,7 +41,7 @@ defmodule Opsmaru.Content.Post.Manager do
         },
         perspective: "published"
       )
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     Enum.map(posts, fn post_params ->
       Post.parse(post_params)
@@ -66,7 +66,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %Sanity.Response{body: %{"result" => posts}} =
       query
       |> Sanity.query(%{featured: true, limit: limit}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     Enum.map(posts, &Post.parse/1)
   end
@@ -87,7 +87,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %Sanity.Response{body: %{"result" => post_params}} =
       query
       |> Sanity.query(%{slug: slug}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     post = Post.parse(post_params)
     full_content = Req.get!(post.content).body
@@ -110,7 +110,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %Sanity.Response{body: %{"result" => posts}} =
       query
       |> Sanity.query(%{}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     Enum.map(posts, &Post.parse/1)
   end
@@ -130,7 +130,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %Sanity.Response{body: %{"result" => posts_count}} =
       query
       |> Sanity.query(%{category: category}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     posts_count
   end

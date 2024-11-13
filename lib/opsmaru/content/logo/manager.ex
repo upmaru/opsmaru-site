@@ -14,7 +14,7 @@ defmodule Opsmaru.Content.Logo.Manager do
     %Sanity.Response{body: %{"result" => logos}} =
       query
       |> Sanity.query(%{}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     Enum.map(logos, &Logo.parse/1)
   end

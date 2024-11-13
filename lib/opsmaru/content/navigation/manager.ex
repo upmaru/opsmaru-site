@@ -19,7 +19,7 @@ defmodule Opsmaru.Content.Navigation.Manager do
   def list(_options \\ []) do
     @base_query
     |> Sanity.query(%{}, perspective: "published")
-    |> Sanity.request!(request_opts())
+    |> Sanity.request!(sanity_request_opts())
     |> case do
       %Sanity.Response{body: %{"result" => navigations}} ->
         Enum.map(navigations, &Navigation.parse/1)

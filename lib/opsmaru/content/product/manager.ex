@@ -16,7 +16,7 @@ defmodule Opsmaru.Content.Product.Manager do
     """
 
     Sanity.query(sanity_query, %{})
-    |> Sanity.request!(request_opts())
+    |> Sanity.request!(sanity_request_opts())
     |> case do
       %Sanity.Response{body: %{"result" => products}} ->
         products

@@ -28,6 +28,7 @@ import { Broadcast } from "../components/broadcast";
 import { Slider } from "../components/slider";
 import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
+import { Player } from '../components/player';
 
 function mountCategories() {
   const domNode = this.el;
@@ -75,6 +76,19 @@ Hooks.MountMobileNav = {
     root.render(<MobileNav links={links} />);
   },
 };
+
+Hooks.MountPlayer = {
+  mounted() {
+    const domNode = this.el;
+    const root = createRoot(domNode);
+
+    let { movie } = this.el.dataset;
+
+    movie = JSON.parse(movie);
+
+    root.render(<Player movie={movie} />);
+  }
+}
 
 Hooks.MountCategories = {
   mounted: mountCategories,

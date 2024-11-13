@@ -17,7 +17,7 @@ defmodule Opsmaru.Pages.FAQ.Manager do
     %Sanity.Response{body: %{"result" => faqs}} =
       @base_query
       |> Sanity.query(%{"page.slug.current" => page_slug}, perspective: "published")
-      |> Sanity.request!(request_opts())
+      |> Sanity.request!(sanity_request_opts())
 
     faqs
     |> Enum.map(&FAQ.parse/1)

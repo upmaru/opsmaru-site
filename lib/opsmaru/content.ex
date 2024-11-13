@@ -33,6 +33,12 @@ defmodule Opsmaru.Content do
     to: Post.Manager,
     as: :show
 
+  alias __MODULE__.Movie
+
+  defdelegate show_movie(slug),
+    to: Movie.Manager,
+    as: :show
+
   alias __MODULE__.Product
 
   defdelegate list_products,
