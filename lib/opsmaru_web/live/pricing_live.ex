@@ -17,6 +17,8 @@ defmodule OpsmaruWeb.PricingLive do
     products = Content.list_products()
     categories = Features.list_categories()
     product_features = Products.list_features()
+    logos = Content.list_logos()
+
 
     socket =
       socket
@@ -27,6 +29,7 @@ defmodule OpsmaruWeb.PricingLive do
       |> assign(:products, products)
       |> assign(:categories, categories)
       |> assign(:product_features, product_features)
+      |> assign(:logos, logos)
 
     {:ok, socket}
   end
@@ -58,29 +61,9 @@ defmodule OpsmaruWeb.PricingLive do
               <BaseComponents.price :for={price <- @prices} price={price} />
             </div>
             <div class="mt-24 flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">
-              <img
-                alt="SavvyCal"
-                src="/images/logo-cloud/savvycal.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Laravel"
-                src="/images/logo-cloud/laravel.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Tuple"
-                src="/images/logo-cloud/tuple.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Transistor"
-                src="/images/logo-cloud/transistor.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Statamic"
-                src="/images/logo-cloud/statamic.svg"
+              <img :for={logo <- @logos}
+                alt={logo.name}
+                src={logo.image}
                 class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
               />
             </div>
@@ -124,7 +107,7 @@ defmodule OpsmaruWeb.PricingLive do
                   <span class="sr-only"><%= gettext("Get started") %></span>
                 </th>
                 <td
-                  :for={product <- @products}
+                  :for={_product <- @products}
                   class="px-0 pb-0 pt-4 data-[selected]:table-cell max-sm:hidden"
                 >
                   <a

@@ -20,7 +20,7 @@ export function Categories({ categories, selected }) {
         <MenuItem>
           <a
             href="/blog"
-            data-phx-link="redirect"
+            data-phx-link="patch"
             data-phx-link-state="push"
             data-selected={selected === undefined ? true : undefined}
             className="group grid grid-cols-[1rem,1fr] items-center gap-2 rounded-md px-2 py-1 data-[focus]:bg-gray-950/5"
@@ -33,7 +33,7 @@ export function Categories({ categories, selected }) {
           <MenuItem key={category.slug}>
             <a
               href={`/blog?category=${category.slug}`}
-              data-phx-link="redirect"
+              data-phx-link="patch"
               data-phx-link-state="push"
               data-selected={category.slug === selected ? true : undefined}
               className="group grid grid-cols-[16px,1fr] items-center gap-2 rounded-md px-2 py-1 data-[focus]:bg-gray-950/5"

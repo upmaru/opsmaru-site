@@ -140,12 +140,11 @@ function TestimonialCard({
   );
 }
 
-function CallToAction() {
+function CallToAction({ description }) {
   return (
     <div>
       <p className="max-w-sm text-sm/6 text-slate-600">
-        Become one of the early adopters of a new way to sell software. Start
-        monetizing your web app today.
+        {description}
       </p>
       <div className="mt-2">
         <a
@@ -160,7 +159,7 @@ function CallToAction() {
   );
 }
 
-export function Slider() {
+export function Slider({ description }) {
   let scrollRef = useRef(null);
   let { scrollX } = useScroll({ container: scrollRef });
   let [setReferenceWindowRef, bounds] = useMeasure();
@@ -204,7 +203,7 @@ export function Slider() {
       </div>
       <Container className="mt-16">
         <div className="flex justify-between">
-          <CallToAction />
+          <CallToAction description={description} />
           <div className="hidden sm:flex sm:gap-2">
             {testimonials.map(({ name }, testimonialIndex) => (
               <Headless.Button

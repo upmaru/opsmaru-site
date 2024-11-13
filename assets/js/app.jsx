@@ -29,6 +29,17 @@ import { Slider } from "../components/slider";
 import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
 
+function mountCategories() {
+  const domNode = this.el;
+  const root = createRoot(domNode);
+
+  let { categories, selected } = this.el.dataset;
+
+  categories = JSON.parse(categories);
+
+  root.render(<Categories categories={categories} selected={selected} />);
+}
+
 let Hooks = {};
 
 Hooks.MountBroadcast = {
@@ -45,7 +56,10 @@ Hooks.MountSlider = {
     const domNode = this.el;
     const root = createRoot(domNode);
 
-    root.render(<Slider />);
+    let { description } = this.el.dataset;
+
+
+    root.render(<Slider description={description} />);
   },
 };
 
@@ -63,16 +77,8 @@ Hooks.MountMobileNav = {
 };
 
 Hooks.MountCategories = {
-  mounted() {
-    const domNode = this.el;
-    const root = createRoot(domNode);
-
-    let { categories, selected } = this.el.dataset;
-
-    categories = JSON.parse(categories);
-
-    root.render(<Categories categories={categories} selected={selected} />);
-  }
+  mounted: mountCategories,
+  updated: mountCategories,
 }
 
 let csrfToken = document

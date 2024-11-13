@@ -4,14 +4,19 @@ defmodule OpsmaruWeb.HomeLive do
   alias Opsmaru.Content
 
   alias OpsmaruWeb.BaseComponents
+  alias OpsmaruWeb.HomeComponents
 
   def mount(_params, _session, socket) do
     page = Content.show_page("home")
+    hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
+    logos = Content.list_logos()
 
     socket =
       socket
       |> assign(:page_title, page.title)
       |> assign(:page, page)
+      |> assign(:hero_section, hero_section)
+      |> assign(:logos, logos)
 
     {:ok, socket, layout: false}
   end
@@ -31,73 +36,44 @@ defmodule OpsmaruWeb.HomeLive do
         <div class="relative px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
             <BaseComponents.header navigation={@main_nav} mobile_nav_active={@mobile_nav_active} />
-            <div class="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
-              <h1 class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-slate-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
-                <%= gettext("Monetize your web application.") %>
-              </h1>
-              <p class="mt-8 max-w-lg text-xl/7 font-medium text-slate-950/75 sm:text-2xl/8">
-                <%= gettext(
-                  "Opsmaru helps you setup the infrastructure that enables you to sell instances of your application."
-                ) %>
-              </p>
-              <div class="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-                <BaseComponents.button href="/auth/users/log_in">
-                  <%= gettext("Get started") %>
-                </BaseComponents.button>
-                <BaseComponents.button href={~p"/our-product/pricing"} variant={:secondary}>
-                  <%= gettext("See pricing") %>
-                </BaseComponents.button>
-              </div>
-            </div>
+            <HomeComponents.hero section={@hero_section} />
           </div>
         </div>
       </div>
       <main>
         <div class="mt-10 px-6 lg:px-8">
-          <div class="mx-auto max-w-2xl lg:max-w-7xl">
+          <div class="mx-auto max-w-xl lg:max-w-2xl">
             <div class="flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">
-              <img
-                alt="SavvyCal"
-                src="/images/logo-cloud/savvycal.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Laravel"
-                src="/images/logo-cloud/laravel.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Tuple"
-                src="/images/logo-cloud/tuple.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Transistor"
-                src="/images/logo-cloud/transistor.svg"
-                class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
-              />
-              <img
-                alt="Statamic"
-                src="/images/logo-cloud/statamic.svg"
+              <img :for={logo <- @logos}
+                alt={logo.name}
+                src={logo.image}
                 class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
               />
             </div>
           </div>
         </div>
-        <div class="bg-gradient-to-b from-white from-50% to-gray-100 py-32">
+        <div class="bg-gradient-to-b from-white from-50% to-slate-100 py-32">
           <div class="overflow-hidden">
             <div class="pb-24 px-6 lg:px-8">
               <div class="mx-auto max-w-2xl lg:max-w-7xl">
-                <h2 class="max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-gray-950 sm:text-6xl">
+                <h2 class="max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl">
                   <%= gettext("Deploy, Observe, Distribute with a single dashboard.") %>
                 </h2>
-                <div class="mt-16 h-[36rem] sm:h-auto w-[76rem] sm:w-[76rem] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+                <div class="mt-16 relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
                   <div class="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-black/5 [--padding:theme(spacing.2)]">
                   </div>
                   <img
                     src={~p"/images/landing-preview.png"}
                     class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-black/10"
                   />
+                  <div class="absolute transition inset-0 flex items-center justify-center bg-slate-950/20 rounded-[var(--radius)]">
+                    <button phx-click={show_modal("demo-video")}>
+                      <.icon name="hero-play-solid" class="absolute transition-transform inset-0 w-24 h-24 hover:scale-110 m-auto text-white" />
+                    </button>
+                    <.modal id="demo-video">
+                      <p>Something</p>
+                    </.modal>
+                  </div>
                 </div>
               </div>
             </div>
@@ -273,7 +249,7 @@ defmodule OpsmaruWeb.HomeLive do
             </div>
           </div>
         </div>
-        <div id="latest-updates-slider" phx-hook="MountSlider"></div>
+        <div id="latest-updates-slider" data-description={gettext("Become one of the early adopters of a new way to sell software. Start monetizing your web app today.")} phx-hook="MountSlider"></div>
       </div>
       <BaseComponents.footer />
     </div>

@@ -22,7 +22,7 @@ defmodule OpsmaruWeb.NavigationHook do
     {:halt, assign(socket, :mobile_nav_active, not assigns.mobile_nav_active)}
   end
 
-  def handle_event("toggle", _params, socket) do
+  def handle_event(_, _params, socket) do
     {:cont, socket}
   end
 end

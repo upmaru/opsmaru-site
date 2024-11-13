@@ -14,10 +14,10 @@ defmodule OpsmaruWeb.MarkdownHelper do
     |> MDEx.parse_document!(opts)
     |> MDEx.traverse_and_update(fn
       # inject a html block to render a note alert
-      {"block_quote", %{}, [{"paragraph", %{}, ["[!NOTE]" = type | rest]}]} ->
+      {"block_quote", %{}, [{"paragraph", %{}, ["[!NOTE]" | rest]}]} ->
         alert_block(rest, :note, opts)
 
-      {"block_quote", %{}, [{"paragraph", %{}, ["[!NOTE]" = type]} | rest]} ->
+      {"block_quote", %{}, [{"paragraph", %{}, ["[!NOTE]"]} | rest]} ->
         alert_block(rest, :note, opts)
 
       # inject a html block to render a caution alert

@@ -1,4 +1,10 @@
 defmodule Opsmaru.Content do
+  alias __MODULE__.Logo
+
+  defdelegate list_logos(options \\ []),
+    to: Logo.Manager,
+    as: :list
+
   alias __MODULE__.Navigation
 
   defdelegate list_nagivations(options \\ []),
