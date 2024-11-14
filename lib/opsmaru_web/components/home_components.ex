@@ -56,10 +56,10 @@ defmodule OpsmaruWeb.HomeComponents do
           </h2>
         </div>
       </div>
-      <div id="slides" class="h-[200vh] bg-gradient-to-b from-slate-950 from-25% to-slate-900 relative" phx-hook="MountSlideScroll">
+      <div id="slides" class="h-[300vh] bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative" phx-hook="MountSlideScroll">
         <div id="slides-container" class="flex sticky top-0">
           <div :for={slide <- @slides} class="slide-item flex flex-col flex-none items-center justify-center w-screen h-screen overflow-hidden">
-            <div class="w-96 h-56 md:w-[640px] md:h-[375px] lg:w-[960px] lg:h-[562px] xl:w-[1200px] xl:h-[704px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+            <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1200px] xl:h-[800px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
               <div class="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-white/10 [--padding:theme(spacing.2)]"></div>
               <img
                 src={Image.url(slide.image, format: "jpeg")}
