@@ -6,14 +6,15 @@ defmodule Opsmaru.Content.Slide do
 
   embedded_schema do
     field :title, :string
+    field :subtitle, :string
 
     embeds_one :image, Image
   end
 
   def changeset(slide, params) do
     slide
-    |> cast(params, ~w(title)a)
-    |> validate_required(~w(title)a)
+    |> cast(params, ~w(title subtitle)a)
+    |> validate_required(~w(title subtitle)a)
     |> cast_embed(:image)
   end
 
