@@ -11,6 +11,12 @@ defmodule Opsmaru.Content do
     to: Navigation.Manager,
     as: :list
 
+  alias __MODULE__.Slide
+
+  defdelegate list_slides(options \\ []),
+    to: Slide.Manager,
+    as: :list
+
   alias __MODULE__.Post
 
   defdelegate list_posts(options \\ []),

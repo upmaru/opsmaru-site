@@ -30,6 +30,8 @@ import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
 import { Player } from '../components/player';
 
+import { animate, scroll } from 'motion'
+
 function mountCategories() {
   const domNode = this.el;
   const root = createRoot(domNode);
@@ -62,15 +64,43 @@ function mountMobileNav() {
   root.render(<MobileNav links={links} />);
 }
 
+function mountBroadcast() {
+  const domNode = this.el;
+  const root = createRoot(domNode);
+
+  root.render(<Broadcast />);
+}
+
+function mountSlideScroll() {
+  const { el } = this;
+  const items = el.querySelectorAll('.slide-item');
+
+  items.forEach((item) => {
+    scroll(
+      animate(item,  { opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 0.8] }, { ease: "linear" }), {
+        target: item,
+        offset: ["start end", "end end", "start start", "end start"],
+      }
+    )
+  })
+
+  scroll(
+    animate(
+      "div#slides-container",
+      {
+        transform: ["none", `translateX(-${items.length - 1}00vw)`],
+      }, 
+      { ease: "easeInOut" }
+    ),
+    { target: el }
+  )
+}
+
 let Hooks = {};
 
 Hooks.MountBroadcast = {
-  mounted() {
-    const domNode = this.el;
-    const root = createRoot(domNode);
-
-    root.render(<Broadcast />);
-  },
+  mounted: mountBroadcast,
+  updated: mountBroadcast,
 };
 
 Hooks.MountSlider = {
@@ -99,6 +129,11 @@ Hooks.MountPlayer = {
 Hooks.MountCategories = {
   mounted: mountCategories,
   updated: mountCategories,
+}
+
+Hooks.MountSlideScroll = {
+  mounted: mountSlideScroll,
+  updated: mountSlideScroll,
 }
 
 let csrfToken = document

@@ -8,29 +8,33 @@ defmodule OpsmaruWeb.HomeLive do
 
   def mount(_params, _session, socket) do
     page = Content.show_page("home")
+
     hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
+    slides_section = Enum.find(page.sections, &(&1.slug == "home-slides"))
+
+    slides = Content.list_slides()
+
     logos = Content.list_logos()
-    demo_movie = Content.show_movie("home-demo")
 
     socket =
       socket
       |> assign(:page_title, page.title)
       |> assign(:page, page)
       |> assign(:hero_section, hero_section)
+      |> assign(:slides_section, slides_section)
       |> assign(:logos, logos)
-      |> assign(:demo_movie, demo_movie)
-      |> assign(:demo_movie_active, false)
+      |> assign(:slides, slides)
 
     {:ok, socket, layout: false}
   end
 
   attr :mobile_nav_active, :boolean, default: false
   attr :main_nav, Content.Navigation, required: true
-  attr :demo_movie, Content.Movie, required: true
+  attr :slides, :list, required: true
 
   def render(assigns) do
     ~H"""
-    <div class="overflow-hidden">
+    <div>
       <div class="relative">
         <div class={[
           "absolute inset-2 bottom-0 rounded-4xl ring-1 ring-inset ring-slate-950/5",
@@ -57,32 +61,8 @@ defmodule OpsmaruWeb.HomeLive do
           </div>
         </div>
         <div class="bg-gradient-to-b from-white from-50% to-slate-100 py-32">
-          <div class="overflow-hidden">
-            <div class="pb-24 px-6 lg:px-8">
-              <div class="mx-auto max-w-2xl lg:max-w-7xl">
-                <h2 class="max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl">
-                  <%= gettext("Deploy, Observe, Distribute with a single dashboard.") %>
-                </h2>
-                <div class="mt-16 relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
-                  <div class="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-black/5 [--padding:theme(spacing.2)]">
-                  </div>
-                  <img
-                    src={~p"/images/landing-preview.png"}
-                    class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-black/10"
-                  />
-                  <div class="absolute transition inset-0 flex items-center justify-center bg-slate-950/20 rounded-[var(--radius)]">
-                    <button phx-click={show_demo_video()}>
-                      <.icon name="hero-play-solid" class="absolute transition-transform inset-0 w-24 h-24 hover:scale-110 m-auto text-white" />
-                    </button>
-                    <.modal id="demo-video" on_cancel={hide_demo_video()}>
-                      <div :if={@demo_movie_active} id="demo-video-player" data-movie={Jason.encode!(@demo_movie)} phx-hook="MountPlayer"></div>
-                    </.modal>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="px-6 lg:px-8">
+          <HomeComponents.slides section={@slides_section} slides={@slides} />
+          <div class="mt-16 px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:max-w-7xl">
               <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500">
                 <%= gettext("Dev Sec Ops") %>
@@ -197,22 +177,22 @@ defmodule OpsmaruWeb.HomeLive do
         <div class="mx-2 mt-2 rounded-4xl bg-slate-900 py-32">
           <div class="px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:max-w-7xl">
-              <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 dark:text-slate-400">
+              <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-400">
                 <%= gettext("First class Day 2 Ops") %>
               </h2>
-              <h3 class="mt-2 max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-gray-950 dark:text-white sm:text-6xl">
+              <h3 class="mt-2 max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-white sm:text-6xl">
                 <%= gettext("Monitor and observe your infrastructure and applications.") %>
               </h3>
               <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
-                <div class="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
+                <div class="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
                   <div class="relative h-80 shrink-0"></div>
                   <div class="relative p-10"></div>
                 </div>
-                <div class="z-10 lg:col-span-2 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
+                <div class="z-10 lg:col-span-2 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
                   <div class="relative h-80 shrink-0"></div>
                   <div class="relative p-10"></div>
                 </div>
-                <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
+                <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
                   <div
                     id="broadcast-graphics"
                     class="relative h-80 shrink-0"
@@ -220,20 +200,20 @@ defmodule OpsmaruWeb.HomeLive do
                   >
                   </div>
                   <div class="relative p-10">
-                    <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 dark:text-slate-400">
+                    <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 text-slate-400">
                       <%= gettext("Broadcasted Upgrade") %>
                     </h3>
-                    <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 dark:text-white">
+                    <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
                       <%= gettext("Push updates to your buyers") %>
                     </p>
-                    <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 dark:text-slate-400">
+                    <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
                       <%= gettext(
                         "Opsmaru handles upgrades to multiple installations of your applications seamlessly."
                       ) %>
                     </p>
                   </div>
                 </div>
-                <div class="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/15">
+                <div class="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
                 </div>
               </div>
             </div>
@@ -258,24 +238,5 @@ defmodule OpsmaruWeb.HomeLive do
       <BaseComponents.footer />
     </div>
     """
-  end
-
-  @impl true
-  def handle_event("activate", %{"component" => "demo-video"}, socket) do
-    {:noreply, assign(socket, demo_movie_active: true)}
-  end
-
-  def handle_event("deactivate", %{"component" => "demo-video"}, socket) do
-    {:noreply, assign(socket, demo_movie_active: false)}
-  end
-
-  defp show_demo_video do
-    JS.push("activate", value: %{"component" => "demo-video"})
-    |> show_modal("demo-video")
-  end
-
-  def hide_demo_video do
-    JS.push("deactivate", value: %{"component" => "demo-video"})
-    |> hide_modal("demo-video")
   end
 end
