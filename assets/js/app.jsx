@@ -100,7 +100,7 @@ function mountSlideScroll() {
   items.forEach((item, i) => {
     const header = item.querySelector(".slide-description");
 
-    scroll(animate(header, { x: [100, -150] }, { ease: "linear" }), {
+    scroll(animate(header, { x: [100, -50] }, { ease: "linear" }), {
       target: el,
       offset: [
         [i * segmentLength, 1],
