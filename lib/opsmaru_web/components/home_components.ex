@@ -60,11 +60,11 @@ defmodule OpsmaruWeb.HomeComponents do
         <div id="slides-container" class="flex sticky top-0">
           <div :for={slide <- @slides} class="slide-item flex flex-col flex-none items-center justify-center w-screen h-screen overflow-hidden">
             <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1200px] xl:h-[800px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
-              <div class="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-white/10 [--padding:theme(spacing.2)]"></div>
+              <div class="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-slate-700 [--padding:theme(spacing.4)]"></div>
               <img
-                src={Image.url(slide.image, format: "jpeg")}
+                src={Image.url(slide.image, format: "jpeg", w: 2160)}
                 alt={slide.image.alt}
-                class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-white/10"
+                class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-slate-700"
               />
             </div>
             <div class="bg-slate-800/50 mt-16 rounded-full px-6 py-4">
