@@ -55,7 +55,8 @@ defmodule OpsmaruWeb.HomeLive do
         <div class="mt-10 px-6 lg:px-8">
           <div class="mx-auto max-w-xl lg:max-w-2xl">
             <div class="flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">
-              <img :for={logo <- @logos}
+              <img
+                :for={logo <- @logos}
                 alt={logo.name}
                 src={logo.image}
                 class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
@@ -218,7 +219,16 @@ defmodule OpsmaruWeb.HomeLive do
             </div>
           </div>
         </div>
-        <div id="latest-updates-slider" data-description={gettext("Become one of the early adopters of a new way to sell software. Start monetizing your web app today.")} phx-hook="MountSlider"></div>
+        <div
+          id="latest-updates-slider"
+          data-description={
+            gettext(
+              "Become one of the early adopters of a new way to sell software. Start monetizing your web app today."
+            )
+          }
+          phx-hook="MountSlider"
+        >
+        </div>
       </div>
       <BaseComponents.footer />
     </div>

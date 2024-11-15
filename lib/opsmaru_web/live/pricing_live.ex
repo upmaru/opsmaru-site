@@ -19,7 +19,6 @@ defmodule OpsmaruWeb.PricingLive do
     product_features = Products.list_features()
     logos = Content.list_logos()
 
-
     socket =
       socket
       |> assign(:page_title, page.title)
@@ -61,7 +60,8 @@ defmodule OpsmaruWeb.PricingLive do
               <BaseComponents.price :for={price <- @prices} price={price} />
             </div>
             <div class="mt-24 flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">
-              <img :for={logo <- @logos}
+              <img
+                :for={logo <- @logos}
                 alt={logo.name}
                 src={logo.image}
                 class="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
