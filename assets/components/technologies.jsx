@@ -2,7 +2,39 @@ import React from 'react'
 
 import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
-import { Mark } from './logo'
+
+const logoSettings = [
+  // {
+  //   left: 360, 
+  //   top: 144, 
+  //   hover: { x: 6, y: 1, rotate: 5, delay: 0.38 }
+  // },
+  {
+    left: 285, 
+    top: 20, 
+    hover: { x: 4, y: -5, rotate: 6, delay: 0.3 }
+  },
+  {
+    left: 255,
+    top: 210,
+    hover: { x: 3, y: 5, rotate: 7, delay: 0.2 }
+  },
+  {
+    left: 144, 
+    top: 40, 
+    hover: { x: -2, y: -5, rotate: -6, delay: 0.15 }
+  },
+  {
+    left: 36, 
+    top: 56, 
+    hover: { x: -4, y: -5, rotate: -6, delay: 0.35 }
+  },
+  {
+    left: 96, 
+    top: 176, 
+    hover: { x: -3, y: 5, rotate: 3, delay: 0.15 }
+  },
+]
 
 function Circle({ size, delay, opacity }) {
   return (
@@ -24,8 +56,8 @@ function Circle({ size, delay, opacity }) {
       style={{ '--opacity': opacity }}
       className={clsx(
         'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full',
-        'bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.blue.500)_var(--opacity),transparent)_100%)]',
-        'ring-1 ring-inset ring-blue-500/[8%]',
+        'bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.cyan.500)_var(--opacity),transparent)_100%)]',
+        'ring-1 ring-inset ring-cyan-500/[8%]',
       )}
     />
   )
@@ -46,14 +78,14 @@ function Circles() {
 function MainLogo() {
   return (
     <div className="absolute left-44 top-32 flex size-16 items-center justify-center rounded-full bg-white shadow ring-1 ring-black/5">
-      <Mark className="h-9 fill-black" />
+      <img src={"/images/logo-color.svg"} className="h-9" />
     </div>
   )
 }
 
 function Logo({ src, left, top, hover }) {
   return (
-    <motion.img
+    <motion.span
       variants={{
         idle: { x: 0, y: 0, rotate: 0 },
         active: {
@@ -70,14 +102,15 @@ function Logo({ src, left, top, hover }) {
         },
       }}
       alt=""
-      src={src}
       style={{ left, top }}
-      className="absolute size-16 rounded-full bg-white shadow ring-1 ring-black/5"
-    />
+      className="absolute size-16 flex rounded-full align-middle items-center justify-center bg-white shadow ring-1 ring-black/5"
+    >
+      <img src={src} className="h-9" />
+    </motion.span>
   )
 }
 
-export function Frameworks() {
+export function Technologies({ technologies }) {
   return (
     <motion.div aria-hidden="true" 
       initial="idle"
@@ -87,42 +120,13 @@ export function Frameworks() {
       <Circles />
       <div className="absolute left-1/2 h-full w-[26rem] -translate-x-1/2">
         <MainLogo />
-        <Logo
-          src="/images/logo-cluster/career-builder.svg"
-          left={360}
-          top={144}
-          hover={{ x: 6, y: 1, rotate: 5, delay: 0.38 }}
-        />
-        <Logo
-          src="/images/logo-cluster/dribbble.svg"
-          left={285}
-          top={20}
-          hover={{ x: 4, y: -5, rotate: 6, delay: 0.3 }}
-        />
-        <Logo
-          src="/images/logo-cluster/glassdoor.svg"
-          left={255}
-          top={210}
-          hover={{ x: 3, y: 5, rotate: 7, delay: 0.2 }}
-        />
-        <Logo
-          src="/images/logo-cluster/linkedin.svg"
-          left={144}
-          top={40}
-          hover={{ x: -2, y: -5, rotate: -6, delay: 0.15 }}
-        />
-        <Logo
-          src="/images/logo-cluster/upwork.svg"
-          left={36}
-          top={56}
-          hover={{ x: -4, y: -5, rotate: -6, delay: 0.35 }}
-        />
-        <Logo
-          src="/images/logo-cluster/we-work-remotely.svg"
-          left={96}
-          top={176}
-          hover={{ x: -3, y: 5, rotate: 3, delay: 0.15 }}
-        />
+        {technologies.map((technology, i) => {
+          const setting = logoSettings[i]
+
+          return (
+            <Logo src={technology.logo.url} left={setting.left} top={setting.top} hover={setting.hover} />
+          )
+        })}
       </div>
     </motion.div>
   )

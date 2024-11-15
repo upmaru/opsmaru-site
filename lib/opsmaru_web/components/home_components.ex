@@ -77,4 +77,32 @@ defmodule OpsmaruWeb.HomeComponents do
     </div>
     """
   end
+
+  attr :technologies, :list, required: true
+
+  def technologies(assigns) do
+    ~H"""
+    <div class="lg:col-span-2 group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+      <div id="technologies" data-technologies={Jason.encode!(@technologies)} class="relative h-80 shrink-0" phx-hook="MountTechnologies">
+        <div class="relative h-full overflow-hidden">
+          <div class="absolute inset-0"></div>
+          <div class="absolute left-1/2 h-full w-[26rem] -translate-x-1/2"></div>
+        </div>
+      </div>
+      <div class="relative p-10">
+        <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
+          <%= gettext("Framework") %>
+        </h3>
+        <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
+          <%= gettext("Support multiple frameworks") %>
+        </p>
+        <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
+          <%= gettext(
+            "Opsmaru supports a variety of languages and frameworks out of the box."
+          ) %>
+        </p>
+      </div>
+    </div>
+    """
+  end
 end

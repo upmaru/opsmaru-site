@@ -17,6 +17,12 @@ defmodule Opsmaru.Content do
     to: Slide.Manager,
     as: :list
 
+  alias __MODULE__.Technology
+
+  defdelegate list_technologies(options \\ []),
+    to: Technology.Manager,
+    as: :list
+
   alias __MODULE__.Post
 
   defdelegate list_posts(options \\ []),

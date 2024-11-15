@@ -29,7 +29,7 @@ import { Slider } from "../components/slider";
 import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
 import { Player } from '../components/player';
-import { Frameworks } from '../components/frameworks';
+import { Technologies } from '../components/technologies';
 
 import { animate, scroll } from 'motion'
 
@@ -110,8 +110,6 @@ function mountSlideScroll() {
     });
   });
 
-
-
   scroll(
     animate(
       "div#slides-container",
@@ -124,11 +122,15 @@ function mountSlideScroll() {
   )
 }
 
-function mountFrameworks() {
+function mountTechnologies() {
   const domNode = this.el;
   const root = createRoot(domNode);
 
-  root.render(<Frameworks />);
+  let { technologies } = this.el.dataset;
+
+  technologies = JSON.parse(technologies);
+
+  root.render(<Technologies technologies={technologies} />);
 }
 
 let Hooks = {};
@@ -148,9 +150,9 @@ Hooks.MountMobileNav = {
   updated: mountMobileNav,
 };
 
-Hooks.MountFrameworks = {
-  mounted: mountFrameworks,
-  updated: mountFrameworks,
+Hooks.MountTechnologies = {
+  mounted: mountTechnologies,
+  updated: mountTechnologies,
 }
 
 Hooks.MountPlayer = {
