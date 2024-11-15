@@ -29,6 +29,7 @@ import { Slider } from "../components/slider";
 import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
 import { Player } from '../components/player';
+import { Frameworks } from '../components/frameworks';
 
 import { animate, scroll } from 'motion'
 
@@ -123,6 +124,13 @@ function mountSlideScroll() {
   )
 }
 
+function mountFrameworks() {
+  const domNode = this.el;
+  const root = createRoot(domNode);
+
+  root.render(<Frameworks />);
+}
+
 let Hooks = {};
 
 Hooks.MountBroadcast = {
@@ -139,6 +147,11 @@ Hooks.MountMobileNav = {
   mounted: mountMobileNav,
   updated: mountMobileNav,
 };
+
+Hooks.MountFrameworks = {
+  mounted: mountFrameworks,
+  updated: mountFrameworks,
+}
 
 Hooks.MountPlayer = {
   mounted() {
