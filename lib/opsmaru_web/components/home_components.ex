@@ -61,8 +61,8 @@ defmodule OpsmaruWeb.HomeComponents do
         class="h-[300vh] bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-clip"
         phx-hook="MountSlideScroll"
       >
-        <div>
-          <div
+        <div id="slides-background">
+          <%!-- <div
             class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
             style="--opacity: 7%; width: 2560px; height: 2560px;"
           >
@@ -86,7 +86,7 @@ defmodule OpsmaruWeb.HomeComponents do
             class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
             style="--opacity: 7%; width: 960px; height: 960px;"
           >
-          </div>
+          </div> --%>
         </div>
         <div id="slides-container" class="flex sticky top-0">
           <div
@@ -105,7 +105,7 @@ defmodule OpsmaruWeb.HomeComponents do
               <div class="absolute -inset-[var(--padding)] bg-black/10 rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
               </div>
               <img
-                src={Image.url(slide.image, format: "jpeg", w: 2160)}
+                src={Image.url(slide.image, w: 2160)}
                 alt={slide.image.alt}
                 class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-slate-700"
               />

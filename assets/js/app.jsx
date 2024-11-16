@@ -30,6 +30,7 @@ import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
 import { Player } from '../components/player';
 import { Technologies } from '../components/technologies';
+import { Circles } from '../components/circles';
 
 import { animate, scroll } from 'motion'
 
@@ -76,6 +77,8 @@ function mountSlideScroll() {
   const { el } = this;
   const items = el.querySelectorAll('.slide-item');
 
+  const backgroundEl = el.querySelector('#slides-background');
+
   items.forEach((item) => {
     scroll(
       animate(item,  { opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 0.8] }, { ease: "linear" }), {
@@ -120,6 +123,9 @@ function mountSlideScroll() {
     ),
     { target: el }
   )
+
+  const backgroundRoot = createRoot(backgroundEl);
+  backgroundRoot.render(<Circles container={el} />);
 }
 
 function mountTechnologies() {

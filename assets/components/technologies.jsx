@@ -124,7 +124,7 @@ export function Technologies({ technologies }) {
           const setting = logoSettings[i]
 
           return (
-            <Logo src={technology.logo.url} left={setting.left} top={setting.top} hover={setting.hover} />
+            <Logo key={`technology-${i}`} src={technology.logo.url} left={setting.left} top={setting.top} hover={setting.hover} />
           )
         })}
       </div>
