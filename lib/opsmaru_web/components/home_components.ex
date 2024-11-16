@@ -61,33 +61,7 @@ defmodule OpsmaruWeb.HomeComponents do
         class="h-[300vh] bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-clip"
         phx-hook="MountSlideScroll"
       >
-        <div id="slides-background">
-          <%!-- <div
-            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
-            style="--opacity: 7%; width: 2560px; height: 2560px;"
-          >
-          </div>
-          <div
-            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
-            style="--opacity: 7%; width: 1920px; height: 1920px;"
-          >
-          </div>
-          <div
-            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
-            style="--opacity: 7%; width: 1600px; height: 1600px;"
-          >
-          </div>
-          <div
-            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
-            style="--opacity: 7%; width: 1280px; height: 1280px;"
-          >
-          </div>
-          <div
-            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.slate.500)_var(--opacity),transparent)_100%)] ring-1 ring-inset ring-slate-100/[8%]"
-            style="--opacity: 7%; width: 960px; height: 960px;"
-          >
-          </div> --%>
-        </div>
+        <div id="slides-background"></div>
         <div id="slides-container" class="flex sticky top-0">
           <div
             :for={slide <- @slides}
