@@ -117,22 +117,7 @@ defmodule OpsmaruWeb.HomeComponents do
           <.top_right card={Enum.find(@section.cards, &(&1.position == "top-right"))} />
           <.bottom_left card={Enum.find(@section.cards, &(&1.position == "bottom-left"))} />
           <.bottom_middle card={Enum.find(@section.cards, &(&1.position == "bottom-center"))} />
-          <div class="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
-            <div class="relative h-80 shrink-0"></div>
-            <div class="relative p-10">
-              <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-                <%= gettext("Setup a store") %>
-              </h3>
-              <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
-                <%= gettext("Sell your apps to anyone") %>
-              </p>
-              <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
-                <%= gettext(
-                  "Opsmaru gives you all the tool to sell your web applications. Collect payments via stripe."
-                ) %>
-              </p>
-            </div>
-          </div>
+          <.bottom_right card={Enum.find(@section.cards, &(&1.position == "bottom-right"))} />
         </div>
       </div>
     </div>
@@ -174,7 +159,7 @@ defmodule OpsmaruWeb.HomeComponents do
   def bottom_left(assigns) do
     ~H"""
      <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
-     <div class="relative h-80 shrink-0">
+      <div class="relative h-80 shrink-0">
         <div class="absolute inset-0 bg-[size:720px_337px] bg-[left_0px_top_0px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
@@ -191,6 +176,22 @@ defmodule OpsmaruWeb.HomeComponents do
     ~H"""
     <div class="lg:col-span-2 group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
       <.technologies :if={@card.hook == "MountTechnologies"} />
+      <.card_content card={@card} />
+    </div>
+    """
+  end
+
+  attr :card, Pages.Card, required: true
+
+  def bottom_right(assigns) do
+    ~H"""
+    <div class="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+      <div class="relative h-80 shrink-0">
+        <div class="absolute inset-0 bg-[size:720px_556px] bg-[left_-10px_top_-25px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
+        </div>
+      </div>
       <.card_content card={@card} />
     </div>
     """
