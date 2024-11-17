@@ -56,8 +56,8 @@ function Circle({ size, delay, opacity }) {
       style={{ '--opacity': opacity }}
       className={clsx(
         'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full',
-        'bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.cyan.500)_var(--opacity),transparent)_100%)]',
-        'ring-1 ring-inset ring-cyan-500/[8%]',
+        'bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.indigo.500)_var(--opacity),transparent)_100%)]',
+        'ring-1 ring-inset ring-indigo-600/[8%]',
       )}
     />
   )
@@ -66,9 +66,9 @@ function Circle({ size, delay, opacity }) {
 function Circles() {
   return (
     <div className="absolute inset-0">
-      <Circle size={528} opacity="3%" delay={0.45} />
-      <Circle size={400} opacity="5%" delay={0.3} />
-      <Circle size={272} opacity="5%" delay={0.15} />
+      <Circle size={528} opacity="5%" delay={0.45} />
+      <Circle size={400} opacity="10%" delay={0.3} />
+      <Circle size={272} opacity="10%" delay={0.15} />
       <Circle size={144} opacity="10%" delay={0} />
       <div className="absolute inset-0 bg-gradient-to-t from-white to-35%" />
     </div>

@@ -11,7 +11,7 @@ export function Circles({ container }) {
 
   return (
     <>
-      <motion.svg width={2560} height={2560} strokeLinecap="round" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 stroke-[3px] stroke-slate-100 fill-slate-800 opacity-10 transform-gpu" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+      <motion.svg width={2560} height={2560} strokeLinecap="round" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 stroke-[3px] stroke-slate-100 fill-slate-800 opacity-10 rotate-90 transform-gpu" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
         <motion.circle cx="500" cy="500" r="480"
           pathLength="1" strokeLinecap="round" style={{ pathLength: scrollYProgress  }}
           />

@@ -115,27 +115,8 @@ defmodule OpsmaruWeb.HomeComponents do
         <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
           <.top_left card={Enum.find(@section.cards, &(&1.position == "top-left"))} />
           <.top_right card={Enum.find(@section.cards, &(&1.position == "top-right"))} />
-          <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
-            <div class="relative h-80 shrink-0">
-              <div class="flex size-full pl-10 pt-10">
-                <div class="flex flex-col gap-2"></div>
-              </div>
-            </div>
-            <div class="relative p-10">
-              <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-                <%= gettext("Observe") %>
-              </h3>
-              <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
-                <%= gettext("See what's happening") %>
-              </p>
-              <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
-                <%= gettext(
-                  "Once your infrastructure is up and running you can see everything that's happening."
-                ) %>
-              </p>
-            </div>
-          </div>
-          <.bottom_middle />
+          <.bottom_left card={Enum.find(@section.cards, &(&1.position == "bottom-left"))} />
+          <.bottom_middle card={Enum.find(@section.cards, &(&1.position == "bottom-center"))} />
           <div class="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
             <div class="relative h-80 shrink-0"></div>
             <div class="relative p-10">
@@ -190,6 +171,33 @@ defmodule OpsmaruWeb.HomeComponents do
 
   attr :card, Pages.Card, required: true
 
+  def bottom_left(assigns) do
+    ~H"""
+     <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+     <div class="relative h-80 shrink-0">
+        <div class="absolute inset-0 bg-[size:720px_337px] bg-[left_0px_top_0px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
+        </div>
+      </div>
+      <.card_content card={@card} />
+    </div>
+    """
+  end
+
+  attr :card, Pages.Card, required: true
+
+  def bottom_middle(assigns) do
+    ~H"""
+    <div class="lg:col-span-2 group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+      <.technologies :if={@card.hook == "MountTechnologies"} />
+      <.card_content card={@card} />
+    </div>
+    """
+  end
+
+  attr :card, Pages.Card, required: true
+
   defp card_content(assigns) do
     ~H"""
     <div class="relative p-10">
@@ -206,36 +214,25 @@ defmodule OpsmaruWeb.HomeComponents do
     """
   end
 
-  def bottom_middle(assigns) do
+  defp technologies(assigns) do
     technologies = Content.list_technologies()
 
     assigns = assign(assigns, :technologies, technologies)
 
     ~H"""
-    <div class="lg:col-span-2 group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
-      <div
+    <div
         id="technologies"
         data-technologies={Jason.encode!(@technologies)}
         class="relative h-80 shrink-0"
         phx-hook="MountTechnologies"
       >
-        <div class="relative h-full overflow-hidden">
-          <div class="absolute inset-0"></div>
-          <div class="absolute left-1/2 h-full w-[26rem] -translate-x-1/2"></div>
-        </div>
-      </div>
-      <div class="relative p-10">
-        <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-          <%= gettext("Framework") %>
-        </h3>
-        <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
-          <%= gettext("Support multiple frameworks") %>
-        </p>
-        <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
-          <%= gettext("Opsmaru supports a variety of languages and frameworks out of the box.") %>
-        </p>
+      <div class="relative h-full overflow-hidden">
+        <div class="absolute inset-0"></div>
+        <div class="absolute left-1/2 h-full w-[26rem] -translate-x-1/2"></div>
       </div>
     </div>
     """
   end
+
+
 end
