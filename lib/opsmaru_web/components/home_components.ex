@@ -2,6 +2,7 @@ defmodule OpsmaruWeb.HomeComponents do
   use OpsmaruWeb, :html
 
   alias Opsmaru.Pages
+  alias Opsmaru.Content
   alias Opsmaru.Content.Image
 
   alias OpsmaruWeb.BaseComponents
@@ -75,11 +76,11 @@ defmodule OpsmaruWeb.HomeComponents do
                 <%= slide.subtitle %>
               </p>
             </div>
-            <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1050px] xl:h-[700px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+            <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1050px] xl:h-[700px] 2xl:w-[1536px] 2xl:h-[1024px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
               <div class="absolute -inset-[var(--padding)] bg-black/10 rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
               </div>
               <img
-                src={Image.url(slide.image, w: 2160)}
+                src={Image.url(slide.image, w: 2560)}
                 alt={slide.image.alt}
                 class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-slate-700"
               />
@@ -91,9 +92,125 @@ defmodule OpsmaruWeb.HomeComponents do
     """
   end
 
-  attr :technologies, :list, required: true
+  attr :section, Pages.Section, required: true
 
-  def technologies(assigns) do
+  def top_bento(assigns) do
+    h2 = Enum.find(assigns.section.contents, &(&1.slug == "home-top-bento-title"))
+    description = Enum.find(assigns.section.contents, &(&1.slug == "home-top-bento-description"))
+
+    assigns =
+      assigns
+      |> assign(:h2, h2)
+      |> assign(:description, description)
+
+    ~H"""
+    <div class="mt-16 px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:max-w-7xl">
+        <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500">
+          <%= @h2.body %>
+        </h2>
+        <h3 class="mt-2 max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
+          <%= @description.body %>
+        </h3>
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
+          <.top_left card={Enum.find(@section.cards, &(&1.position == "top-left"))} />
+          <.top_right card={Enum.find(@section.cards, &(&1.position == "top-right"))} />
+          <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+            <div class="relative h-80 shrink-0">
+              <div class="flex size-full pl-10 pt-10">
+                <div class="flex flex-col gap-2"></div>
+              </div>
+            </div>
+            <div class="relative p-10">
+              <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
+                <%= gettext("Observe") %>
+              </h3>
+              <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
+                <%= gettext("See what's happening") %>
+              </p>
+              <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
+                <%= gettext(
+                  "Once your infrastructure is up and running you can see everything that's happening."
+                ) %>
+              </p>
+            </div>
+          </div>
+          <.bottom_middle />
+          <div class="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+            <div class="relative h-80 shrink-0"></div>
+            <div class="relative p-10">
+              <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
+                <%= gettext("Setup a store") %>
+              </h3>
+              <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
+                <%= gettext("Sell your apps to anyone") %>
+              </p>
+              <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
+                <%= gettext(
+                  "Opsmaru gives you all the tool to sell your web applications. Collect payments via stripe."
+                ) %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  attr :card, Pages.Card, required: true
+
+  def top_left(assigns) do
+    ~H"""
+    <div class="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+      <div class="relative h-80 shrink-0">
+        <div class="h-80 bg-[size:978px_345px] bg-[left_-8px_top_-12px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]"></div>
+      </div>
+      <.card_content card={@card} />
+    </div>
+    """
+  end
+
+  attr :card, Pages.Card, required: true
+
+  def top_right(assigns) do
+    ~H"""
+    <div class="lg:col-span-3 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+      <div class="relative h-80 shrink-0">
+        <div class="absolute inset-0 bg-[size:1100px_647px] bg-[left_-12px_top_-15px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
+        </div>
+      </div>
+      <.card_content card={@card} />
+    </div>
+    """
+  end
+
+  attr :card, Pages.Card, required: true
+
+  defp card_content(assigns) do
+    ~H"""
+    <div class="relative p-10">
+      <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
+        <%= @card.heading %>
+      </h3>
+      <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
+        <%= @card.title %>
+      </p>
+      <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
+        <%= @card.description %>
+      </p>
+    </div>
+    """
+  end
+
+  def bottom_middle(assigns) do
+    technologies = Content.list_technologies()
+
+    assigns = assign(assigns, :technologies, technologies)
+
     ~H"""
     <div class="lg:col-span-2 group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
       <div

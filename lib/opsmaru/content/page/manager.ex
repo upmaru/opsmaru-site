@@ -17,6 +17,10 @@ defmodule Opsmaru.Content.Page.Manager do
           ...,
           "contents": *[ _type == "pageContent" && references(^._id) ]{
             ...
+          },
+          "cards": *[ _type == "pageCard" && references(^._id) ]{
+            ...,
+            card -> {..., "cover": {"url": cover.asset -> url, "alt": cover.alt}}
           }
         }
       }
