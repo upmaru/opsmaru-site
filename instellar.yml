@@ -2,6 +2,7 @@ dependencies:
   build:
     - elixir
     - npm
+    - cargo
   runtime:
     - bash
     - curl
