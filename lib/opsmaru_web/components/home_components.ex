@@ -59,14 +59,14 @@ defmodule OpsmaruWeb.HomeComponents do
       </div>
       <div
         id="slides"
-        class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden"
+        class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden py-64"
         phx-hook="MountSlideScroll"
       >
         <div id="slides-background"></div>
         <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
-            class="slide-item flex items-center justify-center my-64 py-64"
+            class="slide-item flex items-center justify-center h-screen"
           >
             <div>
               <h2 class="slide-title text-center bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-3xl md:text-4xl lg:text-6xl p-2">
