@@ -31,8 +31,6 @@ import { Categories } from '../components/categories';
 import { Player } from '../components/player';
 import { Technologies } from '../components/technologies';
 
-import { animate, scroll } from 'motion'
-
 function mountCategories() {
   const domNode = this.el;
   const root = createRoot(domNode);
