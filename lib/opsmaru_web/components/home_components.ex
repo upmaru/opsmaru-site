@@ -49,7 +49,7 @@ defmodule OpsmaruWeb.HomeComponents do
       |> assign(:h2, h2)
 
     ~H"""
-    <div class="overflow-x-clip">
+    <div class="overflow-hidden">
       <div class="pb-24 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl">
@@ -59,31 +59,33 @@ defmodule OpsmaruWeb.HomeComponents do
       </div>
       <div
         id="slides"
-        class="h-[300vh] bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-clip"
+        class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden"
         phx-hook="MountSlideScroll"
       >
         <div id="slides-background"></div>
-        <div id="slides-container" class="flex sticky top-0">
+        <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
-            class="slide-item flex flex-col flex-none items-center justify-center w-screen h-screen overflow-hidden"
+            class="slide-item flex items-center justify-center my-64 py-64"
           >
-            <h2 class="slide-title bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-xl md:text-4xl lg:text-6xl p-2">
-              <%= slide.title %>
-            </h2>
-            <div class="slide-description rounded-full mb-12 md:mb-16 lg:mb-24">
-              <p class="text-white font-light text-center text-lg md:text-xl lg:text-4xl font-light">
-                <%= slide.subtitle %>
-              </p>
-            </div>
-            <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1050px] xl:h-[700px] 2xl:w-[1536px] 2xl:h-[1024px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
-              <div class="absolute -inset-[var(--padding)] shadow-[inset_0_0_20px_5px_#1e293b] rounded-[calc(var(--radius)+var(--padding))] ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
+            <div>
+              <h2 class="slide-title text-center bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-3xl md:text-4xl lg:text-6xl p-2">
+                <%= slide.title %>
+              </h2>
+              <div class="slide-description rounded-full mb-12 md:mb-16 lg:mb-24">
+                <p class="text-white font-light text-center text-lg md:text-xl lg:text-4xl font-light">
+                  <%= slide.subtitle %>
+                </p>
               </div>
-              <img
-                src={Image.url(slide.image, w: 2560)}
-                alt={slide.image.alt}
-                class="h-full aspect-[3/2] rounded-[var(--radius)] shadow-2xl"
-              />
+              <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+                <div class="absolute -inset-[var(--padding)] shadow-[inset_0_0_20px_5px_#1e293b] rounded-[calc(var(--radius)+var(--padding))] ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
+                </div>
+                <img
+                  src={Image.url(slide.image, w: 2560)}
+                  alt={slide.image.alt}
+                  class="h-full aspect-[3/2] rounded-[var(--radius)] shadow-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>

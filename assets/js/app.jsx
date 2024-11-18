@@ -77,12 +77,11 @@ function mountBroadcast() {
 function mountSlideScroll() {
   const { el } = this;
   const items = el.querySelectorAll('.slide-item');
-
   const backgroundEl = el.querySelector('#slides-background');
 
   items.forEach((item) => {
     scroll(
-      animate(item,  { opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 0.8] }, { ease: "linear" }), {
+      animate(item,  { opacity: [0.5, 1, 1, 0.5], scale: [0.8, 1, 1, 0.8] }, { ease: "linear" }), {
         target: item,
         offset: ["start end", "end end", "start start", "end start"],
       }
@@ -93,7 +92,7 @@ function mountSlideScroll() {
   items.forEach((item, i) => {
     const header = item.querySelector("h2.slide-title");
 
-    scroll(animate(header, { x: [0, 150] }, { ease: "linear" }), {
+    scroll(animate(header, { y: [75, -75] }, { ease: "linear" }), {
       target: el,
       offset: [
         [i * segmentLength, 1],
@@ -103,9 +102,9 @@ function mountSlideScroll() {
   });
 
   items.forEach((item, i) => {
-    const header = item.querySelector(".slide-description");
+    const desc = item.querySelector(".slide-description");
 
-    scroll(animate(header, { x: [100, -50] }, { ease: "linear" }), {
+    scroll(animate(desc, { y: [75, -75], x: [50, -50] }, { ease: "linear" }), {
       target: el,
       offset: [
         [i * segmentLength, 1],
@@ -113,17 +112,6 @@ function mountSlideScroll() {
       ],
     });
   });
-
-  scroll(
-    animate(
-      "div#slides-container",
-      {
-        transform: ["none", `translateX(-${items.length - 1}00vw)`],
-      }, 
-      { ease: "easeInOut" }
-    ),
-    { target: el }
-  )
 
   const backgroundRoot = createRoot(backgroundEl);
   backgroundRoot.render(<Circles container={el} />);
