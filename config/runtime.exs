@@ -25,6 +25,10 @@ config :opsmaru, Opsmaru.Sanity,
   project_id: System.get_env("SANITY_PROJECT_ID"),
   dataset: System.get_env("SANITY_DATASET")
 
+config :stripity_stripe,
+  api_version: "2022-11-15",
+  api_key: System.get_env("STRIPE_SECRET")
+
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
