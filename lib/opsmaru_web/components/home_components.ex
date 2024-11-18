@@ -64,7 +64,7 @@ defmodule OpsmaruWeb.HomeComponents do
         <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
-            class="slide-item flex items-center justify-center h-fit my-96"
+            class="slide-item flex items-center justify-center my-96"
           >
             <div>
               <h2 class="slide-title text-center bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-3xl md:text-4xl lg:text-6xl p-2">
