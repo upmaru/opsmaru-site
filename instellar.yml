@@ -15,10 +15,7 @@ stack: alpine/3.19
 
 run:
   commands:
-    - binary: opsmaru-site
-      call: eval 'Opsmaru-site.Release.Tasks.migrate'
-      name: migrate
-    - binary: opsmaru-site
+    - binary: opsmaru
       call: remote
       name: console
     - binary: tail
@@ -27,7 +24,7 @@ run:
       path: /usr/bin
   name: opsmaru-site
   services:
-    - binary: opsmaru-site
+    - binary: opsmaru
       name: web
       start:
         call: start
@@ -60,7 +57,7 @@ build:
 
     mix release
   destinations:
-    - _build/prod/rel/opsmaru-site/*
+    - _build/prod/rel/opsmaru/*
 
 kits:
   - description: Web service
