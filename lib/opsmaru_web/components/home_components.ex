@@ -62,7 +62,6 @@ defmodule OpsmaruWeb.HomeComponents do
         class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden py-64"
         phx-hook="MountSlideScroll"
       >
-        <div id="slides-background"></div>
         <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
