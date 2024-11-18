@@ -77,7 +77,7 @@ defmodule OpsmaruWeb.HomeComponents do
                   <%= slide.subtitle %>
                 </p>
               </div>
-              <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+              <div class="w-96 h-64 sm:w-[576px] sm:h-[384px] md:w-[704px] md:h-[469px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
                 <div class="absolute -inset-[var(--padding)] shadow-[inset_0_0_20px_5px_#1e293b] rounded-[calc(var(--radius)+var(--padding))] ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
                 </div>
                 <img
