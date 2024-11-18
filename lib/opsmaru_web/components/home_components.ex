@@ -60,12 +60,11 @@ defmodule OpsmaruWeb.HomeComponents do
       <div
         id="slides"
         class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden"
-        phx-hook="MountSlideScroll"
       >
         <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
-            class="slide-item flex items-center justify-center h-screen"
+            class="slide-item flex items-center justify-center h-fit my-96"
           >
             <div>
               <h2 class="slide-title text-center bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-3xl md:text-4xl lg:text-6xl p-2">
@@ -76,7 +75,7 @@ defmodule OpsmaruWeb.HomeComponents do
                   <%= slide.subtitle %>
                 </p>
               </div>
-              <div class="w-96 h-64 sm:w-[576px] sm:h-[384px] md:w-[704px] md:h-[469px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+              <div class="slide-image w-96 h-64 sm:w-[576px] sm:h-[384px] md:w-[704px] md:h-[469px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
                 <div class="absolute -inset-[var(--padding)] shadow-[inset_0_0_20px_5px_#1e293b] rounded-[calc(var(--radius)+var(--padding))] ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
                 </div>
                 <img

@@ -73,20 +73,6 @@ function mountBroadcast() {
   root.render(<Broadcast />);
 }
 
-function mountSlideScroll() {
-  const { el } = this;
-  const items = el.querySelectorAll('.slide-item');
-
-  items.forEach((item) => {
-    scroll(
-      animate(item,  { opacity: [0.5, 1, 1, 0.5], scale: [0.8, 1, 1, 0.8] }, { ease: "linear" }), {
-        target: item,
-        offset: ["start end", "end end", "start start", "end start"],
-      }
-    )
-  })
-}
-
 function mountTechnologies() {
   const domNode = this.el;
   const root = createRoot(domNode);
@@ -136,11 +122,6 @@ Hooks.MountPlayer = {
 Hooks.MountCategories = {
   mounted: mountCategories,
   updated: mountCategories,
-}
-
-Hooks.MountSlideScroll = {
-  mounted: mountSlideScroll,
-  updated: mountSlideScroll,
 }
 
 let csrfToken = document
