@@ -7,7 +7,7 @@ defmodule Opsmaru.Content do
 
   alias __MODULE__.Navigation
 
-  defdelegate list_nagivations(options \\ []),
+  defdelegate list_navigations(options \\ []),
     to: Navigation.Manager,
     as: :list
 
@@ -21,6 +21,12 @@ defmodule Opsmaru.Content do
 
   defdelegate list_technologies(options \\ []),
     to: Technology.Manager,
+    as: :list
+
+  alias __MODULE__.Testimonial
+
+  defdelegate list_testimonials(options \\ []),
+    to: Testimonial.Manager,
     as: :list
 
   alias __MODULE__.Post

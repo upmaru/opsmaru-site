@@ -30,7 +30,7 @@ defmodule OpsmaruWeb.BaseComponents do
           <div class="relative flex gap-6">
             <.nav class="py-3 group/item relative">
               <.link navigate="/" class="space-x-3 flex">
-                <img src={~p"/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
+                <img src={~p"/site/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
                 <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
               </.link>
             </.nav>
@@ -257,7 +257,7 @@ defmodule OpsmaruWeb.BaseComponents do
                         <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
                       </svg>
                       <a href={~p"/"} class="space-x-3 flex">
-                        <img src={~p"/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
+                        <img src={~p"/site/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
                         <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
                       </a>
                     </div>
@@ -300,6 +300,11 @@ defmodule OpsmaruWeb.BaseComponents do
                         <li>
                           <a href="https://discord.gg/9ecvvKfBnp" target="_blank">
                             <%= gettext("Discord") %>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="https://status.opsmaru.com" target="_blank">
+                            <%= gettext("Status") %>
                           </a>
                         </li>
                       </ul>

@@ -17,7 +17,13 @@ defmodule OpsmaruWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(
+    assets
+    fonts
+    images
+    favicon.ico
+    robots.txt
+  )
 
   def router do
     quote do
@@ -103,7 +109,13 @@ defmodule OpsmaruWeb do
       use Phoenix.VerifiedRoutes,
         endpoint: OpsmaruWeb.Endpoint,
         router: OpsmaruWeb.Router,
-        statics: OpsmaruWeb.static_paths()
+        statics: ~w(
+          site/assets
+          site/fonts
+          site/images
+          site/favicon.ico
+          site/robots.txt
+        )
     end
   end
 

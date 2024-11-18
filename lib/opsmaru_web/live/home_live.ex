@@ -17,6 +17,8 @@ defmodule OpsmaruWeb.HomeLive do
 
     logos = Content.list_logos()
 
+    testimonials = Content.list_testimonials()
+
     socket =
       socket
       |> assign(:page_title, page.title)
@@ -26,6 +28,7 @@ defmodule OpsmaruWeb.HomeLive do
       |> assign(:top_bento_section, top_bento_section)
       |> assign(:logos, logos)
       |> assign(:slides, slides)
+      |> assign(:testimonials, testimonials)
 
     {:ok, socket, layout: false}
   end
@@ -33,6 +36,7 @@ defmodule OpsmaruWeb.HomeLive do
   attr :mobile_nav_active, :boolean, default: false
   attr :main_nav, Content.Navigation, required: true
   attr :slides, :list, required: true
+  attr :testimonials, :list, required: true
 
   def render(assigns) do
     ~H"""
@@ -123,13 +127,14 @@ defmodule OpsmaruWeb.HomeLive do
                 <%= gettext("Latest updates") %>
               </h2>
               <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-                <%= gettext("See what's new with Opsmaru.") %>
+                <%= gettext("What customers are saying.") %>
               </h3>
             </div>
           </div>
         </div>
         <div
           id="latest-updates-slider"
+          data-testimonials={Jason.encode!(@testimonials)}
           data-description={
             gettext(
               "Become one of the early adopters of a new way to sell software. Start monetizing your web app today."

@@ -49,10 +49,11 @@ function mountSlider() {
   const domNode = this.el;
   const root = createRoot(domNode);
 
-  let { description } = this.el.dataset;
+  let { description, testimonials } = this.el.dataset;
 
+  testimonials = JSON.parse(testimonials);
 
-  root.render(<Slider description={description} />);
+  root.render(<Slider description={description} testimonials={testimonials} />);
 }
 
 function mountMobileNav() {
@@ -187,7 +188,7 @@ Hooks.MountSlideScroll = {
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
-let liveSocket = new LiveSocket("/live", Socket, {
+let liveSocket = new LiveSocket("/site/live", Socket, {
   hooks: Hooks,
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },

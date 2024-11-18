@@ -6,7 +6,7 @@ defmodule OpsmaruWeb.NavigationHook do
 
   def on_mount(:main, _params, _session, socket) do
     navigation =
-      Content.list_nagivations()
+      Content.list_navigations()
       |> Enum.find(&(&1.slug == "main"))
 
     socket =

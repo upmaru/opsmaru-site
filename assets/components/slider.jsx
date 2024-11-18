@@ -12,49 +12,49 @@ import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import useMeasure from "react-use-measure";
 import { Container } from "./container";
 
-const testimonials = [
-  {
-    img: "/images/testimonials/tina-yards.jpg",
-    name: "Tina Yards",
-    title: "VP of Sales, Protocol",
-    quote:
-      "Thanks to Radiant, we’re finding new leads that we never would have found with legal methods.",
-  },
-  {
-    img: "/images/testimonials/conor-neville.jpg",
-    name: "Conor Neville",
-    title: "Head of Customer Success, TaxPal",
-    quote:
-      "Radiant made undercutting all of our competitors an absolute breeze.",
-  },
-  {
-    img: "/images/testimonials/amy-chase.jpg",
-    name: "Amy Chase",
-    title: "Head of GTM, Pocket",
-    quote:
-      "We closed a deal in literally a few minutes because we knew their exact budget.",
-  },
-  {
-    img: "/images/testimonials/veronica-winton.jpg",
-    name: "Veronica Winton",
-    title: "CSO, Planeteria",
-    quote:
-      "We’ve managed to put two of our main competitors out of business in 6 months.",
-  },
-  {
-    img: "/images/testimonials/dillon-lenora.jpg",
-    name: "Dillon Lenora",
-    title: "VP of Sales, Detax",
-    quote: "I was able to replace 80% of my team with RadiantAI bots.",
-  },
-  {
-    img: "/images/testimonials/harriet-arron.jpg",
-    name: "Harriet Arron",
-    title: "Account Manager, Commit",
-    quote:
-      "I’ve smashed all my targets without having to speak to a lead in months.",
-  },
-];
+// const testimonials = [
+//   {
+//     img: "/images/testimonials/tina-yards.jpg",
+//     name: "Tina Yards",
+//     title: "VP of Sales, Protocol",
+//     quote:
+//       "Thanks to Radiant, we’re finding new leads that we never would have found with legal methods.",
+//   },
+//   {
+//     img: "/images/testimonials/conor-neville.jpg",
+//     name: "Conor Neville",
+//     title: "Head of Customer Success, TaxPal",
+//     quote:
+//       "Radiant made undercutting all of our competitors an absolute breeze.",
+//   },
+//   {
+//     img: "/images/testimonials/amy-chase.jpg",
+//     name: "Amy Chase",
+//     title: "Head of GTM, Pocket",
+//     quote:
+//       "We closed a deal in literally a few minutes because we knew their exact budget.",
+//   },
+//   {
+//     img: "/images/testimonials/veronica-winton.jpg",
+//     name: "Veronica Winton",
+//     title: "CSO, Planeteria",
+//     quote:
+//       "We’ve managed to put two of our main competitors out of business in 6 months.",
+//   },
+//   {
+//     img: "/images/testimonials/dillon-lenora.jpg",
+//     name: "Dillon Lenora",
+//     title: "VP of Sales, Detax",
+//     quote: "I was able to replace 80% of my team with RadiantAI bots.",
+//   },
+//   {
+//     img: "/images/testimonials/harriet-arron.jpg",
+//     name: "Harriet Arron",
+//     title: "Account Manager, Commit",
+//     quote:
+//       "I’ve smashed all my targets without having to speak to a lead in months.",
+//   },
+// ];
 
 function TestimonialCard({
   name,
@@ -107,8 +107,8 @@ function TestimonialCard({
       className="relative flex aspect-[9/16] w-72 shrink-0 snap-start scroll-ml-[var(--scroll-padding)] flex-col justify-end overflow-hidden rounded-3xl sm:aspect-[3/4] sm:w-96"
     >
       <img
-        alt=""
-        src={img}
+        alt={img.alt}
+        src={img.url}
         className="absolute inset-x-0 top-0 aspect-square w-full object-cover"
       />
       <div
@@ -117,7 +117,7 @@ function TestimonialCard({
       />
       <figure className="relative p-10">
         <blockquote>
-          <p className="relative text-xl/7 text-white">
+          <p className="relative text-md text-white">
             <span aria-hidden="true" className="absolute -translate-x-full">
               “
             </span>
@@ -159,7 +159,7 @@ function CallToAction({ description }) {
   );
 }
 
-export function Slider({ description }) {
+export function Slider({ description, testimonials }) {
   let scrollRef = useRef(null);
   let { scrollX } = useScroll({ container: scrollRef });
   let [setReferenceWindowRef, bounds] = useMeasure();
@@ -186,12 +186,12 @@ export function Slider({ description }) {
           "[--scroll-padding:max(theme(spacing.6),calc((100vw-theme(maxWidth.2xl))/2))] lg:[--scroll-padding:max(theme(spacing.8),calc((100vw-theme(maxWidth.7xl))/2))]",
         ])}
       >
-        {testimonials.map(({ img, name, title, quote }, testimonialIndex) => (
+        {testimonials.map(({ cover, name, position, quote }, testimonialIndex) => (
           <TestimonialCard
             key={testimonialIndex}
             name={name}
-            title={title}
-            img={img}
+            title={position}
+            img={cover}
             bounds={bounds}
             scrollX={scrollX}
             onClick={() => scrollTo(testimonialIndex)}

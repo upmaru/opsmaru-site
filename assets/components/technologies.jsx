@@ -4,11 +4,11 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 
 const logoSettings = [
-  // {
-  //   left: 360, 
-  //   top: 144, 
-  //   hover: { x: 6, y: 1, rotate: 5, delay: 0.38 }
-  // },
+  {
+    left: 330, 
+    top: 130, 
+    hover: { x: 6, y: 1, rotate: 5, delay: 0.38 }
+  },
   {
     left: 285, 
     top: 20, 
@@ -78,7 +78,7 @@ function Circles() {
 function MainLogo() {
   return (
     <div className="absolute left-44 top-32 flex size-16 items-center justify-center rounded-full bg-white shadow ring-1 ring-black/5">
-      <img src={"/images/logo-color.svg"} className="h-9" />
+      <img src={"/site/images/logo-color.svg"} className="h-9" />
     </div>
   )
 }

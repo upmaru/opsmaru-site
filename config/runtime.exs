@@ -23,8 +23,7 @@ end
 config :opsmaru, Opsmaru.Sanity,
   token: System.get_env("SANITY_TOKEN"),
   project_id: System.get_env("SANITY_PROJECT_ID"),
-  dataset: System.get_env("SANITY_DATASET"),
-  cdn: true
+  dataset: System.get_env("SANITY_DATASET")
 
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.

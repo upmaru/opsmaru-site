@@ -77,12 +77,12 @@ defmodule OpsmaruWeb.HomeComponents do
               </p>
             </div>
             <div class="w-96 h-64 md:w-[600px] md:h-[400px] lg:w-[960px] lg:h-[640px] xl:w-[1050px] xl:h-[700px] 2xl:w-[1536px] 2xl:h-[1024px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
-              <div class="absolute -inset-[var(--padding)] bg-black/10 rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
+              <div class="absolute -inset-[var(--padding)] shadow-[inset_0_0_20px_5px_#1e293b] rounded-[calc(var(--radius)+var(--padding))] ring-1 ring-slate-700 [--padding:theme(spacing.2)] md:[--padding:theme(spacing.4)]">
               </div>
               <img
                 src={Image.url(slide.image, w: 2560)}
                 alt={slide.image.alt}
-                class="h-full rounded-[var(--radius)] shadow-2xl ring-1 ring-slate-700"
+                class="h-full aspect-[3/2] rounded-[var(--radius)] shadow-2xl"
               />
             </div>
           </div>
