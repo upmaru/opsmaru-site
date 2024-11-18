@@ -36,9 +36,7 @@ hook:
     rc-update del opsmaru-site
   post-install: |
     rc-update add opsmaru-site
-    rc-service opsmaru-site migrate
   post-upgrade: |
-    rc-service opsmaru-site migrate
     rc-service opsmaru-site start
   pre-upgrade: |
     rc-service opsmaru-site stop
