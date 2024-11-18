@@ -59,7 +59,7 @@ defmodule OpsmaruWeb.HomeComponents do
       </div>
       <div
         id="slides"
-        class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden py-64"
+        class="bg-gradient-to-b from-slate-950 from-50% to-slate-900 relative overflow-hidden"
         phx-hook="MountSlideScroll"
       >
         <div id="slides-container" class="relative">

@@ -85,31 +85,6 @@ function mountSlideScroll() {
       }
     )
   })
-
-  const segmentLength = 1 / items.length;
-  items.forEach((item, i) => {
-    const header = item.querySelector("h2.slide-title");
-
-    scroll(animate(header, { y: [75, -75] }, { ease: "linear" }), {
-      target: el,
-      offset: [
-        [i * segmentLength, 1],
-        [(i + 1) * segmentLength, 0],
-      ],
-    });
-  });
-
-  items.forEach((item, i) => {
-    const desc = item.querySelector(".slide-description");
-
-    scroll(animate(desc, { y: [75, -75], x: [50, -50] }, { ease: "linear" }), {
-      target: el,
-      offset: [
-        [i * segmentLength, 1],
-        [(i + 1) * segmentLength, 0],
-      ],
-    });
-  });
 }
 
 function mountTechnologies() {
