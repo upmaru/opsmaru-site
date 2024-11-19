@@ -9,7 +9,7 @@ defmodule Opsmaru.Content.Navigation.Manager do
   @base_query ~S"""
   *[_type == "navigation"]{
     ...,
-    "links": *[ _type == "link" && references(^._id) ]{
+    "links": *[ _type == "link" && references(^._id) ] | order(index asc) {
       ...
     }
   }
