@@ -27,13 +27,14 @@ defmodule OpsmaruWeb.Router do
       live "/blog/:id", BlogLive
 
       live "/our-product/pricing", PricingLive
+
+      live "/legal/:id", LegalLive
     end
 
     # get "/", PageController, :home
     # get "/our-product", PageController, :product
     # get "/our-product/pricing", PageController, :pricing
     # get "/legal/privacy-policy", PageController, :privacy
-    # get "/legal/terms-of-service", PageController, :terms
 
     # get "/blog", PostController, :index
   end

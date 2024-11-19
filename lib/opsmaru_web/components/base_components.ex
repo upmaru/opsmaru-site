@@ -320,8 +320,8 @@ defmodule OpsmaruWeb.BaseComponents do
                           </.link>
                         </li>
                         <li>
-                          <.link navigate={~p"/legal/terms-of-service"}>
-                            <%= gettext("Terms of Service") %>
+                          <.link navigate={~p"/legal/terms-of-use"}>
+                            <%= gettext("Terms of Use") %>
                           </.link>
                         </li>
                       </ul>

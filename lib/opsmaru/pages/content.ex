@@ -5,6 +5,10 @@ defmodule Opsmaru.Pages.Content do
   embedded_schema do
     field :slug, :string
     field :body, :string
+
+    field :markdown, :string
+
+    field :published_at, :date
   end
 
   def changeset(content, params) do
@@ -13,7 +17,7 @@ defmodule Opsmaru.Pages.Content do
     params = Map.put(params, "id", id)
 
     content
-    |> cast(params, ~w(id slug body)a)
-    |> validate_required(~w(id slug body)a)
+    |> cast(params, ~w(id slug body markdown published_at)a)
+    |> validate_required(~w(id slug)a)
   end
 end
