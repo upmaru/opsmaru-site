@@ -9,6 +9,8 @@ defmodule Opsmaru.Content.Slide.Manager do
 
   @decorate cacheable(cache: Cache, key: {:slides, options}, opts: [ttl: @ttl])
   def list(options \\ []) do
+    options = Enum.into(options, %{})
+
     query =
       ~S"""
       *[_type == "slide"] | order(index asc) {
@@ -19,7 +21,7 @@ defmodule Opsmaru.Content.Slide.Manager do
 
     %Sanity.Response{body: %{"result" => slides}} =
       query
-      |> Sanity.query(%{}, perspective: "published")
+      |> Sanity.query(options, perspective: "published")
       |> Sanity.request!(sanity_request_opts())
 
     Enum.map(slides, &Slide.parse/1)
