@@ -49,8 +49,8 @@ defmodule OpsmaruWeb.CourseComponents do
 
   def infrastructure_setup(assigns) do
     ~H"""
-    <div class="mx-auto max-w-2xl lg:max-w-7xl">
-      <h3 class="mt-24 font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
+    <div id="infrastructure-setup" class="mx-auto max-w-2xl lg:max-w-7xl">
+      <h3 class="mt-24 font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
         <%= @category.name %>
       </h3>
       <hr class="mt-6 border-t border-slate-200" />

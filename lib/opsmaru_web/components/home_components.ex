@@ -59,12 +59,12 @@ defmodule OpsmaruWeb.HomeComponents do
       </div>
       <div
         id="slides"
-        class="relative"
+        class="relative bg-[url('/site/images/liquid-cheese.svg')] bg-cover bg-center bg-repeat bg-fixed py-32"
       >
         <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
-            class="slide-item flex items-center justify-center mb-32"
+            class="slide-item flex items-center justify-center mb-32 last:mb-0"
           >
             <div>
               <div class="slide-image w-[20rem] h-[14rem] sm:w-[576px] sm:h-[384px] md:w-[704px] md:h-[469px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
@@ -76,7 +76,7 @@ defmodule OpsmaruWeb.HomeComponents do
                   class="h-full aspect-[3/2] rounded-[var(--radius)] shadow-2xl"
                 />
               </div>
-              <div class="slide-caption mt-12 mx-auto text-center bg-slate-100 w-fit px-8 py-4 rounded-full">
+              <div class="slide-caption mt-12 mx-auto text-center bg-white w-fit px-8 py-4 rounded-full">
                 <h2 class="slide-title bg-gradient-to-br from-blue-500 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-2xl">
                   <%= slide.title %>
                 </h2>

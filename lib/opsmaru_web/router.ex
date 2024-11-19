@@ -27,6 +27,7 @@ defmodule OpsmaruWeb.Router do
       live "/blog/:id", BlogLive
 
       live "/how-to", CourseLive.Index
+      live "/how-to/:id", CourseLive
 
       live "/our-product/pricing", PricingLive
 
