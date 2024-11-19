@@ -282,7 +282,7 @@ defmodule OpsmaruWeb.BaseComponents do
                     </div>
                     <div>
                       <h3 class="text-sm/6 font-medium text-slate-950/50">
-                        <%= gettext("Company") %>
+                        <%= gettext("Resources") %>
                       </h3>
                       <ul class="mt-6 space-y-4 text-sm/6">
                         <li>
