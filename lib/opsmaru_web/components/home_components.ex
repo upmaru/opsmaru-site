@@ -77,7 +77,7 @@ defmodule OpsmaruWeb.HomeComponents do
                 />
               </div>
               <div class="slide-caption mt-12 mx-auto text-center bg-slate-100 w-fit px-8 py-4 rounded-full">
-                <h2 class="slide-title bg-gradient-to-br from-blue-400 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-2xl">
+                <h2 class="slide-title bg-gradient-to-br from-blue-500 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-2xl">
                   <%= slide.title %>
                 </h2>
                 <p class="text-slate-950 font-light text-md font-semibold">
