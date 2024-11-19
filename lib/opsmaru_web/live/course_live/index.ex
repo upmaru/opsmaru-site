@@ -11,7 +11,7 @@ defmodule OpsmaruWeb.CourseLive.Index do
   def mount(_params, _session, socket) do
     page = Content.show_page(@page_slug)
 
-    header_section = Enum.find(page.sections, & &1.slug == "learn-header")
+    header_section = Enum.find(page.sections, &(&1.slug == "learn-header"))
 
     categories = Courses.list_categories()
 

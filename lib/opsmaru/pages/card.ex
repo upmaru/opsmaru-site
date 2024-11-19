@@ -21,13 +21,14 @@ defmodule Opsmaru.Pages.Card do
   def changeset(card, params) do
     %{
       "_id" => id,
-      "card" => %{
-        "title" => title,
-        "heading" => heading,
-        "description" => description,
-        "slug" => %{"current" => slug},
-        "cover" => cover_params
-      } = card_params
+      "card" =>
+        %{
+          "title" => title,
+          "heading" => heading,
+          "description" => description,
+          "slug" => %{"current" => slug},
+          "cover" => cover_params
+        } = card_params
     } = params
 
     params =

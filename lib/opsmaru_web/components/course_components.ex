@@ -34,7 +34,8 @@ defmodule OpsmaruWeb.CourseComponents do
   attr :categories, :list, required: true
 
   def categories(assigns) do
-    infrastructure_setup_category = Enum.find(assigns.categories, &(&1.slug == "infrastructure-setup"))
+    infrastructure_setup_category =
+      Enum.find(assigns.categories, &(&1.slug == "infrastructure-setup"))
 
     assigns = assign(assigns, :infrastructure_setup_category, infrastructure_setup_category)
 
@@ -56,11 +57,18 @@ defmodule OpsmaruWeb.CourseComponents do
       <hr class="mt-6 border-t border-slate-200" />
       <ul role="list" class="mx-auto mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
         <li :for={course <- @category.courses}>
-          <img src={course.main_technology.logo.url} alt={course.main_technology.logo.alt} class="h-14" />
+          <img
+            src={course.main_technology.logo.url}
+            alt={course.main_technology.logo.alt}
+            class="h-14"
+          />
           <p class="mt-6 max-w-lg text-sm/6 text-slate-500">
             <%= course.description %>
           </p>
-          <.link navigate={~p"/how-to/#{course.slug}"} class="mt-8 inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40">
+          <.link
+            navigate={~p"/how-to/#{course.slug}"}
+            class="mt-8 inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
+          >
             <%= gettext("View course") %>
           </.link>
         </li>

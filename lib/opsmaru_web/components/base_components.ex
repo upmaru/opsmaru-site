@@ -257,7 +257,11 @@ defmodule OpsmaruWeb.BaseComponents do
                         <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
                       </svg>
                       <a href={~p"/"} class="space-x-3 flex">
-                        <img src={~p"/site/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
+                        <img
+                          src={~p"/site/images/logo.svg"}
+                          alt="Opsmaru"
+                          class="h-9 overflow-visible"
+                        />
                         <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
                       </a>
                     </div>

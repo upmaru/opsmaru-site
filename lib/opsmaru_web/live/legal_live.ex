@@ -12,10 +12,10 @@ defmodule OpsmaruWeb.LegalLive do
   def mount(%{"id" => slug}, _session, socket) do
     with %Content.Page{} = page <- Content.show_page(slug) do
       main_section =
-        Enum.find(page.sections, & &1.slug == "#{slug}-main")
+        Enum.find(page.sections, &(&1.slug == "#{slug}-main"))
 
       main_content =
-        Enum.find(main_section.contents, & &1.slug == "#{slug}-main-content")
+        Enum.find(main_section.contents, &(&1.slug == "#{slug}-main-content"))
 
       socket =
         socket
@@ -42,7 +42,9 @@ defmodule OpsmaruWeb.LegalLive do
             <%= @main_section.title %>
           </h1>
           <p class="mt-6 max-w-3xl text-2xl font-medium text-slate-500">
-            <%= gettext("Please read the following before using our product. By using our product you agree to these terms and conditions.") %>
+            <%= gettext(
+              "Please read the following before using our product. By using our product you agree to these terms and conditions."
+            ) %>
           </p>
         </div>
       </div>

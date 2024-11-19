@@ -57,10 +57,7 @@ defmodule OpsmaruWeb.HomeComponents do
           </h2>
         </div>
       </div>
-      <div
-        id="slides"
-        class="relative bg-[url('/site/images/liquid-cheese.svg')] bg-cover bg-center bg-repeat bg-fixed py-32"
-      >
+      <div id="slides" class="relative bg-slate-200 py-32">
         <div id="slides-container" class="relative">
           <div
             :for={slide <- @slides}
@@ -130,8 +127,13 @@ defmodule OpsmaruWeb.HomeComponents do
     ~H"""
     <div class="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
       <div class="relative h-80 shrink-0">
-        <div class="h-80 bg-[size:978px_345px] bg-[left_-8px_top_-12px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]"></div>
+        <div
+          class="h-80 bg-[size:978px_345px] bg-[left_-8px_top_-12px] bg-no-repeat"
+          style={"background-image: url(#{@card.cover.url})"}
+        >
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
+        </div>
       </div>
       <.card_content card={@card} />
     </div>
@@ -144,7 +146,10 @@ defmodule OpsmaruWeb.HomeComponents do
     ~H"""
     <div class="lg:col-span-3 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
       <div class="relative h-80 shrink-0">
-        <div class="absolute inset-0 bg-[size:1100px_647px] bg-[left_-12px_top_-15px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
+        <div
+          class="absolute inset-0 bg-[size:1100px_647px] bg-[left_-12px_top_-15px] bg-no-repeat"
+          style={"background-image: url(#{@card.cover.url})"}
+        >
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
         </div>
@@ -158,9 +163,12 @@ defmodule OpsmaruWeb.HomeComponents do
 
   def bottom_left(assigns) do
     ~H"""
-     <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
+    <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
       <div class="relative h-80 shrink-0">
-        <div class="absolute inset-0 bg-[size:720px_337px] bg-[left_0px_top_0px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
+        <div
+          class="absolute inset-0 bg-[size:720px_337px] bg-[left_0px_top_0px] bg-no-repeat"
+          style={"background-image: url(#{@card.cover.url})"}
+        >
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
         </div>
@@ -187,7 +195,10 @@ defmodule OpsmaruWeb.HomeComponents do
     ~H"""
     <div class="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
       <div class="relative h-80 shrink-0">
-        <div class="absolute inset-0 bg-[size:720px_556px] bg-[left_-10px_top_-25px] bg-no-repeat" style={"background-image: url(#{@card.cover.url})"}>
+        <div
+          class="absolute inset-0 bg-[size:720px_556px] bg-[left_-10px_top_-25px] bg-no-repeat"
+          style={"background-image: url(#{@card.cover.url})"}
+        >
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-white to-50% group-data-[dark]:from-gray-800 group-data-[dark]:from-[-25%]">
         </div>
@@ -222,11 +233,11 @@ defmodule OpsmaruWeb.HomeComponents do
 
     ~H"""
     <div
-        id="technologies"
-        data-technologies={Jason.encode!(@technologies)}
-        class="relative h-80 shrink-0"
-        phx-hook="MountTechnologies"
-      >
+      id="technologies"
+      data-technologies={Jason.encode!(@technologies)}
+      class="relative h-80 shrink-0"
+      phx-hook="MountTechnologies"
+    >
       <div class="relative h-full overflow-hidden">
         <div class="absolute inset-0"></div>
         <div class="absolute left-1/2 h-full w-[26rem] -translate-x-1/2"></div>
@@ -234,6 +245,4 @@ defmodule OpsmaruWeb.HomeComponents do
     </div>
     """
   end
-
-
 end
