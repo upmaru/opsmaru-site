@@ -67,7 +67,7 @@ defmodule OpsmaruWeb.HomeComponents do
             class="slide-item flex items-center justify-center mb-32"
           >
             <div>
-              <div class="slide-image w-96 h-64 sm:w-[576px] sm:h-[384px] md:w-[704px] md:h-[469px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
+              <div class="slide-image w-[20rem] h-[14rem] sm:w-[576px] sm:h-[384px] md:w-[704px] md:h-[469px] lg:w-[960px] lg:h-[640px] xl:w-[1216px] xl:h-[811px] 2xl:w-[1472px] 2xl:h-[981px] relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]">
                 <div class="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-[inset_0_0_5px_5px_#ffffffff] ring-1 ring-black/5 [--padding:theme(spacing.2)]">
                 </div>
                 <img
