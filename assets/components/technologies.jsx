@@ -103,7 +103,7 @@ function Logo({ src, left, top, hover }) {
       }}
       alt=""
       style={{ left, top }}
-      className="absolute size-16 flex rounded-full align-middle items-center justify-center bg-white shadow ring-1 ring-black/5"
+      className="absolute size-16 flex rounded-full align-middle items-center justify-center bg-white shadow ring-1 ring-black/5 p-3"
     >
       <img src={src} className="h-9" />
     </motion.span>

@@ -19,7 +19,7 @@ defmodule Opsmaru.Content do
 
   alias __MODULE__.Technology
 
-  defdelegate list_technologies(options \\ []),
+  defdelegate list_technologies(options \\ [end_index: 5]),
     to: Technology.Manager,
     as: :list
 

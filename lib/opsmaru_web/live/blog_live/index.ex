@@ -30,7 +30,6 @@ defmodule OpsmaruWeb.BlogLive.Index do
     {:ok, socket}
   end
 
-  attr :mobile_nav_active, :boolean, default: false
   attr :header_section, Pages.Section, required: true
   attr :featured_posts, :list, required: true
   attr :posts_count, :integer, required: true
