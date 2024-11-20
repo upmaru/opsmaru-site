@@ -3,20 +3,31 @@ defmodule OpsmaruWeb.CourseLive do
 
   alias Opsmaru.Content
   alias Opsmaru.Content.Image
+  alias Opsmaru.Content.Video
+
+  alias Opsmaru.Courses
 
   import OpsmaruWeb.MarkdownHelper
 
   def mount(%{"id" => slug}, _session, socket) do
     course = Content.show_course(slug)
+    sections = Courses.list_sections(course_id: course.id)
+
+    first_section = Enum.find(sections, fn section -> section.index == 1 end)
+    first_episode = Enum.find(first_section.chapter.episodes, fn episode -> episode.index == 1 end)
 
     socket =
       socket
       |> assign(:course, course)
+      |> assign(:sections, sections)
+      |> assign(:first_episode, first_episode)
 
     {:ok, socket}
   end
 
   attr :course, Content.Course, required: true
+  attr :sections, :list, required: true
+  attr :first_episode, Courses.Episode, required: true
 
   def render(assigns) do
     ~H"""
@@ -56,15 +67,49 @@ defmodule OpsmaruWeb.CourseLive do
                     </dd>
                   </dl>
                 </div>
-                <.link navigate={~p"/how-to/#{@course.slug}"} class="px-5 py-5 bg-black text-md font-semibold text-white rounded-b-2xl">
+                <.link navigate={~p"/how-to/#{@course.slug}/#{@first_episode.slug}"} class="px-5 py-5 bg-slate-950 text-md font-semibold text-white rounded-b-2xl">
                   <%= gettext("Start course") %>
                 </.link>
               </div>
             </div>
 
-            <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 prose prose-lg">
+            <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 prose max-w-max">
               <h2><%= gettext("Course Overview") %></h2>
               <%= raw(render_markdown(@course.overview)) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 mb-32 px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl">
+          <div class="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
+              <div class="overflow-hidden bg-white sm:rounded-2xl sm:shadow">
+                <div class="border-b border-slate-700 bg-slate-900 px-4 py-5 sm:px-4">
+                  <h3 class="text-xl font-semibold text-white"><%= gettext("Course episodes") %></h3>
+                </div>
+                <ul class="divide-y divide-slate-700">
+                  <li :for={section <- @sections} class="bg-slate-700">
+                    <h4 class="text-lg font-medium text-slate-200 px-4 py-2">
+                      <%= gettext("Chapter") %> <%= section.index %>
+                      <.icon name="hero-ellipsis-vertical" class="w-3 h-3 text-slate-200" />
+                      <%= section.chapter.title %>
+                    </h4>
+                    <ul>
+                      <li :for={episode <- section.chapter.episodes} class="bg-white text-lg font-medium text-slate-900">
+                        <.link navigate={~p"/how-to/#{@course.slug}/#{episode.slug}"} class="group w-full px-5 py-2.5 text-[0.98rem] flex items-center cursor-pointer">
+                          <div class="pr-3 w-8 text-slate-600"><%= section.index %>.<%= episode.index %></div>
+                          <div class="flex-grow group-hover:text-slate-500"><%= episode.title %></div>
+                          <div><%= Video.duration_display(episode.video) %></div>
+                          <div class="flex items-center justify-center rounded-full ml-2">
+                            <.icon name="hero-play-circle-solid" class="w-8 h-8 text-indigo-400" />
+                          </div>
+                        </.link>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

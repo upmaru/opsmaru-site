@@ -150,19 +150,17 @@ defmodule OpsmaruWeb.MarkdownHelper do
 
   defp objectives_list(assigns) do
     ~H"""
-    <div>
-      <hr />
+    <div class="my-8 bg-slate-100 px-4 rounded-2xl">
       <div>
         <div class="px-4 pt-5 not-prose">
           <h3 class="text-xl font-semibold text-slate-900"><%= @heading %></h3>
         </div>
         <div class="px-4 pb-5">
-          <div class="objectives-list mt-2 max-w-xl text-md text-slate-500">
+          <div class="objectives-list mt-2 text-md text-slate-500">
             <%= raw(@content) %>
           </div>
         </div>
       </div>
-      <hr />
     </div>
     """
   end

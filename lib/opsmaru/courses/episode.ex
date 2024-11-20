@@ -8,6 +8,7 @@ defmodule Opsmaru.Courses.Episode do
   embedded_schema do
     field :title, :string
     field :slug, :string
+    field :index, :integer
 
     field :content, :string
 
@@ -17,8 +18,17 @@ defmodule Opsmaru.Courses.Episode do
   end
 
   def changeset(episode, params) do
+    %{"_id" => id, "slug" => %{"current" => slug}} = params
+
+    params =
+      params
+      |> Map.put("id", id)
+      |> Map.put("slug", slug)
+
     episode
-    |> cast(params, ~w(title slug)a)
-    |> validate_required(~w(title slug)a)
+    |> cast(params, ~w(title slug index)a)
+    |> validate_required(~w(title slug index)a)
+    |> cast_embed(:author)
+    |> cast_embed(:video)
   end
 end
