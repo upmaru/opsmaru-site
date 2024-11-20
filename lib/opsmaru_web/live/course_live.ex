@@ -84,15 +84,15 @@ defmodule OpsmaruWeb.CourseLive do
         <div class="mx-auto max-w-7xl">
           <div class="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-              <div class="overflow-hidden bg-white sm:rounded-2xl sm:shadow">
-                <div class="border-b border-slate-700 bg-slate-900 px-4 py-5 sm:px-4">
-                  <h3 class="text-xl font-semibold text-white"><%= gettext("Course episodes") %></h3>
+              <div class="overflow-hidden bg-white sm:rounded-2xl border border-slate-200">
+                <div class="bg-slate-200 px-4 py-4 sm:px-4">
+                  <h3 class="text-xl font-semibold text-slate-600"><%= gettext("Course episodes") %></h3>
                 </div>
-                <ul class="divide-y divide-slate-700">
-                  <li :for={section <- @sections} class="bg-slate-700">
-                    <h4 class="text-lg font-medium text-slate-200 px-4 py-2">
+                <ul class="divide-y divide-slate-100">
+                  <li :for={section <- @sections} class="bg-slate-300">
+                    <h4 class="text-lg font-medium text-slate-700 px-4 py-2">
                       <%= gettext("Chapter") %> <%= section.index %>
-                      <.icon name="hero-ellipsis-vertical" class="w-3 h-3 text-slate-200" />
+                      <.icon name="hero-ellipsis-vertical" class="w-3 h-3 text-slate-700" />
                       <%= section.chapter.title %>
                     </h4>
                     <ul>
