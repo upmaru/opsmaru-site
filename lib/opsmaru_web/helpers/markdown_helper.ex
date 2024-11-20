@@ -27,6 +27,9 @@ defmodule OpsmaruWeb.MarkdownHelper do
       {"block_quote", %{}, [{"paragraph", %{}, ["[!CAUTION]"]} | rest]} ->
         alert_block(rest, :caution, opts)
 
+      {"block_quote", %{}, [{"paragraph", %{}, ["[!OBJECTIVES]"]} | rest]} ->
+        objectives_block(rest, opts)
+
       node ->
         node
     end)
@@ -55,6 +58,30 @@ defmodule OpsmaruWeb.MarkdownHelper do
       |> IO.iodata_to_binary()
 
     {"html_block", %{"literal" => alert}, []}
+  end
+
+  defp objectives_block(content,  opts) do
+    {top, rest} = List.pop_at(content, 0)
+
+    heading =
+      case top do
+        {"heading", _, [heading]} -> heading
+        _ -> nil
+      end
+
+    content =
+      if heading do
+        MDEx.to_html!(rest, opts)
+      else
+        MDEx.to_html!(content, opts)
+      end
+
+    list =
+      objectives_list(%{heading: heading, content: content})
+      |> Phoenix.HTML.Safe.to_iodata()
+      |> IO.iodata_to_binary()
+
+    {"html_block", %{"literal" => list}, []}
   end
 
   attr :type, :atom, default: :note
@@ -117,6 +144,25 @@ defmodule OpsmaruWeb.MarkdownHelper do
           </div>
         </div>
       </div>
+    </div>
+    """
+  end
+
+  defp objectives_list(assigns) do
+    ~H"""
+    <div>
+      <hr />
+      <div>
+        <div class="px-4 pt-5 not-prose">
+          <h3 class="text-xl font-semibold text-slate-900"><%= @heading %></h3>
+        </div>
+        <div class="px-4 pb-5">
+          <div class="objectives-list mt-2 max-w-xl text-md text-slate-500">
+            <%= raw(@content) %>
+          </div>
+        </div>
+      </div>
+      <hr />
     </div>
     """
   end
