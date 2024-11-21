@@ -10,6 +10,7 @@ defmodule Opsmaru.Courses.Category.Manager do
       "courses": *[ _type == "course" && references(^._id) ] {
         ...,
         author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
+        "cover": {"url": cover.asset -> url, "alt": cover.alt},
         main_technology -> {
           ...,
           "logo": { "url": logo.asset -> url, "alt": logo.alt }

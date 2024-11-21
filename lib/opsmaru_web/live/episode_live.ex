@@ -40,7 +40,7 @@ defmodule OpsmaruWeb.EpisodeLive do
               <span class="ml-2 font-semibold text-slate-200"><%= gettext("Course overview") %></span>
             </.link>
           </div>
-          <div id="episode-player" class="aspect-[16/9] rounded-2xl overflow-hidden min-h-64 bg-slate-950" data-video={Jason.encode!(@episode.video)} data-title={@episode.title} phx-hook="MountPlayer"></div>
+          <div id="episode-player" class="aspect-[16/9] content-center rounded-2xl overflow-hidden min-h-64 bg-slate-950" data-video={Jason.encode!(@episode.video)} data-title={@episode.title} phx-hook="MountPlayer"></div>
         </div>
       </div>
       <div class="mt-16 mb-32 px-6 lg:px-8">

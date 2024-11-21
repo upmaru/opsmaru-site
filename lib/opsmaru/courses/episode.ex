@@ -29,8 +29,8 @@ defmodule Opsmaru.Courses.Episode do
       |> Map.put("slug", slug)
 
     episode
-    |> cast(params, ~w(title slug index content)a)
-    |> validate_required(~w(title slug index content)a)
+    |> cast(params, ~w(id title slug index content)a)
+    |> validate_required(~w(id title slug index)a)
     |> cast_embed(:author)
     |> cast_embed(:section)
     |> cast_embed(:video)

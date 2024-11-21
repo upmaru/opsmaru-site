@@ -5,6 +5,7 @@ defmodule OpsmaruWeb.CourseComponents do
   alias Opsmaru.Content
 
   alias Opsmaru.Content.Video
+  alias Opsmaru.Content.Image
 
   attr :sections, :list, required: true
   attr :course, Content.Course, required: true
@@ -76,23 +77,49 @@ defmodule OpsmaruWeb.CourseComponents do
   attr :categories, :list, required: true
 
   def categories(assigns) do
-    infrastructure_setup_category =
-      Enum.find(assigns.categories, &(&1.slug == "infrastructure-setup"))
-
-    assigns = assign(assigns, :infrastructure_setup_category, infrastructure_setup_category)
-
     ~H"""
-    <div class="my-32 px-6 lg:px-8">
-      <.infrastructure_setup category={@infrastructure_setup_category} />
+    <div class="my-24 px-6 lg:px-8">
+      <.category :for={category <- @categories} category={category} />
     </div>
     """
   end
 
   attr :category, Courses.Category, required: true
+  attr :template, :string, default: nil
 
-  def infrastructure_setup(assigns) do
+  def category(%{category: %{template: "course-cover-with-category-description"}} = assigns) do
     ~H"""
-    <div id="infrastructure-setup" class="mx-auto max-w-2xl lg:max-w-7xl">
+    <div id={@category.slug} class="mx-auto max-w-2xl lg:max-w-7xl">
+      <h3 class="mt-24 font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
+        <%= @category.name %>
+      </h3>
+      <hr class="mt-6 border-t border-slate-200" />
+      <div class="mt-10 grid grid-cols-1 gap-20 g:px-8 xl:grid-cols-3">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2 class="text-pretty text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl"><%= @category.title %></h2>
+          <p class="mt-6 max-w-3xl text-2xl font-medium text-slate-500"><%= @category.description %></p>
+        </div>
+        <ul role="list" class="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-8 xl:col-span-2">
+          <li :for={course <- @category.courses}>
+            <img class="aspect-[3/2] w-full rounded-2xl object-cover" src={Image.url(course.cover, w: 600)} alt={course.cover.alt}>
+            <h3 class="mt-6 text-lg/8 font-semibold text-slate-900"><%= course.title %></h3>
+            <p class="mt-4 text-base/7 text-slate-600"><%= course.description %></p>
+            <.link
+              navigate={~p"/how-to/#{course.slug}"}
+              class="mt-8 inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
+            >
+              <%= gettext("View course") %>
+            </.link>
+          </li>
+        </ul>
+      </div>
+    </div>
+    """
+  end
+
+  def category(assigns) do
+    ~H"""
+    <div id={@category.slug} class="mx-auto max-w-2xl lg:max-w-7xl">
       <h3 class="mt-24 font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
         <%= @category.name %>
       </h3>

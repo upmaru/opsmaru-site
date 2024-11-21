@@ -31,6 +31,7 @@ defmodule Opsmaru.Content.Video do
 
   def duration_display(%__MODULE__{duration: duration}) do
     duration
+    |> Decimal.round()
     |> Decimal.to_integer()
     |> DateTime.from_unix!()
     |> Calendar.strftime("%M:%S")
