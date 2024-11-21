@@ -12,6 +12,7 @@ defmodule Opsmaru.Courses.Section.Manager do
         ...,
         "episodes": *[ _type == "courseEpisode" && references(^._id) ] {
           ...,
+          "content": content.asset -> url,
           author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
           video {
             asset -> {

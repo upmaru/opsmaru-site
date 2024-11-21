@@ -8,6 +8,8 @@ defmodule Opsmaru.Content.Author do
     field :name, :string
     field :title, :string
 
+    field :bio, :string
+
     embeds_one :avatar, Image
   end
 
@@ -19,7 +21,7 @@ defmodule Opsmaru.Content.Author do
       |> Map.put("id", id)
 
     author
-    |> cast(params, ~w(id name title)a)
+    |> cast(params, ~w(id name title bio)a)
     |> validate_required(~w(id name title)a)
     |> cast_embed(:avatar)
   end

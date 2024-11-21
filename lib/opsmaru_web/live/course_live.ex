@@ -1,11 +1,13 @@
 defmodule OpsmaruWeb.CourseLive do
+      alias OpsmaruWeb.CourseComponents
   use OpsmaruWeb, :live_view
 
   alias Opsmaru.Content
   alias Opsmaru.Content.Image
-  alias Opsmaru.Content.Video
 
   alias Opsmaru.Courses
+
+  alias OpsmaruWeb.CourseComponents
 
   import OpsmaruWeb.MarkdownHelper
 
@@ -73,9 +75,12 @@ defmodule OpsmaruWeb.CourseLive do
               </div>
             </div>
 
-            <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 prose max-w-max">
-              <h2><%= gettext("Course Overview") %></h2>
-              <%= raw(render_markdown(@course.overview)) %>
+            <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
+              <h2 class="text-3xl font-semibold"><%= gettext("Course Overview") %></h2>
+
+              <div class="mt-8 prose max-w-max">
+                <%= raw(render_markdown(@course.overview)) %>
+              </div>
             </div>
           </div>
         </div>
@@ -88,27 +93,7 @@ defmodule OpsmaruWeb.CourseLive do
                 <div class="bg-slate-200 px-4 py-4 sm:px-4">
                   <h3 class="text-xl font-semibold text-slate-600"><%= gettext("Course episodes") %></h3>
                 </div>
-                <ul class="divide-y divide-slate-100">
-                  <li :for={section <- @sections} class="bg-slate-300">
-                    <h4 class="text-lg font-medium text-slate-700 px-4 py-2">
-                      <%= gettext("Chapter") %> <%= section.index %>
-                      <.icon name="hero-ellipsis-vertical" class="w-3 h-3 text-slate-700" />
-                      <%= section.chapter.title %>
-                    </h4>
-                    <ul>
-                      <li :for={episode <- section.chapter.episodes} class="bg-white text-lg font-medium text-slate-900">
-                        <.link navigate={~p"/how-to/#{@course.slug}/#{episode.slug}"} class="group w-full px-5 py-2.5 text-[0.98rem] flex items-center cursor-pointer">
-                          <div class="pr-3 w-8 text-slate-600"><%= section.index %>.<%= episode.index %></div>
-                          <div class="flex-grow group-hover:text-slate-500"><%= episode.title %></div>
-                          <div><%= Video.duration_display(episode.video) %></div>
-                          <div class="flex items-center justify-center rounded-full ml-2">
-                            <.icon name="hero-play-circle-solid" class="w-8 h-8 text-indigo-400" />
-                          </div>
-                        </.link>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+                <CourseComponents.playlist course={@course} sections={@sections} />
               </div>
             </div>
           </div>
