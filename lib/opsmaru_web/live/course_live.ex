@@ -99,6 +99,17 @@ defmodule OpsmaruWeb.CourseLive do
                   <%= gettext("Start course") %>
                 </.link>
               </div>
+              <div class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
+                <h3 class="font-semibold">
+                  <%= gettext("Don't have an account?") %>
+                </h3>
+                <p class="pt-2 text-md text-slate-600">
+                  <.link href="/auth/users/register" class="text-black underline">
+                    <%= gettext("Sign up") %>
+                  </.link>
+                  <%= gettext("and get a 30 day free trial. No credit card required.") %>
+                </p>
+              </div>
             </div>
 
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
@@ -126,10 +137,10 @@ defmodule OpsmaruWeb.CourseLive do
                   <div class="border-l-4 border-blue-400 bg-blue-50 p-4">
                     <div class="flex">
                       <div class="shrink-0">
-                        <.icon name="hero-information-circle" class="h-5 w-5 text-blue-700" />
+                        <.icon name="hero-information-circle-solid" class="h-5 w-5 text-blue-700" />
                       </div>
                       <div class="ml-3">
-                        <p class="text-sm text-blue-700">
+                        <p class="text-base text-blue-700">
                           <%= gettext("Course content coming soon...") %>
                         </p>
                       </div>

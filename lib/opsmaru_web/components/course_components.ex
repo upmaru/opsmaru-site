@@ -104,7 +104,7 @@ defmodule OpsmaruWeb.CourseComponents do
       |> assign(:card, card)
 
     ~H"""
-    <div class="my-16 px-6 lg:px-8">
+    <div class="my-32 px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-7xl">
         <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500"><%= @h2.body %></h2>
         <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl"><%= @title.body %></h3>

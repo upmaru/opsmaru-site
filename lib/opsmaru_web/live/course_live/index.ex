@@ -42,8 +42,8 @@ defmodule OpsmaruWeb.CourseLive.Index do
       <CourseComponents.header section={@header_section} />
       <CourseComponents.categories categories={@featured_categories} />
       <CourseComponents.technologies technologies={@technologies} />
-      <CourseComponents.get_support section={@get_support_section} />
       <CourseComponents.categories categories={@categories} />
+      <CourseComponents.get_support section={@get_support_section} />
     </div>
     """
   end
