@@ -51,6 +51,12 @@ defmodule Opsmaru.Content do
     to: Post.Manager,
     as: :show
 
+  alias __MODULE__.Course
+
+  defdelegate show_course(slug),
+    to: Course.Manager,
+    as: :show
+
   alias __MODULE__.Movie
 
   defdelegate show_movie(slug),

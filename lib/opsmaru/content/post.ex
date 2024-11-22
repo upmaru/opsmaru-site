@@ -3,6 +3,8 @@ defmodule Opsmaru.Content.Post do
   import Ecto.Changeset
 
   alias Opsmaru.Posts.Category
+
+  alias Opsmaru.Content.Author
   alias Opsmaru.Content.Image
 
   @valid_attrs ~w(
@@ -21,11 +23,7 @@ defmodule Opsmaru.Content.Post do
 
     embeds_one :cover, Image
 
-    embeds_one :author, Author do
-      field :name, :string
-
-      embeds_one :avatar, Image
-    end
+    embeds_one :author, Author
 
     embeds_many :categories, Category
 
@@ -48,22 +46,10 @@ defmodule Opsmaru.Content.Post do
     |> cast(params, @valid_attrs)
     |> validate_required(@valid_attrs)
     |> cast_embed(:cover)
-    |> cast_embed(:author, with: &author_changeset/2)
+    |> cast_embed(:author)
     |> cast_embed(:categories)
   end
 
-  defp author_changeset(author, params) do
-    %{"_id" => id} = params
-
-    params =
-      params
-      |> Map.put("id", id)
-
-    author
-    |> cast(params, ~w(id name)a)
-    |> validate_required(~w(id name)a)
-    |> cast_embed(:avatar)
-  end
 
   def parse(params) do
     %__MODULE__{}

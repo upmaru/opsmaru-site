@@ -109,11 +109,11 @@ Hooks.MountPlayer = {
     const domNode = this.el;
     const root = createRoot(domNode);
 
-    let { movie } = this.el.dataset;
+    let { video } = this.el.dataset;
 
-    movie = JSON.parse(movie);
+    video = JSON.parse(video);
 
-    root.render(<Player movie={movie} />);
+    root.render(<Player video={video} />);
   }
 }
 

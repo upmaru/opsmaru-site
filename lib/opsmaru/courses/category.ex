@@ -8,6 +8,11 @@ defmodule Opsmaru.Courses.Category do
     field :name, :string
     field :slug, :string
 
+    field :title, :string
+    field :description, :string
+
+    field :template, :string
+
     field :index, :integer
 
     embeds_many :courses, Course
@@ -22,8 +27,8 @@ defmodule Opsmaru.Courses.Category do
       |> Map.put("slug", slug)
 
     category
-    |> cast(params, ~w(id name slug index)a)
-    |> validate_required(~w(id name slug index)a)
+    |> cast(params, ~w(id name slug index title description template)a)
+    |> validate_required(~w(id name slug title description index)a)
     |> cast_embed(:courses)
   end
 

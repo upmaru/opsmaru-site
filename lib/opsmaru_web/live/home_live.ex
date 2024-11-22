@@ -55,7 +55,7 @@ defmodule OpsmaruWeb.HomeLive do
         </div>
       </div>
       <main>
-        <div class="mt-10 px-6 lg:px-8">
+        <div class="mt-16 px-6 lg:px-8">
           <div class="mx-auto max-w-xl lg:max-w-2xl">
             <div class="flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">
               <img

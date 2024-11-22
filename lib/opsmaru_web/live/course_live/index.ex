@@ -14,6 +14,7 @@ defmodule OpsmaruWeb.CourseLive.Index do
     header_section = Enum.find(page.sections, &(&1.slug == "learn-header"))
 
     categories = Courses.list_categories()
+    technologies = Content.list_technologies(end_index: 12)
 
     socket =
       socket
@@ -21,6 +22,7 @@ defmodule OpsmaruWeb.CourseLive.Index do
       |> assign(:page, page)
       |> assign(:header_section, header_section)
       |> assign(:categories, categories)
+      |> assign(:technologies, technologies)
 
     {:ok, socket}
   end
@@ -30,6 +32,7 @@ defmodule OpsmaruWeb.CourseLive.Index do
     <div>
       <CourseComponents.header section={@header_section} />
       <CourseComponents.categories categories={@categories} />
+      <CourseComponents.technologies technologies={@technologies} />
     </div>
     """
   end

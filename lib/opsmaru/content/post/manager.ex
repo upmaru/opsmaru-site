@@ -63,12 +63,11 @@ defmodule Opsmaru.Content.Post.Manager do
       }
       """
 
-    %Sanity.Response{body: %{"result" => posts}} =
-      query
-      |> Sanity.query(%{featured: true, limit: limit}, perspective: "published")
-      |> Sanity.request!(sanity_request_opts())
-
-    Enum.map(posts, &Post.parse/1)
+    query
+    |> Sanity.query(%{featured: true, limit: limit}, perspective: "published")
+    |> Sanity.request!(sanity_request_opts())
+    |> Sanity.result!()
+    |> Enum.map(&Post.parse/1)
   end
 
   @spec show(String.t()) :: %Post{}
