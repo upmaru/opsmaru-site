@@ -32,7 +32,7 @@ defmodule OpsmaruWeb.EpisodeLive do
   def render(assigns) do
     ~H"""
     <div>
-      <div class="bg-slate-600 px-6 lg:px-8">
+      <div class="relative bg-slate-600 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl py-10">
           <div class="pb-8">
             <.link navigate={~p"/how-to/#{@course.slug}"} class="inline-flex items-center align-middle">
@@ -47,9 +47,7 @@ defmodule OpsmaruWeb.EpisodeLive do
         <div class="mx-auto max-w-7xl">
           <div class="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="lg:col-start-3 lg:row-end-1">
-              <div class="overflow-hidden bg-white sm:rounded-2xl border border-slate-200">
-                <CourseComponents.playlist current_episode={@episode} course={@course} sections={@sections} />
-              </div>
+              <CourseComponents.playlist current_episode={@episode} course={@course} sections={@sections} />
             </div>
 
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">

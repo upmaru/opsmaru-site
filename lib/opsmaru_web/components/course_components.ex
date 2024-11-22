@@ -14,24 +14,24 @@ defmodule OpsmaruWeb.CourseComponents do
   def playlist(assigns) do
     ~H"""
     <ul class="divide-y divide-slate-100">
-      <li :for={section <- @sections} class="bg-slate-300">
-        <h4 class="text-lg font-medium text-slate-700 px-4 py-2">
+      <li :for={section <- @sections}>
+        <h4 class="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold">
           <%= gettext("Chapter") %> <%= section.index %>
           <.icon name="hero-ellipsis-vertical" class="w-3 h-3 text-slate-700" />
           <%= section.chapter.title %>
         </h4>
         <ul>
-          <li :for={episode <- section.chapter.episodes} class="bg-white text-lg font-medium text-slate-900">
+          <li :for={episode <- section.chapter.episodes} class="border-b border-dotted border-gray-200 text-sm/6 font-normal">
             <.link :if={is_nil(@current_episode) || @current_episode.id != episode.id}
-                navigate={~p"/how-to/#{@course.slug}/#{episode.slug}"} class="group w-full px-5 py-2.5 text-[0.98rem] flex items-center cursor-pointer">
+                navigate={~p"/how-to/#{@course.slug}/#{episode.slug}"} class="px-0 py-4 group w-full flex items-center cursor-pointer">
               <div class="pr-3 w-8 text-slate-600"><%= section.index %>.<%= episode.index %></div>
-              <div class="flex-grow group-hover:text-slate-500"><%= episode.title %></div>
+              <div class="flex-grow"><%= episode.title %></div>
               <div><%= Video.duration_display(episode.video) %></div>
               <div class="flex items-center justify-center rounded-full ml-2">
                 <.icon name="hero-play-circle-solid" class="w-8 h-8 text-indigo-400" />
               </div>
             </.link>
-            <span :if={@current_episode && @current_episode.id == episode.id} class="group w-full px-5 py-2.5 text-[0.98rem] flex items-center">
+            <span :if={@current_episode && @current_episode.id == episode.id} class="px-0 py-4 group w-full flex items-center">
               <div class="pr-3 w-8 text-slate-400"><%= section.index %>.<%= episode.index %></div>
               <div class="flex-grow text-slate-400"><%= episode.title %></div>
               <div class="text-slate-400"><%= Video.duration_display(episode.video) %></div>
@@ -142,6 +142,28 @@ defmodule OpsmaruWeb.CourseComponents do
           </.link>
         </li>
       </ul>
+    </div>
+    """
+  end
+
+  def technologies(assigns) do
+    ~H"""
+    <div class="my-32 px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:max-w-7xl">
+        <h3 class="mt-24 font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
+          <%= gettext("Tech Stack") %>
+        </h3>
+        <hr class="mt-6 border-t border-gray-200" />
+        <ul class="mx-auto mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
+          <li :for={technology <- @technologies} class="flex items-center gap-4">
+            <img src={technology.logo.url} alt={technology.logo.alt} class="size-12" />
+            <div class="text-sm/6">
+              <h3 class="font-medium"><%= technology.title %></h3>
+              <p class="text-slate-500"><%= Phoenix.Naming.humanize(technology.type) %></p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     """
   end

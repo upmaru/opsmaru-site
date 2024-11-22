@@ -89,11 +89,11 @@ defmodule OpsmaruWeb.CourseLive do
         <div class="mx-auto max-w-7xl">
           <div class="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-              <div class="overflow-hidden bg-white sm:rounded-2xl border border-slate-200">
-                <div class="bg-slate-200 px-4 py-4 sm:px-4">
-                  <h3 class="text-xl font-semibold text-slate-600"><%= gettext("Course episodes") %></h3>
+              <div class="lg:max-w-2xl">
+                <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500"><%= gettext("Course episodes") %></h3>
+                <div class="mt-8">
+                  <CourseComponents.playlist course={@course} sections={@sections} />
                 </div>
-                <CourseComponents.playlist course={@course} sections={@sections} />
               </div>
             </div>
           </div>
