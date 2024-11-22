@@ -17,6 +17,7 @@ defmodule Opsmaru.Content.Course.Manager do
       "cover": {"url": cover.asset -> url, "alt": cover.alt},
       main_technology -> {
         ...,
+        category -> {...},
         "logo": { "url": logo.asset -> url, "alt": logo.alt }
       },
       introduction {

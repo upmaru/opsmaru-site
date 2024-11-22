@@ -50,7 +50,6 @@ defmodule Opsmaru.Content.Post do
     |> cast_embed(:categories)
   end
 
-
   def parse(params) do
     %__MODULE__{}
     |> changeset(params)

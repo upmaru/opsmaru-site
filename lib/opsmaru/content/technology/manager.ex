@@ -14,6 +14,7 @@ defmodule Opsmaru.Content.Technology.Manager do
     query = ~S"""
       *[_type == "technology"][0..$end_index] {
         ...,
+        category -> {...},
         "logo": {"url": logo.asset -> url, "alt": logo.alt}
       }
     """
@@ -22,6 +23,7 @@ defmodule Opsmaru.Content.Technology.Manager do
     |> Sanity.query(options, perspective: "published")
     |> Sanity.request!(sanity_request_opts())
     |> Sanity.result!()
+    |> IO.inspect()
     |> Enum.map(&Technology.parse/1)
   end
 end

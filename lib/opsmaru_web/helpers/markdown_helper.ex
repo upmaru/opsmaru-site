@@ -60,7 +60,7 @@ defmodule OpsmaruWeb.MarkdownHelper do
     {"html_block", %{"literal" => alert}, []}
   end
 
-  defp objectives_block(content,  opts) do
+  defp objectives_block(content, opts) do
     {top, rest} = List.pop_at(content, 0)
 
     heading =

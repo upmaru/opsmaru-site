@@ -23,7 +23,9 @@ defmodule Opsmaru.Courses.Episode.Manager do
 
     episode =
       query
-      |> Sanity.query(%{course_slug: course_slug, episode_slug: episode_slug}, perspective: "published")
+      |> Sanity.query(%{course_slug: course_slug, episode_slug: episode_slug},
+        perspective: "published"
+      )
       |> Sanity.request!(sanity_request_opts())
       |> Sanity.result!()
       |> Episode.parse()

@@ -35,24 +35,40 @@ defmodule OpsmaruWeb.EpisodeLive do
       <div class="relative bg-slate-600 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl py-10">
           <div class="pb-8">
-            <.link navigate={~p"/how-to/#{@course.slug}"} class="inline-flex items-center align-middle">
+            <.link
+              navigate={~p"/how-to/#{@course.slug}"}
+              class="inline-flex items-center align-middle"
+            >
               <.icon name="hero-chevron-left" class="w-4 h-4 text-slate-200" />
               <span class="ml-2 font-semibold text-slate-200"><%= gettext("Course overview") %></span>
             </.link>
           </div>
-          <div id="episode-player" class="aspect-[16/9] content-center rounded-2xl overflow-hidden min-h-64 bg-slate-950" data-video={Jason.encode!(@episode.video)} data-title={@episode.title} phx-hook="MountPlayer"></div>
+          <div
+            id="episode-player"
+            class="aspect-[16/9] content-center rounded-2xl overflow-hidden min-h-64 bg-slate-950"
+            data-video={Jason.encode!(@episode.video)}
+            data-title={@episode.title}
+            phx-hook="MountPlayer"
+          >
+          </div>
         </div>
       </div>
       <div class="mt-16 mb-32 px-6 lg:px-8">
         <div class="mx-auto max-w-7xl">
           <div class="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="lg:col-start-3 lg:row-end-1">
-              <CourseComponents.playlist current_episode={@episode} course={@course} sections={@sections} />
+              <CourseComponents.playlist
+                current_episode={@episode}
+                course={@course}
+                sections={@sections}
+              />
             </div>
 
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
               <div class="flex items-center">
-                <div class="text-3xl font-semibold -mb-1 mr-4 text-slate-400"><%= @episode.section.index %>.<%= @episode.index %></div>
+                <div class="text-3xl font-semibold -mb-1 mr-4 text-slate-400">
+                  <%= @episode.section.index %>.<%= @episode.index %>
+                </div>
                 <h1 class="text-3xl font-semibold -mb-1"><%= @episode.title %></h1>
               </div>
               <div class="mt-8 prose max-w-max">
@@ -63,7 +79,13 @@ defmodule OpsmaruWeb.EpisodeLive do
                 <h3 class="text-xl font-semibold my-8"><%= gettext("Instructor") %></h3>
                 <div class="flex items-center">
                   <div>
-                    <img class="inline-block size-24 rounded-full" src={Image.url(@episode.author.avatar, w: 256, h: 256, format: "auto", fit: "crop")} alt={@episode.author.avatar.alt} />
+                    <img
+                      class="inline-block size-24 rounded-full"
+                      src={
+                        Image.url(@episode.author.avatar, w: 256, h: 256, format: "auto", fit: "crop")
+                      }
+                      alt={@episode.author.avatar.alt}
+                    />
                   </div>
                   <div class="ml-6">
                     <p class="text-lg font-medium text-slate-700"><%= @episode.author.name %></p>

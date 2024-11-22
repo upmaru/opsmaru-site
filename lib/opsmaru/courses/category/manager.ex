@@ -3,9 +3,11 @@ defmodule Opsmaru.Courses.Category.Manager do
 
   alias Opsmaru.Courses.Category
 
-  def list(_options \\ []) do
+  def list(options \\ [featured: false]) do
+    options = Enum.into(options, %{})
+
     query = ~s"""
-    *[_type == "courseCategory"] | order(index asc){
+    *[_type == "courseCategory" && featured == $featured] | order(index asc){
       ...,
       "courses": *[ _type == "course" && references(^._id) ] {
         ...,
@@ -13,6 +15,7 @@ defmodule Opsmaru.Courses.Category.Manager do
         "cover": {"url": cover.asset -> url, "alt": cover.alt},
         main_technology -> {
           ...,
+          category -> {...},
           "logo": { "url": logo.asset -> url, "alt": logo.alt }
         },
         "overview": overview.asset -> url,
@@ -26,7 +29,7 @@ defmodule Opsmaru.Courses.Category.Manager do
     """
 
     query
-    |> Sanity.query(%{}, perspective: "published")
+    |> Sanity.query(options, perspective: "published")
     |> Sanity.request!(sanity_request_opts())
     |> Sanity.result!()
     |> Enum.map(&Category.parse/1)

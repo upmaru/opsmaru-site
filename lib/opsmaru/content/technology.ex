@@ -3,6 +3,7 @@ defmodule Opsmaru.Content.Technology do
   import Ecto.Changeset
 
   alias Opsmaru.Content.Image
+  alias Opsmaru.Technologies.Category
 
   @derive Jason.Encoder
   embedded_schema do
@@ -11,6 +12,8 @@ defmodule Opsmaru.Content.Technology do
     field :type, :string
 
     embeds_one :logo, Image
+
+    embeds_one :category, Category
   end
 
   def changeset(technology, params) do
@@ -22,8 +25,9 @@ defmodule Opsmaru.Content.Technology do
       |> Map.put("slug", slug)
 
     technology
-    |> cast(params, [:title, :slug, :type])
+    |> cast(params, [:id, :title, :slug, :type])
     |> cast_embed(:logo)
+    |> cast_embed(:category)
   end
 
   def parse(params) do
