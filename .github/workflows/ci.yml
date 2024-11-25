@@ -138,5 +138,5 @@ jobs:
         env:
           STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-          SANITY_DATASET: ${{ env.SANITY_DATASET }}
-          SANITY_PROJECT_ID: ${{ env.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+          SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
