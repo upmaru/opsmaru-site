@@ -62,6 +62,28 @@ defmodule OpsmaruWeb.EpisodeLive do
                 course={@course}
                 sections={@sections}
               />
+              <div :if={!@current_user} class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
+                <h3 class="font-semibold">
+                  <%= gettext("Don't have an account?") %>
+                </h3>
+                <p class="pt-2 text-md text-slate-600">
+                  <.link href="/auth/users/register" class="text-black underline">
+                    <%= gettext("Sign up") %>
+                  </.link>
+                  <%= gettext("and get a 30 day free trial. No credit card required.") %>
+                </p>
+              </div>
+              <div :if={@current_user} class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
+                <h3 class="font-semibold">
+                  <%= gettext("You're signed in.") %>
+                </h3>
+                <p class="pt-2 text-md text-slate-600">
+                  <.link href="/home" class="text-black underline">
+                    <%= gettext("Open dashboard") %>
+                  </.link>
+                  <%= gettext("to follow along with the video.") %>
+                </p>
+              </div>
             </div>
 
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
