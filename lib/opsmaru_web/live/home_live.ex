@@ -49,7 +49,11 @@ defmodule OpsmaruWeb.HomeLive do
         </div>
         <div class="relative px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
-            <BaseComponents.header navigation={@main_nav} mobile_nav_active={@mobile_nav_active} current_user={@current_user} />
+            <BaseComponents.header
+              navigation={@main_nav}
+              mobile_nav_active={@mobile_nav_active}
+              current_user={@current_user}
+            />
             <HomeComponents.hero section={@hero_section} />
           </div>
         </div>

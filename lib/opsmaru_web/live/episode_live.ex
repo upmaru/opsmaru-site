@@ -79,9 +79,9 @@ defmodule OpsmaruWeb.EpisodeLive do
                 </h3>
                 <p class="pt-2 text-md text-slate-600">
                   <.link href="/home" class="text-black underline">
-                    <%= gettext("Open dashboard") %>
+                    <%= gettext("Open console") %>
                   </.link>
-                  <%= gettext("to follow along with the video.") %>
+                  <%= gettext("and follow along with the video.") %>
                 </p>
               </div>
             </div>

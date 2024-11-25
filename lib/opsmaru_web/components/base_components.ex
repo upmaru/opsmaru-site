@@ -5,6 +5,8 @@ defmodule OpsmaruWeb.BaseComponents do
   alias Opsmaru.Content
   alias Opsmaru.Commerce
 
+  alias Opsmaru.Content.Navigation
+
   alias OpsmaruWeb.CoreComponents
 
   alias Phoenix.LiveView.JS
@@ -16,6 +18,17 @@ defmodule OpsmaruWeb.BaseComponents do
   attr :current_user, Opsmaru.Accounts.User, default: nil
 
   def header(assigns) do
+    auth_link =
+      if assigns.current_user do
+        %Navigation.Link{title: gettext("Console"), path: "/home", index: 5}
+      else
+        %Navigation.Link{title: gettext("Log in"), path: "/auth/users/log_in", index: 5}
+      end
+
+    links = assigns.navigation.links ++ [auth_link]
+
+    assigns = assign(assigns, :links, links)
+
     ~H"""
     <header class="pt-12 sm:pt-16">
       <div>
@@ -37,22 +50,12 @@ defmodule OpsmaruWeb.BaseComponents do
             </.nav>
           </div>
           <nav class="relative hidden lg:flex">
-            <.nav :for={link <- @navigation.links} class="relative flex group/item">
+            <.nav :for={link <- @links} class="relative flex group/item">
               <.link
                 navigate={link.path}
                 class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]"
               >
                 <%= link.title %>
-              </.link>
-            </.nav>
-            <.nav class="relative flex group/item">
-              <.link :if={!@current_user} navigate={"/auth/users/log_in"} class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]">
-                <%= gettext("Log in") %>
-              </.link>
-            </.nav>
-            <.nav class="relative flex group/item">
-              <.link :if={@current_user} navigate={"/home"} class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]">
-                <%= gettext("Dashboard") %>
               </.link>
             </.nav>
           </nav>
@@ -67,7 +70,7 @@ defmodule OpsmaruWeb.BaseComponents do
       <div
         :if={@mobile_nav_active}
         id="mobile-nav"
-        data-links={Jason.encode!(@navigation.links)}
+        data-links={Jason.encode!(@links)}
         class="lg:hidden"
         phx-hook="MountMobileNav"
       >
