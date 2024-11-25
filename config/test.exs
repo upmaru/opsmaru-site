@@ -22,3 +22,18 @@ config :phoenix, :plug_init_mode, :runtime
 # Enable helpful, but potentially expensive runtime checks
 config :phoenix_live_view,
   enable_expensive_runtime_checks: true
+
+config :opsmaru, :test_finch, OpsmaruTestFinch
+
+config :sanity, Opsmaru.Sanity, http_options: [finch: OpsmaruTestFinch]
+
+config :exvcr, [
+  vcr_cassette_library_dir: "test/fixture/vcr_cassettes",
+  custom_cassette_library_dir: "test/fixture/custom_cassettes",
+  filter_sensitive_data: [],
+  filter_url_params: false,
+  filter_request_headers: [
+    "authorization"
+  ],
+  response_headers_blacklist: []
+]

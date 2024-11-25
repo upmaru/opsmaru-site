@@ -9,7 +9,10 @@ defmodule Opsmaru.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test
+      ]
     ]
   end
 
@@ -49,7 +52,7 @@ defmodule Opsmaru.MixProject do
        compile: false,
        depth: 1},
       {:swoosh, "~> 1.5"},
-      {:finch, "~> 0.13"},
+      {:finch, "0.17.0"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
@@ -81,7 +84,10 @@ defmodule Opsmaru.MixProject do
       {:req, "~> 0.5.7"},
 
       # Data
-      {:ecto, "~> 3.12"}
+      {:ecto, "~> 3.12"},
+
+      # Testing
+      {:exvcr, "~> 0.15", only: :test}
     ]
   end
 
