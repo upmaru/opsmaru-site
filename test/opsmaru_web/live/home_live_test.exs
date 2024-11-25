@@ -2,15 +2,10 @@ defmodule OpsmaruWeb.HomeLiveTest do
   use OpsmaruWeb.ConnCase, async: true
   use ExVCR.Mock, adapter: ExVCR.Adapter.Finch
 
+  import Opsmaru.Scenarios
   import Phoenix.LiveViewTest
 
-  setup do
-    test_finch = Application.get_env(:opsmaru, :test_finch)
-
-    Finch.start_link(name: test_finch)
-
-    :ok
-  end
+  setup [:setup_finch]
 
   describe "home when not logged in" do
     test "can visit home page", %{conn: conn} do
