@@ -30,7 +30,6 @@ defmodule OpsmaruWeb.BlogLive.IndexTest do
 
     test "can filter by page", %{conn: conn} do
       use_cassette "blog_live_index_page_test", match_requests_on: [:query] do
-
         {:ok, lv, _html} = live(conn, ~p"/blog?page=2")
 
         rendered = render(lv)

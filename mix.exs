@@ -12,7 +12,10 @@ defmodule Opsmaru.MixProject do
       deps: deps(),
       dialyzer: dialyzer(),
       preferred_cli_env: [
-        vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test
+        vcr: :test,
+        "vcr.delete": :test,
+        "vcr.check": :test,
+        "vcr.show": :test
       ]
     ]
   end
