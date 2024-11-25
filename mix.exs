@@ -67,6 +67,9 @@ defmodule Opsmaru.MixProject do
       {:stripity_stripe, "~> 3.2.0"},
       {:money, "~> 1.13.1"},
 
+      # Auth
+      {:guardian, "~> 2.3"},
+
       # Content
       {:sanity, "~> 2.0"},
       {:mdex, github: "leandrocp/mdex", branch: "main"},

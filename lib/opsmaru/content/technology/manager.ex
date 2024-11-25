@@ -23,7 +23,6 @@ defmodule Opsmaru.Content.Technology.Manager do
     |> Sanity.query(options, perspective: "published")
     |> Sanity.request!(sanity_request_opts())
     |> Sanity.result!()
-    |> IO.inspect()
     |> Enum.map(&Technology.parse/1)
   end
 end

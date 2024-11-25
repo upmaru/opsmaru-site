@@ -13,7 +13,7 @@ config :opsmaru, OpsmaruWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "l7A+cY9tJkVgLhd+66+iPTV+8yIa56Nf1ku2f1kv+BMALcJMhDVLote692Iw+gI6",
+  secret_key_base: "TH0doam1v01ExZH98/1mUvgq+JstaA7Msn8I8l9oPa/pqCk5Kelwa16m012F7tmE",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:opsmaru, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:opsmaru, ~w(--watch)]}

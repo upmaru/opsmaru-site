@@ -13,6 +13,7 @@ defmodule OpsmaruWeb.BaseComponents do
 
   attr :mobile_nav_active, :boolean, default: false
   attr :navigation, Content.Navigation, required: true
+  attr :current_user, Opsmaru.Accounts.User, default: nil
 
   def header(assigns) do
     ~H"""
@@ -42,6 +43,16 @@ defmodule OpsmaruWeb.BaseComponents do
                 class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]"
               >
                 <%= link.title %>
+              </.link>
+            </.nav>
+            <.nav class="relative flex group/item">
+              <.link :if={!@current_user} navigate={"/auth/users/log_in"} class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]">
+                <%= gettext("Log in") %>
+              </.link>
+            </.nav>
+            <.nav class="relative flex group/item">
+              <.link :if={@current_user} navigate={"/home"} class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]">
+                <%= gettext("Dashboard") %>
               </.link>
             </.nav>
           </nav>

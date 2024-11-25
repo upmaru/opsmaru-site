@@ -6,8 +6,8 @@ defmodule OpsmaruWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_opsmaru_key",
-    signing_salt: "UTmcQflg",
+    key: "_instellar_key",
+    signing_salt: "1ZHdrgO2",
     same_site: "Lax"
   ]
 

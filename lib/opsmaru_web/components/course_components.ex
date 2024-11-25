@@ -91,7 +91,10 @@ defmodule OpsmaruWeb.CourseComponents do
   def get_support(assigns) do
     h2 = Enum.find(assigns.section.contents, &(&1.slug == "learn-get-support-h2"))
     title = Enum.find(assigns.section.contents, &(&1.slug == "learn-get-support-title"))
-    description = Enum.find(assigns.section.contents, &(&1.slug == "learn-get-support-description"))
+
+    description =
+      Enum.find(assigns.section.contents, &(&1.slug == "learn-get-support-description"))
+
     content = Enum.find(assigns.section.contents, &(&1.slug == "learn-get-support-content"))
     card = Enum.find(assigns.section.cards, &(&1.slug == "learn-get-support-card"))
 
@@ -106,8 +109,12 @@ defmodule OpsmaruWeb.CourseComponents do
     ~H"""
     <div class="my-32 px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-7xl">
-        <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500"><%= @h2.body %></h2>
-        <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl"><%= @title.body %></h3>
+        <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
+          <%= @h2.body %>
+        </h2>
+        <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl">
+          <%= @title.body %>
+        </h3>
         <p class="mt-6 max-w-3xl text-2xl font-medium text-slate-500"><%= @description.body %></p>
         <div class="mt-24 grid grid-cols-1 gap-16 lg:grid-cols-[1fr_24rem]">
           <div class="max-w-lg">
@@ -115,25 +122,36 @@ defmodule OpsmaruWeb.CourseComponents do
               <%= raw(render_markdown(@content.body)) %>
             </div>
             <div class="mt-6">
-              <a href="https://discord.gg/gPFvN9QW" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-[calc(theme(spacing.2)-1px)] rounded-full border border-transparent bg-gray-950 shadow-md whitespace-nowrap text-base font-medium text-white data-[disabled]:bg-gray-950 data-[hover]:bg-gray-800 data-[disabled]:opacity-40">
+              <a
+                href="https://discord.gg/gPFvN9QW"
+                class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-[calc(theme(spacing.2)-1px)] rounded-full border border-transparent bg-gray-950 shadow-md whitespace-nowrap text-base font-medium text-white data-[disabled]:bg-gray-950 data-[hover]:bg-gray-800 data-[disabled]:opacity-40"
+              >
                 <%= gettext("Join Discord") %>
               </a>
-              <a href="https://cal.com/zacksiri/opsmaru-onboarding" class="w-full sm:w-auto mt-6 sm:ml-2 inline-flex items-center justify-center px-4 py-[calc(theme(spacing.2)-1px)] rounded-full border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-base font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40">
+              <a
+                href="https://cal.com/zacksiri/opsmaru-onboarding"
+                class="w-full sm:w-auto mt-6 sm:ml-2 inline-flex items-center justify-center px-4 py-[calc(theme(spacing.2)-1px)] rounded-full border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-base font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
+              >
                 <%= gettext("Book a call") %>
               </a>
             </div>
           </div>
           <div class="relative flex aspect-square flex-col justify-end overflow-hidden rounded-3xl sm:aspect-[5/4] lg:aspect-[3/4]">
             <img src={Image.url(@card.cover, w: 600)} class="absolute inset-0 object-cover" />
-            <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-black from-10% to-75% ring-1 ring-inset ring-gray-950/10 lg:from-25%"></div>
+            <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-black from-10% to-75% ring-1 ring-inset ring-gray-950/10 lg:from-25%">
+            </div>
             <figure class="relative p-10">
               <blockquote>
-                <p class="relative text-md text-white before:absolute before:-translate-x-full"><%= @card.description %></p>
+                <p class="relative text-md text-white before:absolute before:-translate-x-full">
+                  <%= @card.description %>
+                </p>
               </blockquote>
               <figcaption class="mt-6 border-t border-white/20 pt-6">
                 <p class="text-sm/6 font-medium text-white"><%= @card.heading %></p>
                 <p class="text-sm/6 font-medium">
-                  <span class="bg-gradient-to-r from-cyan-300 from-[28%] via-[#c084fc] via-[70%] to-[#7c3aed] bg-clip-text text-transparent"><%= @card.title %></span>
+                  <span class="bg-gradient-to-r from-cyan-300 from-[28%] via-[#c084fc] via-[70%] to-[#7c3aed] bg-clip-text text-transparent">
+                    <%= @card.title %>
+                  </span>
                 </p>
               </figcaption>
             </figure>
@@ -204,14 +222,25 @@ defmodule OpsmaruWeb.CourseComponents do
       <h2 class="mt-24 font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
         <%= @category.name %>
       </h2>
-      <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl"><%= @category.title %></h3>
+      <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
+        <%= @category.title %>
+      </h3>
       <p class="mt-6 max-w-3xl text-2xl font-medium text-gray-500"><%= @category.description %></p>
-      <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:max-w-4xl lg:gap-x-8 xl:max-w-none">
+      <ul
+        role="list"
+        class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:max-w-4xl lg:gap-x-8 xl:max-w-none"
+      >
         <li :for={course <- @category.courses} class="flex flex-col gap-6 xl:flex-row">
-          <img class="aspect-[4/5] w-52 flex-none rounded-2xl object-cover" src={Image.url(course.cover, w: 600)} alt={course.cover.alt} />
+          <img
+            class="aspect-[4/5] w-52 flex-none rounded-2xl object-cover"
+            src={Image.url(course.cover, w: 600)}
+            alt={course.cover.alt}
+          />
           <div class="flex-auto">
             <h3 class="text-lg/8 font-semibold tracking-tight text-gray-900"><%= course.title %></h3>
-            <p class="text-base/7 text-gray-600"><%= course.main_technology.title %> - <%= course.main_technology.category.name %></p>
+            <p class="text-base/7 text-gray-600">
+              <%= course.main_technology.title %> - <%= course.main_technology.category.name %>
+            </p>
             <p class="mt-6 text-base/7 text-gray-600"><%= course.description %></p>
             <.link
               navigate={~p"/how-to/#{course.slug}"}

@@ -27,6 +27,10 @@ config :opsmaru, Opsmaru.Cache,
     backend: :shards
   ]
 
+config :opsmaru, Opsmaru.Guardian,
+  issuer: "instellar",
+  secret_key: "XsaA1vyT1Z9bnBh5e0J/G9/lhQRpbypHKCgF0ZoAJTbj3ActaAMjt0Y7GuB+IkL2"
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

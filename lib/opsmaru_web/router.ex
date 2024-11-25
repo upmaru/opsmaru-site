@@ -1,6 +1,9 @@
 defmodule OpsmaruWeb.Router do
   use OpsmaruWeb, :router
 
+  alias Guardian.Plug.Pipeline
+  alias Guardian.Plug.VerifySession
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +11,12 @@ defmodule OpsmaruWeb.Router do
     plug :put_root_layout, html: {OpsmaruWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    plug Pipeline,
+      module: Opsmaru.Guardian,
+      error_handler: OpsmaruWeb.Plugs.BrowserErrorHandler
+
+    plug VerifySession, refresh_from_cookie: true
   end
 
   pipeline :api do
@@ -20,7 +29,10 @@ defmodule OpsmaruWeb.Router do
     get "/blog/rss.xml", Blog.RssController, :index
 
     live_session :default,
-      on_mount: [{OpsmaruWeb.NavigationHook, :main}] do
+      on_mount: [
+        {OpsmaruWeb.UserHook, :current_user},
+        {OpsmaruWeb.NavigationHook, :main}
+      ] do
       live "/", HomeLive
 
       live "/blog", BlogLive.Index
