@@ -45,7 +45,7 @@ defmodule OpsmaruWeb.EpisodeLive do
           </div>
           <div
             id="episode-player"
-            class="aspect-[16/9] content-center rounded-2xl overflow-hidden min-h-64 bg-slate-950"
+            class="aspect-[16/9] content-center rounded-2xl overflow-hidden bg-slate-950"
             data-video={Jason.encode!(@episode.video)}
             data-title={@episode.title}
             phx-hook="MountPlayer"

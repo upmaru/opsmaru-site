@@ -58,7 +58,7 @@ defmodule OpsmaruWeb.CourseLive do
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <div
             id="introduction-player"
-            class="aspect-[16/9] content-center rounded-2xl overflow-hidden min-h-64 bg-slate-950 shadow-xl"
+            class="aspect-[16/9] content-center rounded-2xl overflow-hidden bg-slate-950 shadow-xl"
             data-video={Jason.encode!(@course.introduction)}
             data-title={@course.title}
             phx-hook="MountPlayer"
