@@ -135,3 +135,8 @@ jobs:
 
       - name: Run Tests
         run: mix test --trace --slowest 10
+        env:
+          STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_DATASET: ${{ env.SANITY_DATASET }}
+          SANITY_PROJECT_ID: ${{ env.SANITY_PROJECT_ID }}
