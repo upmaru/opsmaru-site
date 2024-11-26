@@ -27,7 +27,7 @@ config :opsmaru, :test_finch, OpsmaruTestFinch
 
 config :sanity, Opsmaru.Sanity, http_options: [finch: OpsmaruTestFinch]
 
-config :exvcr, [
+config :exvcr,
   vcr_cassette_library_dir: "test/fixture/vcr_cassettes",
   custom_cassette_library_dir: "test/fixture/custom_cassettes",
   filter_sensitive_data: [],
@@ -36,4 +36,3 @@ config :exvcr, [
     "authorization"
   ],
   response_headers_blacklist: []
-]
