@@ -69,7 +69,7 @@ defmodule OpsmaruWeb.PricingLive do
         </div>
         <div class="relative px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div id="price-list" class="grid grid-cols-1 gap-8 lg:grid-cols-3" phx-hook="MountPriceFadeIn">
               <PricingComponents.price :for={price <- @prices} price={price} />
             </div>
             <div class="mt-24 flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">

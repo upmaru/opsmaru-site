@@ -22,7 +22,7 @@ defmodule OpsmaruWeb.PricingComponents do
       |> assign(:features, price.product.features)
 
     ~H"""
-    <div class="-m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md">
+    <div class="price -m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md">
       <div class="grid grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
         <div class="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
           <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">

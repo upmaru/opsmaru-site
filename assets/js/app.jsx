@@ -24,6 +24,8 @@ import topbar from "../vendor/topbar";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
+import {animate, stagger} from 'motion';
+
 import { Broadcast } from "../components/broadcast";
 import { Slider } from "../components/slider";
 import { MobileNav } from "../components/mobile-nav";
@@ -82,6 +84,13 @@ function mountTechnologies() {
   root.render(<Technologies technologies={technologies} />);
 }
 
+function mountPriceFadeIn() {
+  const el = this.el;
+  const prices = el.querySelectorAll(".price");
+
+  animate(prices, {opacity: [0, 1]}, {delay: stagger(0.2)})
+}
+
 let Hooks = {};
 
 Hooks.MountBroadcast = {
@@ -102,6 +111,11 @@ Hooks.MountMobileNav = {
 Hooks.MountTechnologies = {
   mounted: mountTechnologies,
   updated: mountTechnologies,
+}
+
+Hooks.MountPriceFadeIn = {
+  mounted: mountPriceFadeIn,
+  updated: mountPriceFadeIn,
 }
 
 Hooks.MountPlayer = {
