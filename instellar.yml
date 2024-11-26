@@ -69,6 +69,14 @@ kits:
     variables:
       - default_value: 'true'
         key: PHX_SERVER
+      - key: SANITY_DATASET
+        required: true
+      - key: SANITY_PROJECT_ID
+        required: true
+      - key: SANITY_TOKEN
+        required: true
+      - key: STRIPE_SECRET
+        required: true
       - driver: generic/secret
         driver_options:
           length: 128
