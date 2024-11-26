@@ -55,10 +55,18 @@ defmodule OpsmaruWeb.PricingLive do
         </div>
         <div class="mt-16 flex justify-center">
           <div class="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs/5 font-semibold ring-1 ring-inset ring-slate-200">
-            <.link patch={~p"/our-product/pricing"} class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950" data-active={@interval == "month"}>
+            <.link
+              patch={~p"/our-product/pricing"}
+              class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950"
+              data-active={@interval == "month"}
+            >
               <span><%= gettext("Monthly") %></span>
             </.link>
-            <.link patch={~p"/our-product/pricing?interval=year"} class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950" data-active={@interval == "year"}>
+            <.link
+              patch={~p"/our-product/pricing?interval=year"}
+              class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950"
+              data-active={@interval == "year"}
+            >
               <span><%= gettext("Yearly") %></span>
             </.link>
           </div>
@@ -69,7 +77,11 @@ defmodule OpsmaruWeb.PricingLive do
         </div>
         <div class="relative px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
-            <div id="price-list" class="grid grid-cols-1 gap-8 lg:grid-cols-3" phx-hook="MountPriceFadeIn">
+            <div
+              id="price-list"
+              class="grid grid-cols-1 gap-8 lg:grid-cols-3"
+              phx-hook="MountPriceFadeIn"
+            >
               <PricingComponents.price :for={price <- @prices} price={price} />
             </div>
             <div class="mt-24 flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">

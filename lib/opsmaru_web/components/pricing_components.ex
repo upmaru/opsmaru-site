@@ -37,7 +37,10 @@ defmodule OpsmaruWeb.PricingComponents do
               <p><%= String.upcase(@price.currency) %></p>
               <%= if @metadata.user_count_limit > 1 do %>
                 <p>
-                  <%= gettext("per %{unit_label} per %{interval}", unit_label: @price.product.unit_label, interval: @price.recurring.interval) %>
+                  <%= gettext("per %{unit_label} per %{interval}",
+                    unit_label: @price.product.unit_label,
+                    interval: @price.recurring.interval
+                  ) %>
                 </p>
               <% else %>
                 <p>
