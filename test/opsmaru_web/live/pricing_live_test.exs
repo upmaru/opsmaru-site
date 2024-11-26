@@ -1,11 +1,7 @@
 defmodule OpsmaruWeb.PricingLiveTest do
   use OpsmaruWeb.ConnCase, async: true
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Finch
 
-  import Opsmaru.Scenarios
   import Phoenix.LiveViewTest
-
-  setup [:setup_finch]
 
   setup do
     bypass = Bypass.open()
@@ -43,15 +39,13 @@ defmodule OpsmaruWeb.PricingLiveTest do
         |> send_resp(200, product_search_response)
       end)
 
-      use_cassette "pricing_live_test", match_requests_on: [:query] do
-        {:ok, lv, _html} = live(conn, ~p"/our-product/pricing")
+      {:ok, lv, _html} = live(conn, ~p"/our-product/pricing")
 
-        rendered = render(lv)
+      rendered = render(lv)
 
-        assert rendered =~ "Launch with a plan that makes"
+      assert rendered =~ "Launch with a plan that makes"
 
-        assert rendered =~ "generous"
-      end
+      assert rendered =~ "generous"
     end
   end
 end

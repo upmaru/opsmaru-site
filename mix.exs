@@ -11,12 +11,6 @@ defmodule Opsmaru.MixProject do
       aliases: aliases(),
       deps: deps(),
       dialyzer: dialyzer(),
-      preferred_cli_env: [
-        vcr: :test,
-        "vcr.delete": :test,
-        "vcr.check": :test,
-        "vcr.show": :test
-      ]
     ]
   end
 
@@ -98,7 +92,6 @@ defmodule Opsmaru.MixProject do
       {:ecto, "~> 3.12"},
 
       # Testing
-      {:exvcr, "~> 0.15", only: :test},
       {:bypass, "~> 2.1", only: :test},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
