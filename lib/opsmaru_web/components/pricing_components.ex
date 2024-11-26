@@ -50,9 +50,9 @@ defmodule OpsmaruWeb.PricingComponents do
             </div>
           </div>
           <div class="mt-8">
-            <.button href="/auth/users/register">
+            <.link navigate="/auth/users/register">
               <%= gettext("Get started") %>
-            </.button>
+            </.link>
           </div>
           <div class="mt-8">
             <h3 class="text-sm/6 font-medium text-slate-950"><%= gettext("What's included:") %></h3>

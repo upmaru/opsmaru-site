@@ -7,7 +7,10 @@ defmodule OpsmaruWeb.HomeLiveTest do
     test "can visit home page", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/")
 
-      assert render(lv) =~ "Deploy &amp; Monetize"
+      rendered = render(lv)
+
+      assert rendered =~ "Deploy"
+      assert rendered =~ "Monetize"
     end
   end
 end

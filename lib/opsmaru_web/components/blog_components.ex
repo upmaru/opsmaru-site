@@ -39,7 +39,7 @@ defmodule OpsmaruWeb.BlogComponents do
 
   def featured(assigns) do
     ~H"""
-    <div class="mt-16 bg-gradient-to-t from-gray-100 pb-14">
+    <div class="mt-16 bg-gradient-to-t from-gray-100 pb-32">
       <div class="px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="text-2xl font-medium tracking-tight"><%= gettext("Featured") %></h2>
@@ -56,7 +56,7 @@ defmodule OpsmaruWeb.BlogComponents do
 
   def featured_post(assigns) do
     ~H"""
-    <div class="relative flex flex-col rounded-3xl bg-white p-2 shadow-md shadow-black/5 ring-1 ring-black/5">
+    <div class="featured-post relative flex flex-col rounded-3xl bg-white p-2 shadow-md shadow-black/5 ring-1 ring-black/5">
       <img
         class="aspect-[3/2] w-full rounded-2xl object-cover"
         alt={@post.cover.alt}

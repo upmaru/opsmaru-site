@@ -5,6 +5,7 @@ defmodule OpsmaruWeb.HomeLive do
 
   alias OpsmaruWeb.BaseComponents
   alias OpsmaruWeb.HomeComponents
+  alias OpsmaruWeb.BlogComponents
 
   def mount(_params, _session, socket) do
     page = Content.show_page("home")
@@ -12,6 +13,7 @@ defmodule OpsmaruWeb.HomeLive do
     hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
     slides_section = Enum.find(page.sections, &(&1.slug == "home-slides"))
     top_bento_section = Enum.find(page.sections, &(&1.slug == "home-top-bento"))
+    featured_posts = Content.featured_posts()
 
     slides = Content.list_slides()
 
@@ -29,6 +31,7 @@ defmodule OpsmaruWeb.HomeLive do
       |> assign(:logos, logos)
       |> assign(:slides, slides)
       |> assign(:testimonials, testimonials)
+      |> assign(:featured_posts, featured_posts)
 
     {:ok, socket, layout: false}
   end
@@ -37,6 +40,7 @@ defmodule OpsmaruWeb.HomeLive do
   attr :main_nav, Content.Navigation, required: true
   attr :slides, :list, required: true
   attr :testimonials, :list, required: true
+  attr :featured_posts, :list, default: []
 
   def render(assigns) do
     ~H"""
@@ -123,7 +127,7 @@ defmodule OpsmaruWeb.HomeLive do
           </div>
         </div>
       </main>
-      <div class="overflow-hidden py-32">
+      <div class="overflow-hidden pt-32">
         <div class="px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
             <div>
@@ -131,22 +135,12 @@ defmodule OpsmaruWeb.HomeLive do
                 <%= gettext("Latest updates") %>
               </h2>
               <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-                <%= gettext("What customers are saying.") %>
+                <%= gettext("From the blog.") %>
               </h3>
             </div>
           </div>
         </div>
-        <div
-          id="latest-updates-slider"
-          data-testimonials={Jason.encode!(@testimonials)}
-          data-description={
-            gettext(
-              "Become one of the early adopters of a new way to sell software. Start monetizing your web app today."
-            )
-          }
-          phx-hook="MountSlider"
-        >
-        </div>
+        <BlogComponents.featured posts={@featured_posts} />
       </div>
       <BaseComponents.footer />
     </div>
