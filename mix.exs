@@ -99,7 +99,8 @@ defmodule Opsmaru.MixProject do
 
       # Testing
       {:exvcr, "~> 0.15", only: :test},
-
+      {:bypass, "~> 2.1", only: :test},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 
