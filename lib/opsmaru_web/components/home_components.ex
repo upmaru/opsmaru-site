@@ -20,8 +20,15 @@ defmodule OpsmaruWeb.HomeComponents do
 
     ~H"""
     <div class="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
-      <h1 class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-slate-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
-        <%= @h1.body %>
+      <h1
+        id="hero-text"
+        class="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-slate-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]"
+        data-fade_in_class=".chunk"
+        phx-hook="MountStaggerIn"
+      >
+        <span :for={chunk <- String.split(@h1.body, " ")} class="chunk">
+          <%= chunk %>
+        </span>
       </h1>
       <p class="mt-8 max-w-lg text-xl/7 font-medium text-slate-950/75 sm:text-2xl/8">
         <%= @description.body %>

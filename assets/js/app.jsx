@@ -84,11 +84,12 @@ function mountTechnologies() {
   root.render(<Technologies technologies={technologies} />);
 }
 
-function mountPriceFadeIn() {
+function mountStaggerIn() {
   const el = this.el;
-  const prices = el.querySelectorAll(".price");
+  const { fade_in_class } = el.dataset;
+  const nodes = el.querySelectorAll(fade_in_class);
 
-  animate(prices, {opacity: [0, 1]}, {delay: stagger(0.2)})
+  animate(nodes, {opacity: [0, 1]}, {delay: stagger(0.2)})
 }
 
 let Hooks = {};
@@ -113,9 +114,9 @@ Hooks.MountTechnologies = {
   updated: mountTechnologies,
 }
 
-Hooks.MountPriceFadeIn = {
-  mounted: mountPriceFadeIn,
-  updated: mountPriceFadeIn,
+Hooks.MountStaggerIn = {
+  mounted: mountStaggerIn,
+  updated: mountStaggerIn,
 }
 
 Hooks.MountPlayer = {

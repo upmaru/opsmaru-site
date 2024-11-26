@@ -80,7 +80,8 @@ defmodule OpsmaruWeb.PricingLive do
             <div
               id="price-list"
               class="grid grid-cols-1 gap-8 lg:grid-cols-3"
-              phx-hook="MountPriceFadeIn"
+              data-fade_in_class=".price"
+              phx-hook="MountStaggerIn"
             >
               <PricingComponents.price :for={price <- @prices} price={price} />
             </div>
