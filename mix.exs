@@ -10,12 +10,20 @@ defmodule Opsmaru.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
+      dialyzer: dialyzer(),
       preferred_cli_env: [
         vcr: :test,
         "vcr.delete": :test,
         "vcr.check": :test,
         "vcr.show": :test
       ]
+    ]
+  end
+
+  defp dialyzer do
+    [
+      plt_core_path: "priv/plts",
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]
   end
 
@@ -91,7 +99,7 @@ defmodule Opsmaru.MixProject do
 
       # Testing
       {:exvcr, "~> 0.15", only: :test},
-      {:bypass, "~> 2.1", only: :test}
+
     ]
   end
 

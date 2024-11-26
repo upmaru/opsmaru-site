@@ -11,7 +11,7 @@ on:
 jobs:
   deps:
     name: Dependencies
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: warp-ubuntu-latest-x64-4x
     container:
       image: alpine:3.19
 
@@ -57,7 +57,7 @@ jobs:
   static_code_analysis:
     name: Static Code Analysis
     needs: deps
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: warp-ubuntu-latest-x64-4x
     container:
       image: alpine:3.19
 
@@ -100,7 +100,7 @@ jobs:
   test:
     name: Unit Tests
     needs: deps
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: warp-ubuntu-latest-x64-4x
     container:
       image: alpine:3.19
 
@@ -135,3 +135,8 @@ jobs:
 
       - name: Run Tests
         run: mix test --trace --slowest 10
+        env:
+          STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+          SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
