@@ -177,7 +177,10 @@ defmodule OpsmaruWeb.PricingLive do
                 <div class="-m-2 rounded-4xl bg-white/15 shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:max-w-xs">
                   <div class="rounded-4xl p-2 shadow-md shadow-black/5">
                     <div class="overflow-hidden rounded-3xl shadow-2xl outline outline-1 -outline-offset-1 outline-black/10">
-                      <img src={Image.url(@testimonial.cover)} class="aspect-[3/4] w-full object-cover" />
+                      <img
+                        src={Image.url(@testimonial.cover)}
+                        class="aspect-[3/4] w-full object-cover"
+                      />
                     </div>
                   </div>
                 </div>
