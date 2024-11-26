@@ -56,7 +56,7 @@ defmodule OpsmaruWeb.BlogComponents do
 
   def featured_post(assigns) do
     ~H"""
-    <div class="relative flex flex-col rounded-3xl bg-white p-2 shadow-md shadow-black/5 ring-1 ring-black/5">
+    <div class="featured-post relative flex flex-col rounded-3xl bg-white p-2 shadow-md shadow-black/5 ring-1 ring-black/5">
       <img
         class="aspect-[3/2] w-full rounded-2xl object-cover"
         alt={@post.cover.alt}

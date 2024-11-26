@@ -6,6 +6,8 @@ defmodule OpsmaruWeb.PricingLive do
   alias Opsmaru.Features
   alias Opsmaru.Products
 
+  alias Opsmaru.Content.Image
+
   alias OpsmaruWeb.PricingComponents
 
   import __MODULE__.DataLoader
@@ -21,6 +23,10 @@ defmodule OpsmaruWeb.PricingLive do
     product_features = Products.list_features()
     logos = Content.list_logos()
 
+    testimonials = Content.list_testimonials()
+
+    selected_testimonial = Enum.random(testimonials)
+
     socket =
       socket
       |> assign(:page_title, page.title)
@@ -30,6 +36,7 @@ defmodule OpsmaruWeb.PricingLive do
       |> assign(:categories, categories)
       |> assign(:product_features, product_features)
       |> assign(:logos, logos)
+      |> assign(:testimonial, selected_testimonial)
 
     {:ok, socket}
   end
@@ -160,6 +167,40 @@ defmodule OpsmaruWeb.PricingLive do
               />
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="mx-2 my-24 rounded-4xl bg-gray-900 bg-[url(/site/images/dot-texture.svg)] pb-24 pt-72 lg:pt-36">
+        <div class="px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl lg:max-w-7xl">
+            <div class="grid grid-cols-1 lg:grid-cols-[384px_1fr_1fr]">
+              <div class="-mt-96 lg:-mt-52">
+                <div class="-m-2 rounded-4xl bg-white/15 shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:max-w-xs">
+                  <div class="rounded-4xl p-2 shadow-md shadow-black/5">
+                    <div class="overflow-hidden rounded-3xl shadow-2xl outline outline-1 -outline-offset-1 outline-black/10">
+                      <img src={Image.url(@testimonial.cover)} class="aspect-[3/4] w-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex max-lg:mt-16 lg:col-span-2 lg:px-16">
+                <figure class="mx-auto flex max-w-xl flex-col gap-16 max-lg:text-center">
+                  <blockquote>
+                    <p class="relative text-3xl tracking-tight text-white before:absolute before:-translate-x-full before:content-['“'] after:absolute after:content-['”'] lg:text-4xl">
+                      <%= @testimonial.quote %>
+                    </p>
+                  </blockquote>
+                  <figcaption class="mt-auto">
+                    <p class="text-sm/6 font-medium text-white"><%= @testimonial.name %></p>
+                    <p class="text-sm/6 font-medium">
+                      <span class="bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 bg-clip-text text-transparent">
+                        <%= @testimonial.position %>
+                      </span>
+                    </p>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="px-6 lg:px-8">

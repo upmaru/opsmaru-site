@@ -135,7 +135,7 @@ defmodule OpsmaruWeb.HomeLive do
                 <%= gettext("Latest updates") %>
               </h2>
               <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-                <%= gettext("What's happening at Opsmaru.") %>
+                <%= gettext("From the blog.") %>
               </h3>
             </div>
           </div>
