@@ -10,11 +10,13 @@ defmodule OpsmaruWeb.PricingLive do
 
   import __MODULE__.DataLoader
 
+  @impl true
   def mount(_params, _session, socket) do
     prices = load_prices()
+
     page = Content.show_page("pricing")
     faqs = Pages.list_faqs(page)
-    products = Content.list_products()
+
     categories = Features.list_categories()
     product_features = Products.list_features()
     logos = Content.list_logos()
@@ -25,7 +27,6 @@ defmodule OpsmaruWeb.PricingLive do
       |> assign(:prices, prices)
       |> assign(:page, page)
       |> assign(:faqs, faqs)
-      |> assign(:products, products)
       |> assign(:categories, categories)
       |> assign(:product_features, product_features)
       |> assign(:logos, logos)
@@ -35,6 +36,8 @@ defmodule OpsmaruWeb.PricingLive do
 
   attr :mobile_nav_active, :boolean, default: false
   attr :main_nav, Content.Navigation, required: true
+  attr :interval, :string, default: "month"
+  attr :products, :list, default: []
 
   def render(assigns) do
     ~H"""
@@ -50,6 +53,16 @@ defmodule OpsmaruWeb.PricingLive do
             ) %>
           </p>
         </div>
+        <div class="mt-16 flex justify-center">
+          <div class="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs/5 font-semibold ring-1 ring-inset ring-slate-200">
+            <.link patch={~p"/our-product/pricing"} class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950" data-active={@interval == "month"}>
+              <span><%= gettext("Monthly") %></span>
+            </.link>
+            <.link patch={~p"/our-product/pricing?interval=year"} class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950" data-active={@interval == "year"}>
+              <span><%= gettext("Yearly") %></span>
+            </.link>
+          </div>
+        </div>
       </div>
       <div class="relative py-24">
         <div class="absolute inset-x-2 bottom-0 top-48 rounded-4xl ring-1 ring-inset ring-slate-950/5 bg-[linear-gradient(115deg,var(--tw-gradient-stops))] from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 sm:bg-[linear-gradient(145deg,var(--tw-gradient-stops))]">
@@ -57,7 +70,7 @@ defmodule OpsmaruWeb.PricingLive do
         <div class="relative px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-              <BaseComponents.price :for={price <- @prices} price={price} />
+              <PricingComponents.price :for={price <- @prices} price={price} />
             </div>
             <div class="mt-24 flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4">
               <img
@@ -146,5 +159,45 @@ defmodule OpsmaruWeb.PricingLive do
       </div>
     </div>
     """
+  end
+
+  @impl true
+  def handle_params(%{"interval" => interval}, _uri, socket) do
+    prices = load_prices(interval)
+
+    active_products_names = Enum.map(prices, & &1.product.name)
+
+    products =
+      Content.list_products()
+      |> Enum.filter(fn product ->
+        product.reference in active_products_names
+      end)
+
+    socket =
+      socket
+      |> assign(:prices, prices)
+      |> assign(:interval, interval)
+      |> assign(:products, products)
+
+    {:noreply, socket}
+  end
+
+  def handle_params(_, _uri, socket) do
+    prices = load_prices()
+    active_products_names = Enum.map(prices, & &1.product.name)
+
+    products =
+      Content.list_products()
+      |> Enum.filter(fn product ->
+        product.reference in active_products_names
+      end)
+
+    socket =
+      socket
+      |> assign(:prices, prices)
+      |> assign(:interval, "month")
+      |> assign(:products, products)
+
+    {:noreply, socket}
   end
 end
