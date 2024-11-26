@@ -39,7 +39,7 @@ defmodule OpsmaruWeb.BlogComponents do
 
   def featured(assigns) do
     ~H"""
-    <div class="mt-16 bg-gradient-to-t from-gray-100 pb-14">
+    <div class="mt-16 bg-gradient-to-t from-gray-100 pb-32">
       <div class="px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="text-2xl font-medium tracking-tight"><%= gettext("Featured") %></h2>
