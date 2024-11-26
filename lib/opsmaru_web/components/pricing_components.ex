@@ -6,6 +6,8 @@ defmodule OpsmaruWeb.PricingComponents do
   alias Opsmaru.Pages
   alias Opsmaru.Commerce
 
+  alias OpsmaruWeb.BaseComponents
+
   use Gettext, backend: OpsmaruWeb.Gettext
 
   attr :price, Stripe.Price, required: true
@@ -50,9 +52,9 @@ defmodule OpsmaruWeb.PricingComponents do
             </div>
           </div>
           <div class="mt-8">
-            <.link navigate="/auth/users/register">
+            <BaseComponents.button href="/auth/users/register">
               <%= gettext("Get started") %>
-            </.link>
+            </BaseComponents.button>
           </div>
           <div class="mt-8">
             <h3 class="text-sm/6 font-medium text-slate-950"><%= gettext("What's included:") %></h3>
