@@ -8,7 +8,9 @@ defmodule Opsmaru.Content.Course.Manager do
   @ttl :timer.hours(1)
 
   @decorate cacheable(cache: Cache, key: {:course, slug}, opts: [ttl: @ttl])
-  def show(slug) do
+  def show(slug, options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     query = ~S"""
     *[_type == "course" && slug.current == $slug][0] {
       ...,
@@ -30,7 +32,7 @@ defmodule Opsmaru.Content.Course.Manager do
 
     course =
       query
-      |> Sanity.query(%{slug: slug}, perspective: "published")
+      |> Sanity.query(%{slug: slug}, perspective: perspective)
       |> Sanity.request!(sanity_request_opts())
       |> Sanity.result!()
 

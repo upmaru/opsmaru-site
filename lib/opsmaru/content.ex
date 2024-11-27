@@ -53,7 +53,7 @@ defmodule Opsmaru.Content do
 
   alias __MODULE__.Course
 
-  defdelegate show_course(slug),
+  defdelegate show_course(slug, options \\ []),
     to: Course.Manager,
     as: :show
 

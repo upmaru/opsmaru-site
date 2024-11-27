@@ -12,7 +12,7 @@ defmodule OpsmaruWeb.CourseLive do
   import OpsmaruWeb.MarkdownHelper
 
   def mount(%{"id" => slug}, _session, socket) do
-    course = Content.show_course(slug)
+    course = Content.show_course(slug, perspective: socket.assigns.perspective)
     sections = Courses.list_sections(course_id: course.id)
 
     first_section = Enum.find(sections, fn section -> section.index == 1 end)

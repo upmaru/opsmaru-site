@@ -13,7 +13,7 @@ defmodule Opsmaru.Courses do
 
   alias __MODULE__.Episode
 
-  defdelegate show_episode(course_slug, episode_slug),
+  defdelegate show_episode(course_slug, episode_slug, options \\ []),
     to: Episode.Manager,
     as: :show
 end
