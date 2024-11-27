@@ -4,7 +4,9 @@ defmodule Opsmaru.Courses.Episode.Manager do
 
   alias Opsmaru.Courses.Episode
 
-  def show(course_slug, episode_slug) do
+  def show(course_slug, episode_slug, options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     query = ~S"""
     *[_type == "courseEpisode"
       && slug.current == $episode_slug
@@ -24,7 +26,7 @@ defmodule Opsmaru.Courses.Episode.Manager do
     episode =
       query
       |> Sanity.query(%{course_slug: course_slug, episode_slug: episode_slug},
-        perspective: "published"
+        perspective: perspective
       )
       |> Sanity.request!(sanity_request_opts())
       |> Sanity.result!()

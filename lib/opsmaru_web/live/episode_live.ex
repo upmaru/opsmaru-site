@@ -11,8 +11,11 @@ defmodule OpsmaruWeb.EpisodeLive do
   import OpsmaruWeb.MarkdownHelper
 
   def mount(%{"course_id" => course_slug, "id" => episode_slug}, _session, socket) do
-    course = Content.show_course(course_slug)
-    episode = Courses.show_episode(course_slug, episode_slug)
+    course = Content.show_course(course_slug, perspective: socket.assigns.perspective)
+
+    episode =
+      Courses.show_episode(course_slug, episode_slug, perspective: socket.assigns.perspective)
+
     sections = Courses.list_sections(course_id: course.id)
 
     socket =
