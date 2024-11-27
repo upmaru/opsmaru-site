@@ -25,8 +25,6 @@ defmodule Opsmaru.Content.Post.Manager do
   def list(options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
 
-    IO.inspect(perspective)
-
     start_index = Keyword.get(options, :start_index, 0)
     end_index = Keyword.get(options, :end_index, 5)
     category = Keyword.get(options, :category)
