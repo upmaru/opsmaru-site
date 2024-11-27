@@ -30,6 +30,7 @@ defmodule OpsmaruWeb.Router do
 
     live_session :default,
       on_mount: [
+        {OpsmaruWeb.PerspectiveHook, :default},
         {OpsmaruWeb.UserHook, :current_user},
         {OpsmaruWeb.NavigationHook, :main}
       ] do
