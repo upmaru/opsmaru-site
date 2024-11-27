@@ -3,7 +3,7 @@ defmodule OpsmaruWeb.PerspectiveHook do
 
   alias Opsmaru.Cache
 
-  def on_mount(:default, _params, _session, %{host_uri: uri} socket) do
+  def on_mount(:default, _params, _session, %{host_uri: uri} = socket) do
     socket =
       assign_new(socket, :perspective, fn ->
         if uri.host =~ "preview" do
