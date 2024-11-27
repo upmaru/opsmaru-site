@@ -8,7 +8,7 @@ defmodule Opsmaru.Content.Page.Manager do
   @ttl :timer.hours(1)
 
   @spec show(String.t(), Keyword.t()) :: %{data: %Page{}, perspective: String.t()}
-  @decorate cacheable(cache: Cache, opts: [ttl: @ttl])
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def show(slug, options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
 
