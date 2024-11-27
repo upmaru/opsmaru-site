@@ -31,23 +31,20 @@ defmodule Opsmaru.Content.Post.Manager do
     last_id = Keyword.get(options, :last_id, "")
     last_published_at = Keyword.get(options, :last_published_at, Date.utc_today())
 
-    %Sanity.Response{body: %{"result" => posts}} =
-      @base_query
-      |> Sanity.query(
-        %{
-          start_index: start_index,
-          end_index: end_index,
-          category: category,
-          last_id: last_id,
-          last_published_at: last_published_at
-        },
-        perspective: perspective
-      )
-      |> Sanity.request!(sanity_request_opts())
-
-    Enum.map(posts, fn post_params ->
-      Post.parse(post_params)
-    end)
+    @base_query
+    |> Sanity.query(
+      %{
+        start_index: start_index,
+        end_index: end_index,
+        category: category,
+        last_id: last_id,
+        last_published_at: last_published_at
+      },
+      perspective: perspective
+    )
+    |> Sanity.request!(sanity_request_opts())
+    |> Sanity.result!()
+    |> Enum.map(&Post.parse/1)
   end
 
   @decorate cacheable(cache: Cache, key: {:featured_posts, options}, opts: [ttl: @ttl])
