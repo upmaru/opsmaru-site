@@ -23,6 +23,8 @@ defmodule Opsmaru.Content.Post.Manager do
 
   @decorate cacheable(cache: Cache, key: {:posts, options}, opts: [ttl: @ttl])
   def list(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     start_index = Keyword.get(options, :start_index, 0)
     end_index = Keyword.get(options, :end_index, 5)
     category = Keyword.get(options, :category)
@@ -39,7 +41,7 @@ defmodule Opsmaru.Content.Post.Manager do
           last_id: last_id,
           last_published_at: last_published_at
         },
-        perspective: "published"
+        perspective: perspective
       )
       |> Sanity.request!(sanity_request_opts())
 

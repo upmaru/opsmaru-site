@@ -90,7 +90,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
       if last_post do
         last_post
       else
-        Content.list_posts(end_index: @per_page, category: category)
+        Content.list_posts(end_index: @per_page, category: category, perspective: assigns.perspective)
         |> List.last()
       end
 
@@ -120,7 +120,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
     {:noreply, socket}
   end
 
-  def handle_params(params, _url, socket) do
+  def handle_params(params, _url, %{assigns: assigns} = socket) do
     category = Map.get(params, "category")
 
     current_path =
@@ -130,7 +130,13 @@ defmodule OpsmaruWeb.BlogLive.Index do
         ~p"/blog"
       end
 
-    posts = Content.list_posts(end_index: @per_page, category: category, perspective: socket.assigns.perspective)
+    posts =
+      Content.list_posts(
+        end_index: @per_page,
+        category: category,
+        perspective: assigns.perspective
+      )
+
     posts_count = Content.posts_count(category: category)
 
     socket =
