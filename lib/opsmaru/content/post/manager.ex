@@ -21,6 +21,7 @@ defmodule Opsmaru.Content.Post.Manager do
   }
   """
 
+  @spec featured(Keyword.t()) :: %{data: [%Post{}], perspective: String.t()}
   @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def list(options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
@@ -50,6 +51,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %{data: data, perspective: perspective}
   end
 
+  @spec featured(Keyword.t()) :: %{data: [%Post{}], perspective: String.t()}
   @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def featured(options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
@@ -77,7 +79,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %{data: data, perspective: perspective}
   end
 
-  @spec show(String.t(), Keyword.t()) :: %Post{}
+  @spec show(String.t(), Keyword.t()) :: %{data: %Post{}, perspective: String.t()}
   @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def show(slug, options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
