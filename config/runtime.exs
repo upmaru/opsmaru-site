@@ -57,7 +57,8 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    check_origin: Enum.uniq(["https://#{host}", "https://preview.opsmaru.com"])
 
   config :opsmaru, Opsmaru.Guardian,
     issuer: "instellar",

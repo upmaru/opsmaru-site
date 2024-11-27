@@ -70,9 +70,11 @@ defmodule Opsmaru.Content.Post.Manager do
     |> Enum.map(&Post.parse/1)
   end
 
-  @spec show(String.t()) :: %Post{}
+  @spec show(String.t(), Keyword.t()) :: %Post{}
   @decorate cacheable(cache: Cache, key: {:posts, slug}, opts: [ttl: @ttl])
-  def show(slug) do
+  def show(slug, options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     query = ~S"""
     *[_type == "post" && slug.current == $slug][0]{
       ...,
@@ -85,7 +87,7 @@ defmodule Opsmaru.Content.Post.Manager do
 
     %Sanity.Response{body: %{"result" => post_params}} =
       query
-      |> Sanity.query(%{slug: slug}, perspective: "published")
+      |> Sanity.query(%{slug: slug}, perspective: perspective)
       |> Sanity.request!(sanity_request_opts())
 
     post = Post.parse(post_params)
