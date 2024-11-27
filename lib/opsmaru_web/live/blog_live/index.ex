@@ -90,7 +90,11 @@ defmodule OpsmaruWeb.BlogLive.Index do
       if last_post do
         last_post
       else
-        Content.list_posts(end_index: @per_page, category: category, perspective: assigns.perspective)
+        Content.list_posts(
+          end_index: @per_page,
+          category: category,
+          perspective: assigns.perspective
+        )
         |> List.last()
       end
 
