@@ -7,15 +7,15 @@ defmodule OpsmaruWeb.PerspectiveHook do
       %URI{host: host} ->
         socket =
           if host =~ "preview" do
-            assign(socket, :perspective, "raw")
+            assign_new(socket, :perspective, fn -> "raw" end)
           else
-            assign(socket, :perspective, "published")
+            assign_new(socket, :perspective, fn -> "published" end)
           end
 
         {:cont, socket}
 
       nil ->
-        {:cont, assign(socket, :perspective, "published")}
+        {:cont, assign(socket, :perspective, fn -> "published" end)}
     end
   end
 end
