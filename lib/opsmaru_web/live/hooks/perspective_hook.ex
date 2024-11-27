@@ -19,7 +19,7 @@ defmodule OpsmaruWeb.PerspectiveHook do
         {:cont, socket}
 
       nil ->
-        {:cont, assign(socket, :perspective, fn -> "published" end)}
+        {:cont, assign_new(socket, :perspective, fn -> "published" end)}
     end
   end
 end
