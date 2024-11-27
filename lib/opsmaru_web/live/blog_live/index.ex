@@ -108,7 +108,8 @@ defmodule OpsmaruWeb.BlogLive.Index do
         Content.list_posts(
           end_index: @per_page,
           last_id: last_id,
-          last_published_at: last_published_at
+          last_published_at: last_published_at,
+          perspective: assigns.perspective
         )
       end
 
