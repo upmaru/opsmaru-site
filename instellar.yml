@@ -65,8 +65,10 @@ kits:
     ports:
       - main: true
         name: web
-        target: 4000
+        target: 3000
     variables:
+      - default_value: '3000'
+        key: PORT
       - default_value: 'true'
         key: PHX_SERVER
       - key: SANITY_DATASET
