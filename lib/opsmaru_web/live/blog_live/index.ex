@@ -130,7 +130,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
         ~p"/blog"
       end
 
-    posts = Content.list_posts(end_index: @per_page, category: category)
+    posts = Content.list_posts(end_index: @per_page, category: category, perspective: socket.assigns.perspective)
     posts_count = Content.posts_count(category: category)
 
     socket =
