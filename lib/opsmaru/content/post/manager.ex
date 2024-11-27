@@ -21,7 +21,7 @@ defmodule Opsmaru.Content.Post.Manager do
   }
   """
 
-  @decorate cacheable(cache: Cache, key: {:posts, options}, opts: [ttl: @ttl])
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def list(options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
 
@@ -31,24 +31,29 @@ defmodule Opsmaru.Content.Post.Manager do
     last_id = Keyword.get(options, :last_id, "")
     last_published_at = Keyword.get(options, :last_published_at, Date.utc_today())
 
-    @base_query
-    |> Sanity.query(
-      %{
-        start_index: start_index,
-        end_index: end_index,
-        category: category,
-        last_id: last_id,
-        last_published_at: last_published_at
-      },
-      perspective: perspective
-    )
-    |> Sanity.request!(sanity_request_opts())
-    |> Sanity.result!()
-    |> Enum.map(&Post.parse/1)
+    data =
+      @base_query
+      |> Sanity.query(
+        %{
+          start_index: start_index,
+          end_index: end_index,
+          category: category,
+          last_id: last_id,
+          last_published_at: last_published_at
+        },
+        perspective: perspective
+      )
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Post.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 
-  @decorate cacheable(cache: Cache, key: {:featured_posts, options}, opts: [ttl: @ttl])
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def featured(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     limit = Keyword.get(options, :limit, 3)
 
     query =
@@ -62,15 +67,18 @@ defmodule Opsmaru.Content.Post.Manager do
       }
       """
 
-    query
-    |> Sanity.query(%{featured: true, limit: limit}, perspective: "published")
-    |> Sanity.request!(sanity_request_opts())
-    |> Sanity.result!()
-    |> Enum.map(&Post.parse/1)
+    data =
+      query
+      |> Sanity.query(%{featured: true, limit: limit}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Post.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 
   @spec show(String.t(), Keyword.t()) :: %Post{}
-  @decorate cacheable(cache: Cache, key: {:posts, slug}, opts: [ttl: @ttl])
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def show(slug, options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
 
@@ -91,12 +99,14 @@ defmodule Opsmaru.Content.Post.Manager do
 
     post = Post.parse(post_params)
     full_content = Req.get!(post.content).body
-    %{post | content: full_content}
+    %{data: %{post | content: full_content}, perspective: perspective}
   end
 
-  @spec feed() :: [%Post{}]
-  @decorate cacheable(cache: Cache, key: :posts_feed, opts: [ttl: :timer.hours(24)])
-  def feed do
+  @spec feed(Keyword.t()) :: [%Post{}]
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: :timer.hours(24)])
+  def feed(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     query = ~S"""
     *[_type == "post" && defined(slug.current)] | order(featured, published_at desc) {
      ...,
@@ -107,17 +117,21 @@ defmodule Opsmaru.Content.Post.Manager do
     }
     """
 
-    %Sanity.Response{body: %{"result" => posts}} =
+    data =
       query
-      |> Sanity.query(%{}, perspective: "published")
+      |> Sanity.query(%{}, perspective: perspective)
       |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Post.parse/1)
 
-    Enum.map(posts, &Post.parse/1)
+    %{data: data, perspective: perspective}
   end
 
-  @spec count(Keyword.t()) :: integer
-  @decorate cacheable(cache: Cache, key: {:posts_count, options}, opts: [ttl: :timer.hours(24)])
+  @spec count(Keyword.t()) :: %{data: integer, perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: :timer.hours(24)])
   def count(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     category = Keyword.get(options, :category)
 
     query = ~S"""
@@ -127,11 +141,12 @@ defmodule Opsmaru.Content.Post.Manager do
     ])
     """
 
-    %Sanity.Response{body: %{"result" => posts_count}} =
+    data =
       query
-      |> Sanity.query(%{category: category}, perspective: "published")
+      |> Sanity.query(%{category: category}, perspective: perspective)
       |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
 
-    posts_count
+    %{data: data, perspective: perspective}
   end
 end

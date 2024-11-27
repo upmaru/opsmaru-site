@@ -7,7 +7,7 @@ defmodule OpsmaruWeb.BlogLive do
   import OpsmaruWeb.MarkdownHelper
 
   def mount(%{"id" => slug}, _session, socket) do
-    post = Content.show_post(slug, perspective: socket.assigns.perspective)
+    %{data: post} = Content.show_post(slug, perspective: socket.assigns.perspective)
 
     socket =
       socket
