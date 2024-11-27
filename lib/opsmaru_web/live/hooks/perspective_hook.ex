@@ -5,7 +5,7 @@ defmodule OpsmaruWeb.PerspectiveHook do
   alias Opsmaru.Cache
 
   def on_mount(:default, _params, _session, socket) do
-    case get_connect_info(socket, :uri) |> IO.inspect() do
+    case get_connect_info(socket, :uri) do
       %URI{host: host} ->
         socket =
           if host =~ "preview" do
