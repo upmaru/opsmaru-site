@@ -13,7 +13,7 @@ defmodule OpsmaruWeb.HomeLive do
     hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
     slides_section = Enum.find(page.sections, &(&1.slug == "home-slides"))
     top_bento_section = Enum.find(page.sections, &(&1.slug == "home-top-bento"))
-    %{data: featured_posts} = Content.featured_posts()
+    %{data: featured_posts} = Content.featured_posts(perspective: assigns.perspective)
 
     %{data: slides} = Content.list_slides(perspective: assigns.perspective)
 
