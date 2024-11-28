@@ -9,18 +9,21 @@ defmodule Opsmaru.Pages.FAQ.Manager do
   @ttl :timer.hours(1)
 
   @base_query ~S"""
-  *[_type == "pageFaq"]{..., faq -> {question, answer}}
+  *[_type == "pageFaq" && page -> slug.current == $page_slug] | order(index asc) {..., faq -> {question, answer}}
   """
 
-  @decorate cacheable(cache: Cache, key: {:faqs, page_slug}, opts: [ttl: @ttl])
-  def list(%Page{slug: page_slug}) do
-    %Sanity.Response{body: %{"result" => faqs}} =
-      @base_query
-      |> Sanity.query(%{"page.slug.current" => page_slug}, perspective: "published")
-      |> Sanity.request!(sanity_request_opts())
+  @spec list(%Page{}, Keyword.t()) :: %{data: [%FAQ{}], perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
+  def list(%Page{slug: page_slug}, options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
 
-    faqs
-    |> Enum.map(&FAQ.parse/1)
-    |> Enum.sort_by(& &1.index, :asc)
+    data =
+      @base_query
+      |> Sanity.query(%{page_slug: page_slug}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&FAQ.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 end

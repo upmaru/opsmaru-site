@@ -7,9 +7,10 @@ defmodule Opsmaru.Content.Testimonial.Manager do
 
   @ttl :timer.hours(1)
 
-  @decorate cacheable(cache: Cache, key: {:testimonials, options}, opts: [ttl: @ttl])
+  @spec list(Keyword.t()) :: %{data: [%Testimonial{}], perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def list(options \\ []) do
-    options = Enum.into(options, %{})
+    perspective = Keyword.get(options, :perspective, "published")
 
     query = ~S"""
       *[_type == "testimonial"] {
@@ -18,10 +19,13 @@ defmodule Opsmaru.Content.Testimonial.Manager do
       }
     """
 
-    query
-    |> Sanity.query(options, perspective: "published")
-    |> Sanity.request!(sanity_request_opts())
-    |> Sanity.result!()
-    |> Enum.map(&Testimonial.parse/1)
+    data =
+      query
+      |> Sanity.query(options, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Testimonial.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 end

@@ -13,17 +13,17 @@ defmodule OpsmaruWeb.PricingLive do
   import __MODULE__.DataLoader
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, _session, %{assigns: assigns} = socket) do
     prices = load_prices()
 
-    page = Content.show_page("pricing")
-    faqs = Pages.list_faqs(page)
+    %{data: page} = Content.show_page("pricing", perspective: assigns.perspective)
+    %{data: faqs} = Pages.list_faqs(page, perspective: assigns.perspective)
 
-    categories = Features.list_categories()
-    product_features = Products.list_features()
-    logos = Content.list_logos()
+    %{data: categories} = Features.list_categories(perspective: assigns.perspective)
+    %{data: product_features} = Products.list_features(perspective: assigns.perspective)
+    %{data: logos} = Content.list_logos(perspective: assigns.perspective)
 
-    testimonials = Content.list_testimonials()
+    %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
     selected_testimonial = Enum.random(testimonials)
 
@@ -219,13 +219,15 @@ defmodule OpsmaruWeb.PricingLive do
   end
 
   @impl true
-  def handle_params(%{"interval" => interval}, _uri, socket) do
+  def handle_params(%{"interval" => interval}, _uri, %{assigns: assigns} = socket) do
     prices = load_prices(interval)
 
     active_products_names = Enum.map(prices, & &1.product.name)
 
+    %{data: products} = Content.list_products(perspective: assigns.perspective)
+
     products =
-      Content.list_products()
+      products
       |> Enum.filter(fn product ->
         product.reference in active_products_names
       end)
@@ -239,12 +241,14 @@ defmodule OpsmaruWeb.PricingLive do
     {:noreply, socket}
   end
 
-  def handle_params(_, _uri, socket) do
+  def handle_params(_, _uri, %{assigns: assigns} = socket) do
     prices = load_prices()
     active_products_names = Enum.map(prices, & &1.product.name)
 
+    %{data: products} = Content.list_products(perspective: assigns.perspective)
+
     products =
-      Content.list_products()
+      products
       |> Enum.filter(fn product ->
         product.reference in active_products_names
       end)

@@ -6,8 +6,10 @@ defmodule Opsmaru.Content.Movie.Manager do
   alias Opsmaru.Content.Movie
 
   @spec show(String.t()) :: %Movie{}
-  @decorate cacheable(cache: Cache, key: {:movie, slug}, opts: [ttl: :timer.hours(1)])
-  def show(slug) do
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: :timer.hours(1)])
+  def show(slug, options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     query = ~S"""
     *[_type == "movie" && slug.current == $slug][0]{
       ...,
@@ -19,11 +21,13 @@ defmodule Opsmaru.Content.Movie.Manager do
     }
     """
 
-    %Sanity.Response{body: %{"result" => movie_params}} =
+    data =
       query
-      |> Sanity.query(%{slug: slug}, perspective: "published")
+      |> Sanity.query(%{slug: slug}, perspective: perspective)
       |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Movie.parse()
 
-    Movie.parse(movie_params)
+    %{data: data, perspective: perspective}
   end
 end

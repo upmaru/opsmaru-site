@@ -17,18 +17,18 @@ defmodule Opsmaru.Features.Category.Manager do
   }
   """
 
-  @decorate cacheable(cache: Cache, key: :feature_categories, opts: [ttl: @ttl])
-  def list(_options \\ []) do
-    @base_query
-    |> Sanity.query(%{}, perspective: "published")
-    |> Sanity.request!(sanity_request_opts())
-    |> case do
-      %Sanity.Response{body: %{"result" => categories}} ->
-        Enum.map(categories, &Category.parse/1)
-        |> Enum.sort_by(& &1.index, :asc)
+  @spec list(Keyword.t()) :: %{data: [%Category{}], perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
+  def list(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
 
-      error ->
-        error
-    end
+    data =
+      @base_query
+      |> Sanity.query(%{}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Category.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 end

@@ -9,11 +9,11 @@ defmodule OpsmaruWeb.BlogLive.Index do
 
   @per_page 5
 
-  def mount(_params, _session, socket) do
-    page = Content.show_page("blog")
+  def mount(_params, _session, %{assigns: assigns} = socket) do
+    %{data: page} = Content.show_page("blog", perspective: assigns.perspective)
     header_section = Enum.find(page.sections, &(&1.slug == "blog-header"))
-    %{data: featured_posts} = Content.featured_posts()
-    categories = Posts.list_categories()
+    %{data: featured_posts} = Content.featured_posts(perspective: assigns.perspective)
+    %{data: categories} = Posts.list_categories(perspective: assigns.perspective)
 
     socket =
       socket

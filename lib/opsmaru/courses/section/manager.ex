@@ -4,7 +4,10 @@ defmodule Opsmaru.Courses.Section.Manager do
 
   alias Opsmaru.Courses.Section
 
-  def list(course_id: course_id) do
+  def list(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+    course_id = Keyword.fetch!(options, :course_id)
+
     query = ~S"""
     *[_type == "courseSection" && course._ref == $course_id] | order(index asc){
       ...,
@@ -24,10 +27,13 @@ defmodule Opsmaru.Courses.Section.Manager do
     }
     """
 
-    query
-    |> Sanity.query(%{course_id: "#{course_id}"}, perspective: "published")
-    |> Sanity.request!(sanity_request_opts())
-    |> Sanity.result!()
-    |> Enum.map(&Section.parse/1)
+    data =
+      query
+      |> Sanity.query(%{course_id: "#{course_id}"}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Section.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 end

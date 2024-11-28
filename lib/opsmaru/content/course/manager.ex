@@ -7,7 +7,8 @@ defmodule Opsmaru.Content.Course.Manager do
 
   @ttl :timer.hours(1)
 
-  @decorate cacheable(cache: Cache, key: {:course, slug}, opts: [ttl: @ttl])
+  @spec show(String.t(), Keyword.t()) :: %{data: %Course{}, perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
   def show(slug, options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
 
@@ -38,6 +39,6 @@ defmodule Opsmaru.Content.Course.Manager do
 
     course = Course.parse(course)
     full_overview = Req.get!(course.overview).body
-    %{course | overview: full_overview}
+    %{data: %{course | overview: full_overview}, perspective: perspective}
   end
 end

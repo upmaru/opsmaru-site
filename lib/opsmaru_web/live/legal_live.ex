@@ -10,7 +10,7 @@ defmodule OpsmaruWeb.LegalLive do
   end
 
   def mount(%{"id" => slug}, _session, socket) do
-    with %Content.Page{} = page <- Content.show_page(slug) do
+    with %{data: %Content.Page{} = page} <- Content.show_page(slug) do
       main_section =
         Enum.find(page.sections, &(&1.slug == "#{slug}-main"))
 

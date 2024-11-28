@@ -5,7 +5,7 @@ defmodule Opsmaru.Content.Price.Manager do
 
   @ttl :timer.hours(1)
 
-  @decorate cacheable(cache: Cache, key: :prices, opts: [ttl: @ttl])
+  @decorate cacheable(cache: Cache, opts: [ttl: @ttl])
   def list do
     query = "active: 'true' AND metadata['app']: 'instellar'"
 
