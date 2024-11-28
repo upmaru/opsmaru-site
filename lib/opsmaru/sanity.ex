@@ -1,4 +1,8 @@
 defmodule Opsmaru.Sanity do
+  defmodule Response do
+    defstruct [:data, :perspective]
+  end
+
   def sanity_request_opts do
     Application.get_env(:opsmaru, __MODULE__)
   end

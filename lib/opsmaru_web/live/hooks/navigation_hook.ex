@@ -4,10 +4,10 @@ defmodule OpsmaruWeb.NavigationHook do
 
   alias Opsmaru.Content
 
-  def on_mount(:main, _params, _session, socket) do
-    navigation =
-      Content.list_navigations()
-      |> Enum.find(&(&1.slug == "main"))
+  def on_mount(:main, _params, _session, %{assigns: assigns} = socket) do
+    %{data: navigations} = Content.list_navigations(perspective: assigns.perspective)
+
+    navigation = Enum.find(navigations, &(&1.slug == "main"))
 
     socket =
       assign_new(socket, :main_nav, fn -> navigation end)

@@ -2,6 +2,8 @@ defmodule Opsmaru.Products.Feature.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Products.Feature
 
@@ -25,6 +27,6 @@ defmodule Opsmaru.Products.Feature.Manager do
       |> Sanity.result!()
       |> Enum.map(&Feature.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

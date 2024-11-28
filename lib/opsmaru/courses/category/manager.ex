@@ -2,6 +2,8 @@ defmodule Opsmaru.Courses.Category.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Courses.Category
 
@@ -40,6 +42,6 @@ defmodule Opsmaru.Courses.Category.Manager do
       |> Sanity.result!()
       |> Enum.map(&Category.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

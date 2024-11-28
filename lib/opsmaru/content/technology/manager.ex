@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Technology.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Technology
 
@@ -28,6 +30,6 @@ defmodule Opsmaru.Content.Technology.Manager do
       |> Sanity.result!()
       |> Enum.map(&Technology.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

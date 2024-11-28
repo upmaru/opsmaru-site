@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Movie.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Movie
 
@@ -28,6 +30,6 @@ defmodule Opsmaru.Content.Movie.Manager do
       |> Sanity.result!()
       |> Movie.parse()
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

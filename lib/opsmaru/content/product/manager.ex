@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Product.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Product
 
@@ -33,7 +35,7 @@ defmodule Opsmaru.Content.Product.Manager do
         %{product | stripe_product: matched_product}
       end)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 
   defp load_stripe_products do

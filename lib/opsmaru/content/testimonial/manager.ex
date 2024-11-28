@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Testimonial.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Testimonial
 
@@ -26,6 +28,6 @@ defmodule Opsmaru.Content.Testimonial.Manager do
       |> Sanity.result!()
       |> Enum.map(&Testimonial.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

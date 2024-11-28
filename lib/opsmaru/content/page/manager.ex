@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Page.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Page
 
@@ -38,7 +40,7 @@ defmodule Opsmaru.Content.Page.Manager do
       page.sections
       |> Enum.map(&process_section/1)
 
-    %{data: %{page | sections: sections}, perspective: perspective}
+    %Response{data: %{page | sections: sections}, perspective: perspective}
   end
 
   defp process_section(section) do

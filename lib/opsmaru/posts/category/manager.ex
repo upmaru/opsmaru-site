@@ -2,6 +2,8 @@ defmodule Opsmaru.Posts.Category.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Posts.Category
 
   @ttl :timer.hours(1)
@@ -24,6 +26,6 @@ defmodule Opsmaru.Posts.Category.Manager do
       |> Sanity.result!()
       |> Enum.map(&Category.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

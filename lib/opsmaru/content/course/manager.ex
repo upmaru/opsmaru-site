@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Course.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Course
 
@@ -39,6 +41,7 @@ defmodule Opsmaru.Content.Course.Manager do
 
     course = Course.parse(course)
     full_overview = Req.get!(course.overview).body
-    %{data: %{course | overview: full_overview}, perspective: perspective}
+
+    %Response{data: %{course | overview: full_overview}, perspective: perspective}
   end
 end

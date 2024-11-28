@@ -2,6 +2,8 @@ defmodule Opsmaru.Pages.FAQ.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Page
   alias Opsmaru.Pages.FAQ
@@ -24,6 +26,6 @@ defmodule Opsmaru.Pages.FAQ.Manager do
       |> Sanity.result!()
       |> Enum.map(&FAQ.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

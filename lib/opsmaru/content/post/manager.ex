@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Post.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Post
 
@@ -48,7 +50,7 @@ defmodule Opsmaru.Content.Post.Manager do
       |> Sanity.result!()
       |> Enum.map(&Post.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 
   @spec featured(Keyword.t()) :: %{data: [%Post{}], perspective: String.t()}
@@ -76,7 +78,7 @@ defmodule Opsmaru.Content.Post.Manager do
       |> Sanity.result!()
       |> Enum.map(&Post.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 
   @spec show(String.t(), Keyword.t()) :: %{data: %Post{}, perspective: String.t()}
@@ -101,7 +103,7 @@ defmodule Opsmaru.Content.Post.Manager do
 
     post = Post.parse(post_params)
     full_content = Req.get!(post.content).body
-    %{data: %{post | content: full_content}, perspective: perspective}
+    %Response{data: %{post | content: full_content}, perspective: perspective}
   end
 
   @spec feed(Keyword.t()) :: [%Post{}]
@@ -149,6 +151,6 @@ defmodule Opsmaru.Content.Post.Manager do
       |> Sanity.request!(sanity_request_opts())
       |> Sanity.result!()
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end

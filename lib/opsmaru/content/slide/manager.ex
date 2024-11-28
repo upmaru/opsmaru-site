@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Slide.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Slide
 
@@ -27,6 +29,6 @@ defmodule Opsmaru.Content.Slide.Manager do
       |> Sanity.result!()
       |> Enum.map(&Slide.parse/1)
 
-    %{data: data, perspective: perspective}
+    %Response{data: data, perspective: perspective}
   end
 end
