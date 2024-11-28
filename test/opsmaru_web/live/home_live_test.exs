@@ -11,6 +11,8 @@ defmodule OpsmaruWeb.HomeLiveTest do
 
       assert rendered =~ "Deploy"
       assert rendered =~ "Monetize"
+
+      assert rendered =~ "Cloud provider" || rendered =~ "Web framework"
     end
   end
 end

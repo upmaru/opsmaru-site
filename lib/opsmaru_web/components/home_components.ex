@@ -145,6 +145,7 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   attr :card, Pages.Card, required: true
+  attr :perspective, :string, default: "published"
 
   def top_left(assigns) do
     ~H"""
@@ -164,6 +165,7 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   attr :card, Pages.Card, required: true
+  attr :perspective, :string, default: "published"
 
   def top_right(assigns) do
     ~H"""
@@ -183,6 +185,7 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   attr :card, Pages.Card, required: true
+  attr :perspective, :string, default: "published"
 
   def bottom_left(assigns) do
     ~H"""
@@ -214,6 +217,7 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   attr :card, Pages.Card, required: true
+  attr :perspective, :string, default: "published"
 
   def bottom_right(assigns) do
     ~H"""
