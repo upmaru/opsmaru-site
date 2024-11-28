@@ -97,6 +97,7 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   attr :section, Pages.Section, required: true
+  attr :perspective, :string, default: "published"
 
   def top_bento(assigns) do
     h2 = Enum.find(assigns.section.contents, &(&1.slug == "home-top-bento-title"))
@@ -117,11 +118,26 @@ defmodule OpsmaruWeb.HomeComponents do
           <%= @description.body %>
         </h3>
         <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
-          <.top_left card={Enum.find(@section.cards, &(&1.position == "top-left"))} />
-          <.top_right card={Enum.find(@section.cards, &(&1.position == "top-right"))} />
-          <.bottom_left card={Enum.find(@section.cards, &(&1.position == "bottom-left"))} />
-          <.bottom_middle card={Enum.find(@section.cards, &(&1.position == "bottom-center"))} />
-          <.bottom_right card={Enum.find(@section.cards, &(&1.position == "bottom-right"))} />
+          <.top_left
+            card={Enum.find(@section.cards, &(&1.position == "top-left"))}
+            perspective={@perspective}
+          />
+          <.top_right
+            card={Enum.find(@section.cards, &(&1.position == "top-right"))}
+            perspective={@perspective}
+          />
+          <.bottom_left
+            card={Enum.find(@section.cards, &(&1.position == "bottom-left"))}
+            perspective={@perspective}
+          />
+          <.bottom_center
+            card={Enum.find(@section.cards, &(&1.position == "bottom-center"))}
+            perspective={@perspective}
+          />
+          <.bottom_right
+            card={Enum.find(@section.cards, &(&1.position == "bottom-right"))}
+            perspective={@perspective}
+          />
         </div>
       </div>
     </div>
@@ -186,11 +202,12 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   attr :card, Pages.Card, required: true
+  attr :perspective, :string, default: "published"
 
-  def bottom_middle(assigns) do
+  def bottom_center(assigns) do
     ~H"""
     <div class="lg:col-span-2 group relative flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 data-[dark]:bg-gray-800 data-[dark]:ring-white/15">
-      <.technologies :if={@card.hook == "MountTechnologies"} />
+      <.technologies :if={@card.hook == "MountTechnologies"} perspective={@perspective} />
       <.card_content card={@card} />
     </div>
     """
@@ -234,7 +251,7 @@ defmodule OpsmaruWeb.HomeComponents do
   end
 
   defp technologies(assigns) do
-    technologies = Content.list_technologies()
+    %{data: technologies} = Content.list_technologies(perspective: assigns.perspective)
 
     assigns = assign(assigns, :technologies, technologies)
 
