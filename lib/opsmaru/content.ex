@@ -19,7 +19,7 @@ defmodule Opsmaru.Content do
 
   alias __MODULE__.Technology
 
-  defdelegate list_technologies(options \\ [end_index: 5]),
+  defdelegate list_technologies(options \\ []),
     to: Technology.Manager,
     as: :list
 
@@ -43,7 +43,7 @@ defmodule Opsmaru.Content do
     to: Post.Manager,
     as: :featured
 
-  defdelegate posts_feed,
+  defdelegate posts_feed(options \\ []),
     to: Post.Manager,
     as: :feed
 
@@ -59,19 +59,19 @@ defmodule Opsmaru.Content do
 
   alias __MODULE__.Movie
 
-  defdelegate show_movie(slug),
+  defdelegate show_movie(slug, options \\ []),
     to: Movie.Manager,
     as: :show
 
   alias __MODULE__.Product
 
-  defdelegate list_products,
+  defdelegate list_products(options \\ []),
     to: Product.Manager,
     as: :list
 
   alias __MODULE__.Page
 
-  defdelegate show_page(slug),
+  defdelegate show_page(slug, options \\ []),
     to: Page.Manager,
     as: :show
 

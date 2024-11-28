@@ -7,19 +7,19 @@ defmodule OpsmaruWeb.HomeLive do
   alias OpsmaruWeb.HomeComponents
   alias OpsmaruWeb.BlogComponents
 
-  def mount(_params, _session, socket) do
-    page = Content.show_page("home")
+  def mount(_params, _session, %{assigns: assigns} = socket) do
+    %{data: page} = Content.show_page("home", perspective: assigns.perspective)
 
     hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
     slides_section = Enum.find(page.sections, &(&1.slug == "home-slides"))
     top_bento_section = Enum.find(page.sections, &(&1.slug == "home-top-bento"))
-    featured_posts = Content.featured_posts()
+    %{data: featured_posts} = Content.featured_posts()
 
-    slides = Content.list_slides()
+    %{data: slides} = Content.list_slides(perspective: assigns.perspective)
 
-    logos = Content.list_logos()
+    %{data: logos} = Content.list_logos(perspective: assigns.perspective)
 
-    testimonials = Content.list_testimonials()
+    %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
     socket =
       socket
@@ -41,6 +41,7 @@ defmodule OpsmaruWeb.HomeLive do
   attr :slides, :list, required: true
   attr :testimonials, :list, required: true
   attr :featured_posts, :list, default: []
+  attr :perspective, :string, default: "published"
 
   def render(assigns) do
     ~H"""
@@ -77,7 +78,7 @@ defmodule OpsmaruWeb.HomeLive do
         </div>
         <div class="bg-gradient-to-b from-white from-50% to-slate-100 py-32">
           <HomeComponents.slides section={@slides_section} slides={@slides} />
-          <HomeComponents.top_bento section={@top_bento_section} />
+          <HomeComponents.top_bento section={@top_bento_section} perspective={@perspective} />
         </div>
         <div class="mx-2 mt-2 rounded-4xl bg-slate-900 py-32">
           <div class="px-6 lg:px-8">

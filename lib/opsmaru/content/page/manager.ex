@@ -2,45 +2,45 @@ defmodule Opsmaru.Content.Page.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Sanity.Response
+
   alias Opsmaru.Cache
   alias Opsmaru.Content.Page
 
   @ttl :timer.hours(1)
 
-  @decorate cacheable(cache: Cache, key: {:pages, slug}, opts: [ttl: @ttl])
-  def show(slug) do
-    ~S"""
-    *[_type == "page" && slug.current == $slug][0]{
-      ...,
-      "sections": *[ _type == "pageSection" && references(^._id) ]{
+  @spec show(String.t(), Keyword.t()) :: %{data: %Page{}, perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
+  def show(slug, options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
+    page =
+      ~S"""
+      *[_type == "page" && slug.current == $slug][0]{
         ...,
-        "contents": *[ _type == "pageContent" && references(^._id) ]{
+        "sections": *[ _type == "pageSection" && references(^._id) ]{
           ...,
-          "markdown": markdown.asset -> url
-        },
-        "cards": *[ _type == "pageCard" && references(^._id) ]{
-          ...,
-          card -> {..., "cover": {"url": cover.asset -> url, "alt": cover.alt}}
+          "contents": *[ _type == "pageContent" && references(^._id) ]{
+            ...,
+            "markdown": markdown.asset -> url
+          },
+          "cards": *[ _type == "pageCard" && references(^._id) ]{
+            ...,
+            card -> {..., "cover": {"url": cover.asset -> url, "alt": cover.alt}}
+          }
         }
       }
-    }
-    """
-    |> Sanity.query(%{"slug" => slug}, perspective: "published")
-    |> Sanity.request!(sanity_request_opts())
-    |> Sanity.result!()
-    |> case do
-      nil ->
-        nil
+      """
+      |> Sanity.query(%{"slug" => slug}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Page.parse()
 
-      page ->
-        page = Page.parse(page)
+    sections =
+      page.sections
+      |> Enum.map(&process_section/1)
 
-        sections =
-          page.sections
-          |> Enum.map(&process_section/1)
-
-        %{page | sections: sections}
-    end
+    %Response{data: %{page | sections: sections}, perspective: perspective}
   end
 
   defp process_section(section) do

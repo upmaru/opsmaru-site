@@ -9,15 +9,20 @@ defmodule OpsmaruWeb.CourseLive.Index do
 
   @page_slug "learn"
 
-  def mount(_params, _session, socket) do
-    page = Content.show_page(@page_slug)
+  def mount(_params, _session, %{assigns: assigns} = socket) do
+    %{data: page} = Content.show_page(@page_slug, perspective: assigns.perspective)
 
     header_section = Enum.find(page.sections, &(&1.slug == "#{@page_slug}-header"))
     get_support_section = Enum.find(page.sections, &(&1.slug == "#{@page_slug}-get-support"))
 
-    featured_categories = Courses.list_categories(featured: true)
-    technologies = Content.list_technologies(end_index: 12)
-    categories = Courses.list_categories(featured: false)
+    %{data: featured_categories} =
+      Courses.list_categories(featured: true, perspective: assigns.perspective)
+
+    %{data: technologies} =
+      Content.list_technologies(end_index: 12, perspective: assigns.perspective)
+
+    %{data: categories} =
+      Courses.list_categories(featured: false, perspective: assigns.perspective)
 
     socket =
       socket

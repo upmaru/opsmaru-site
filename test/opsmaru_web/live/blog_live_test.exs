@@ -7,7 +7,7 @@ defmodule OpsmaruWeb.BlogLiveTest do
 
   describe "blog page" do
     test "can visit blog page", %{conn: conn} do
-      posts = Content.list_posts()
+      %{data: posts} = Content.list_posts()
 
       alpine_post = Enum.find(posts, fn post -> post.slug == "alpine-linux" end)
 
