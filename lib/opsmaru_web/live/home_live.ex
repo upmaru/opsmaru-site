@@ -7,19 +7,19 @@ defmodule OpsmaruWeb.HomeLive do
   alias OpsmaruWeb.HomeComponents
   alias OpsmaruWeb.BlogComponents
 
-  def mount(_params, _session, socket) do
-    page = Content.show_page("home")
+  def mount(_params, _session, %{assigns: assigns} = socket) do
+    %{data: page} = Content.show_page("home", perspective: assigns.perspective)
 
     hero_section = Enum.find(page.sections, &(&1.slug == "home-hero"))
     slides_section = Enum.find(page.sections, &(&1.slug == "home-slides"))
     top_bento_section = Enum.find(page.sections, &(&1.slug == "home-top-bento"))
     %{data: featured_posts} = Content.featured_posts()
 
-    slides = Content.list_slides()
+    %{data: slides} = Content.list_slides(perspective: assigns.perspective)
 
-    logos = Content.list_logos()
+    %{data: logos} = Content.list_logos(perspective: assigns.perspective)
 
-    testimonials = Content.list_testimonials()
+    %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
     socket =
       socket

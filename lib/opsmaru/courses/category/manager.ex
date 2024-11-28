@@ -1,10 +1,15 @@
 defmodule Opsmaru.Courses.Category.Manager do
+  use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Cache
   alias Opsmaru.Courses.Category
 
-  def list(options \\ [featured: false]) do
-    options = Enum.into(options, %{})
+  @spec list(Keyword.t()) :: %{data: [%Category{}], perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: :timer.hours(1)])
+  def list(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+    featured = Keyword.get(options, :featured, false)
 
     query = ~s"""
     *[_type == "courseCategory" && featured == $featured] | order(index asc){
@@ -28,10 +33,13 @@ defmodule Opsmaru.Courses.Category.Manager do
     }
     """
 
-    query
-    |> Sanity.query(options, perspective: "published")
-    |> Sanity.request!(sanity_request_opts())
-    |> Sanity.result!()
-    |> Enum.map(&Category.parse/1)
+    data =
+      query
+      |> Sanity.query(%{featured: featured}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Category.parse/1)
+
+    %{data: data, perspective: perspective}
   end
 end

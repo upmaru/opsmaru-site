@@ -7,33 +7,33 @@ defmodule Opsmaru.Content.Product.Manager do
 
   @ttl :timer.hours(1)
 
-  @decorate cacheable(cache: Cache, key: :products, opts: [ttl: @ttl])
-  def list(_options \\ []) do
+  @spec list(Keyword.t()) :: %{data: [%Product{}], perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: @ttl])
+  def list(options \\ []) do
+    perspective = Keyword.get(options, :perspective, "published")
+
     stripe_products = load_stripe_products()
 
     sanity_query = ~S"""
-    *[_type == "product"]
+    *[_type == "product"] | order(index asc)
     """
 
-    Sanity.query(sanity_query, %{})
-    |> Sanity.request!(sanity_request_opts())
-    |> case do
-      %Sanity.Response{body: %{"result" => products}} ->
-        products
-        |> Enum.map(&Product.parse/1)
-        |> Enum.map(fn product ->
-          matched_product =
-            Enum.find(stripe_products, fn stripe_product ->
-              product.reference == stripe_product.name
-            end)
+    data =
+      sanity_query
+      |> Sanity.query(%{}, perspective: perspective)
+      |> Sanity.request!(sanity_request_opts())
+      |> Sanity.result!()
+      |> Enum.map(&Product.parse/1)
+      |> Enum.map(fn product ->
+        matched_product =
+          Enum.find(stripe_products, fn stripe_product ->
+            product.reference == stripe_product.name
+          end)
 
-          %{product | stripe_product: matched_product}
-        end)
-        |> Enum.sort_by(& &1.index, :asc)
+        %{product | stripe_product: matched_product}
+      end)
 
-      error ->
-        error
-    end
+    %{data: data, perspective: perspective}
   end
 
   defp load_stripe_products do

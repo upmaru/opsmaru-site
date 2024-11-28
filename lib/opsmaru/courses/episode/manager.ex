@@ -2,8 +2,11 @@ defmodule Opsmaru.Courses.Episode.Manager do
   use Nebulex.Caching
   import Opsmaru.Sanity
 
+  alias Opsmaru.Cache
   alias Opsmaru.Courses.Episode
 
+  @spec show(String.t(), String.t(), Keyword.t()) :: %{data: %Episode{}, perspective: String.t()}
+  @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: :timer.hours(1)])
   def show(course_slug, episode_slug, options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
 
@@ -34,6 +37,6 @@ defmodule Opsmaru.Courses.Episode.Manager do
 
     full_content = Req.get!(episode.content).body
 
-    %{episode | content: full_content}
+    %{data: %{episode | content: full_content}, perspective: perspective}
   end
 end

@@ -7,7 +7,7 @@ defmodule OpsmaruWeb.CourseLiveTest do
 
   describe "course detail page" do
     test "can visit course detail page", %{conn: conn} do
-      categories = Courses.list_categories(featured: true)
+      %{data: categories} = Courses.list_categories(featured: true)
       courses = Enum.flat_map(categories, fn category -> category.courses end)
 
       course = Enum.find(courses, fn course -> course.slug == "setup-aws-infrastructure" end)
