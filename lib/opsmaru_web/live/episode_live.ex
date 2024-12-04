@@ -25,6 +25,7 @@ defmodule OpsmaruWeb.EpisodeLive do
 
     socket =
       socket
+      |> assign(:page_title, "#{episode.title} - #{course.title} - Opsmaru")
       |> assign(:course, course)
       |> assign(:episode, episode)
       |> assign(:sections, sections)
