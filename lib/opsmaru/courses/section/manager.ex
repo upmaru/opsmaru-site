@@ -13,7 +13,7 @@ defmodule Opsmaru.Courses.Section.Manager do
       ...,
       chapter -> {
         ...,
-        "episodes": *[ _type == "courseEpisode" && references(^._id) ] {
+        "episodes": *[ _type == "courseEpisode" && references(^._id) ] | order(index asc) {
           ...,
           "content": content.asset -> url,
           author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
