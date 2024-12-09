@@ -97,11 +97,11 @@ defmodule OpsmaruWeb.HomeLive do
                       <%= gettext("Access your cluster") %>
                     </h3>
                     <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
-                      <%= gettext("SSH / LXC CLI Access") %>
+                      <%= gettext("SSH / LXD CLI Access") %>
                     </p>
                     <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
                       <%= gettext(
-                        "Get full unfettered access to your cluster with SSH or LXC CLI. Whether you want host access via SSH or container access via LXD CLI, Opsmaru has you covered."
+                        "Get full unfettered access to your cluster with SSH or LXD CLI. Whether you want host access via SSH or container access via LXD CLI, Opsmaru has you covered."
                       ) %>
                     </p>
                   </div>
