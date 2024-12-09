@@ -32,6 +32,7 @@ import { MobileNav } from "../components/mobile-nav";
 import { Categories } from '../components/categories';
 import { Player } from '../components/player';
 import { Technologies } from '../components/technologies';
+import { SSHAccess } from '../components/access'; 
 
 function mountCategories() {
   const domNode = this.el;
@@ -92,6 +93,13 @@ function mountStaggerIn() {
   animate(nodes, {opacity: [0, 1]}, {delay: stagger(0.2)})
 }
 
+function mountAccess() {
+  const el = this.el;
+  const root = createRoot(el);
+
+  root.render(<SSHAccess />);
+}
+
 let Hooks = {};
 
 Hooks.MountBroadcast = {
@@ -117,6 +125,11 @@ Hooks.MountTechnologies = {
 Hooks.MountStaggerIn = {
   mounted: mountStaggerIn,
   updated: mountStaggerIn,
+}
+
+Hooks.MountAccess = {
+  mounted: mountAccess,
+  updated: mountAccess,
 }
 
 Hooks.MountPlayer = {
