@@ -91,9 +91,7 @@ defmodule OpsmaruWeb.HomeLive do
               </h3>
               <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
                 <div class="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
-                  <div id="access" class="relative h-80 shrink-0" phx-hook="MountAccess">
-
-                  </div>
+                  <div id="access" class="relative h-80 shrink-0" phx-hook="MountAccess"></div>
                   <div class="relative p-10"></div>
                 </div>
                 <div class="z-10 lg:col-span-2 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
