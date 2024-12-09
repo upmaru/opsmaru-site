@@ -34,7 +34,7 @@ defmodule OpsmaruWeb.BlogLive do
       </div>
       <div class="px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
-          <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+          <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr]">
             <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
               <div class="flex items-center gap-3">
                 <img
@@ -55,13 +55,13 @@ defmodule OpsmaruWeb.BlogLive do
               </div>
             </div>
             <div class="text-slate-700">
-              <div class="max-w-2xl xl:mx-auto">
+              <div class="max-w-7xl xl:mx-auto">
                 <img
                   class="mb-10 aspect-[3/2] w-full rounded-2xl object-cover shadow-xl"
                   alt={@post.cover.alt}
                   src={Image.url(@post.cover, w: 1024)}
                 />
-                <div class="prose prose-slate prose-img:rounded-2xl prose-h2:font-medium lg:prose-lg">
+                <div class="prose prose-slate max-w-max prose-img:rounded-2xl prose-h2:font-medium lg:prose-lg">
                   <%= raw(render_markdown(@post.content)) %>
                 </div>
                 <div class="mt-10">
