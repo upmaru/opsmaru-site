@@ -90,7 +90,7 @@ defmodule OpsmaruWeb.MarkdownHelper do
 
   defp alert(%{type: :note} = assigns) do
     ~H"""
-    <div class="rounded-md bg-blue-50 p-4">
+    <div class="alert rounded-md bg-blue-50 p-4">
       <div class="flex">
         <div class="shrink-0">
           <svg
@@ -109,7 +109,7 @@ defmodule OpsmaruWeb.MarkdownHelper do
         </div>
         <div class="ml-3">
           <h5 class="text-sm font-medium text-blue-800"><%= @heading || gettext("Notice") %></h5>
-          <div class="mt-2 text-sm text-blue-700">
+          <div class="content mt-2 text-sm text-blue-700">
             <%= raw(@content) %>
           </div>
         </div>
@@ -120,7 +120,7 @@ defmodule OpsmaruWeb.MarkdownHelper do
 
   defp alert(%{type: :caution} = assigns) do
     ~H"""
-    <div class="rounded-md bg-amber-50 p-4">
+    <div class="alert rounded-md bg-amber-50 p-4">
       <div class="flex">
         <div class="shrink-0">
           <svg
@@ -139,7 +139,7 @@ defmodule OpsmaruWeb.MarkdownHelper do
         </div>
         <div class="ml-3">
           <h5 class="text-sm font-medium text-amber-800"><%= @heading || gettext("Warning") %></h5>
-          <div class="mt-2 text-sm text-amber-700">
+          <div class="content mt-2 text-sm text-amber-700">
             <%= raw(@content) %>
           </div>
         </div>
