@@ -34,6 +34,7 @@ import { Player } from '../components/player';
 import { Technologies } from '../components/technologies';
 import { SSHAccess } from '../components/access'; 
 import { Timeline } from '../components/rollback';
+import { mountCommands } from '../components/commands';
 
 function mountTimeline() {
   const domNode = this.el;
@@ -143,6 +144,11 @@ Hooks.MountAccess = {
 Hooks.MountTimeline = {
   mounted: mountTimeline,
   updated: mountTimeline,
+}
+
+Hooks.MountCommands = {
+  mounted: mountCommands,
+  updated: mountCommands,
 }
 
 Hooks.MountPlayer = {

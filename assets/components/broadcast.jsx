@@ -66,10 +66,10 @@ function Servers() {
   return (
     <div className="z-10 col-start-1 row-start-1">
       <div className="mx-auto flex size-full max-w-md items-center justify-around">
-        <div class="size-20 rounded-full bg-slate-900/15 ring-4 ring-slate-700 place-content-center justify-center">
+        <div className="size-20 rounded-full bg-slate-900/15 ring-4 ring-slate-700 place-content-center justify-center">
           <ServerIcon className="h-8 w-8 mx-auto text-slate-500" />
         </div>
-        <div class="size-20 rounded-full bg-slate-900/15 ring-4 ring-slate-700 place-content-center justify-center">
+        <div className="size-20 rounded-full bg-slate-900/15 ring-4 ring-slate-700 place-content-center justify-center">
           <ServerIcon className="h-8 w-8 mx-auto text-slate-500" />
         </div>
       </div>

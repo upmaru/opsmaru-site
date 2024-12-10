@@ -97,11 +97,11 @@ defmodule OpsmaruWeb.HomeLive do
                       {gettext("Access your cluster")}
                     </h3>
                     <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
-                      {gettext("SSH / LXD CLI Access")}
+                      {gettext("Root SSH Access")}
                     </p>
                     <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
                       {gettext(
-                        "Get full unfettered access to your cluster with SSH or LXD CLI. Whether you want host access via SSH or container access via LXD CLI, Opsmaru has you covered."
+                        "Get full unfettered access to your cluster with SSH. Every cluster comes with a bastion by default. You can use the bastion as a jump host."
                       )}
                     </p>
                   </div>
@@ -145,8 +145,20 @@ defmodule OpsmaruWeb.HomeLive do
                   </div>
                 </div>
                 <div class="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
-                  <div class="relative h-80 shrink-0"></div>
-                  <div class="relative p-10"></div>
+                  <div class="relative h-80 shrink-0" id="issue-commands" phx-hook="MountCommands"></div>
+                  <div class="relative p-10">
+                    <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 text-slate-400">
+                      {gettext("Manage Containers")}
+                    </h3>
+                    <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
+                      {gettext("Use the LXD CLI")}
+                    </p>
+                    <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
+                      {gettext(
+                        "LXD CLI gives you full access, you can issue commands to your containers directly from your favorite terminal app. Define custom tasks for your apps or get full console access to the container."
+                      )}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
