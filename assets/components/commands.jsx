@@ -142,9 +142,9 @@ export function Commands() {
     <div className="flex px-10 gap-x-4 mt-4">
       <Window width={800} height={600} className="z-0 absolute left-1/2 -translate-x-1/2 -bottom-8"/>
       {tabs.map((tab, index) => 
-      <button key={`demo-${index}`} onClick={() => setActiveTab(index) } data-active={activeTab === index} className="text-left border border-slate-700 rounded-lg px-4 py-4 z-10 bg-slate-800/90 hover:bg-slate-700/90 hover:border-slate-400 data-[active=true]:bg-slate-500/90 data-[active=true]:border-white">
+      <button key={`demo-${index}`} onClick={() => setActiveTab(index) } data-active={activeTab === index} className="text-left border border-slate-700 rounded-lg p-2 md:p-4 z-10 bg-slate-800/90 hover:bg-slate-700/90 hover:border-slate-400 data-[active=true]:bg-slate-500/90 data-[active=true]:border-white">
         <h2 className="text-white font-semibold">{tab.title}</h2>
-        <p className="mt-4 text-white">{tab.description}</p>
+        <p className="hidden mt-4 text-white md:block">{tab.description}</p>
       </button>)}
       <div ref={scope} key={activeTab} className="absolute inset-0 px-6">
         <div className="relative w-full h-full overflow-hidden">
