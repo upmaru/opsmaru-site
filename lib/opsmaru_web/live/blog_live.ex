@@ -55,7 +55,7 @@ defmodule OpsmaruWeb.BlogLive do
               </div>
             </div>
             <div class="text-slate-700">
-              <div class="max-w-7xl xl:mx-auto">
+              <div class="max-w-2xl md:max-w-2xl xl:max-w-5xl md:mx-auto">
                 <img
                   class="mb-10 aspect-[3/2] w-full rounded-2xl object-cover shadow-xl"
                   alt={@post.cover.alt}
