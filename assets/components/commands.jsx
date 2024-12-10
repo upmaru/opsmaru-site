@@ -57,7 +57,7 @@ const tabs = [
     description: 'Run database migrations or tasks for a service running in a container.',
     command: 'lxc exec my-container -- rc-service my-app migrate',
     output: `
-    == 20211210123456 CreateUsers: migrating ====================================
+    == 20211210123456 CreateUsers: migrating =====================================
     -- create_table(:users)
       -> 0.0015s
     -- add_index(:users, :email, {:unique=>true})
@@ -148,7 +148,7 @@ export function Commands() {
       </button>)}
       <div ref={scope} key={activeTab} className="absolute inset-0 px-6">
         <div className="relative w-full h-full overflow-hidden">
-          <div className="absolute left-3 bottom-0 mb-2 text-xs font-mono overflow-hidden text-slate-600">
+          <div className="absolute left-3 bottom-0 mb-2 text-xs font-mono overflow-hidden text-slate-500">
             {activeOutput?.split("\n\n").map((line, index) => 
               <div className="my-6" key={index}>{line.split("\n").map((l, idx) => <motion.p initial={{opacity: 0}} className="output" key={`line-${idx}`}>{l}</motion.p>)}</div>
             )}
