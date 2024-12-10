@@ -145,7 +145,8 @@ defmodule OpsmaruWeb.HomeLive do
                   </div>
                 </div>
                 <div class="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
-                  <div class="relative h-80 shrink-0" id="issue-commands" phx-hook="MountCommands"></div>
+                  <div class="relative h-80 shrink-0" id="issue-commands" phx-hook="MountCommands">
+                  </div>
                   <div class="relative p-10">
                     <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 text-slate-400">
                       {gettext("Manage Containers")}
