@@ -33,6 +33,14 @@ import { Categories } from '../components/categories';
 import { Player } from '../components/player';
 import { Technologies } from '../components/technologies';
 import { SSHAccess } from '../components/access'; 
+import { Timeline } from '../components/rollback';
+
+function mountTimeline() {
+  const domNode = this.el;
+  const root = createRoot(domNode);
+
+  root.render(<Timeline />);
+}
 
 function mountCategories() {
   const domNode = this.el;
@@ -130,6 +138,11 @@ Hooks.MountStaggerIn = {
 Hooks.MountAccess = {
   mounted: mountAccess,
   updated: mountAccess,
+}
+
+Hooks.MountTimeline = {
+  mounted: mountTimeline,
+  updated: mountTimeline,
 }
 
 Hooks.MountPlayer = {

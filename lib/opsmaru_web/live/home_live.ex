@@ -107,8 +107,21 @@ defmodule OpsmaruWeb.HomeLive do
                   </div>
                 </div>
                 <div class="z-10 lg:col-span-2 lg:rounded-tr-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
-                  <div class="relative h-80 shrink-0"></div>
-                  <div class="relative p-10"></div>
+                  <div id="rollback-timeline" class="relative h-80 shrink-0" phx-hook="MountTimeline">
+                  </div>
+                  <div class="relative p-10">
+                    <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 text-slate-400">
+                      {gettext("Rollback Easily")}
+                    </h3>
+                    <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
+                      {gettext("Made a mistake?")}
+                    </p>
+                    <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
+                      {gettext(
+                        "Not a problem, with a couple of clicks on the dashboard, you can rollback to a previous commit when everything was working."
+                      )}
+                    </p>
+                  </div>
                 </div>
                 <div class="lg:col-span-2 lg:rounded-bl-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
                   <div
