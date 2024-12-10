@@ -11,3 +11,7 @@
     transform: translateX(var(--move-x-to));
   }
 }
+
+.alert .content p:last-child {
+  margin-bottom: 0;
+}
