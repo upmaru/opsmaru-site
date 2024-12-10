@@ -16,22 +16,22 @@
     <meta name="theme-color" content="#0f172a" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      <%= gettext("Internal Server Error") %> · Opsmaru
+      {gettext("Internal Server Error")} · Opsmaru
     </title>
     <link phx-track-static rel="stylesheet" href={~p"/site/assets/app.css"} />
   </head>
   <body class="antialiased font-sans bg-slate-900">
     <div class="mx-auto mt-20 max-w-2xl text-center sm:mt-24">
-      <p class="text-base font-semibold leading-8 text-indigo-400"><%= gettext("500") %></p>
+      <p class="text-base font-semibold leading-8 text-indigo-400">{gettext("500")}</p>
       <h1 class="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">
-        <%= gettext("Something went wrong") %>
+        {gettext("Something went wrong")}
       </h1>
       <p class="mt-4 text-base leading-7 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
         <% gettext("Sorry, but something went wrong, our engineers have been informed.") %>
       </p>
     </div>
     <div class="mx-auto mt-16 flow-root max-w-lg sm:mt-20">
-      <h2 class="sr-only"><%= gettext("Check out other pages") %></h2>
+      <h2 class="sr-only">{gettext("Check out other pages")}</h2>
       <ul role="list" class="-mt-6 divide-y divide-gray-900/5 border-b border-gray-900/5">
         <li class="relative flex gap-x-6 py-6">
           <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg shadow-sm ring-1 ring-slate-900/10">
@@ -40,13 +40,11 @@
           <div class="flex-auto">
             <h3 class="text-sm font-semibold leading-6 text-slate-100">
               <a href="/">
-                <span class="absolute inset-0" aria-hidden="true"></span> <%= gettext(
-                  "Take me home"
-                ) %>
+                <span class="absolute inset-0" aria-hidden="true"></span> {gettext("Take me home")}
               </a>
             </h3>
             <p class="mt-2 text-sm leading-6 text-slate-200">
-              <%= gettext("to the place I belong. West Virginia.") %>
+              {gettext("to the place I belong. West Virginia.")}
             </p>
           </div>
           <div class="flex-none self-center">
@@ -60,11 +58,11 @@
           <div class="flex-auto">
             <h3 class="text-sm font-semibold leading-6 text-slate-100">
               <a href="/home">
-                <span class="absolute inset-0" aria-hidden="true"></span> <%= gettext("Dashboard") %>
+                <span class="absolute inset-0" aria-hidden="true"></span> {gettext("Dashboard")}
               </a>
             </h3>
             <p class="mt-2 text-sm leading-6 text-slate-200">
-              <%= gettext("Go back to the dashboard.") %>
+              {gettext("Go back to the dashboard.")}
             </p>
           </div>
           <div class="flex-none self-center">

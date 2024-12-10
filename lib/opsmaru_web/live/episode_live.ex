@@ -49,7 +49,7 @@ defmodule OpsmaruWeb.EpisodeLive do
               class="inline-flex items-center align-middle"
             >
               <.icon name="hero-chevron-left" class="w-4 h-4 text-slate-200" />
-              <span class="ml-2 font-semibold text-slate-200"><%= gettext("Course overview") %></span>
+              <span class="ml-2 font-semibold text-slate-200">{gettext("Course overview")}</span>
             </.link>
           </div>
           <div
@@ -73,24 +73,24 @@ defmodule OpsmaruWeb.EpisodeLive do
               />
               <div :if={!@current_user} class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
                 <h3 class="font-semibold">
-                  <%= gettext("Don't have an account?") %>
+                  {gettext("Don't have an account?")}
                 </h3>
                 <p class="pt-2 text-md text-slate-600">
                   <.link href="/auth/users/register" class="text-black underline">
-                    <%= gettext("Sign up") %>
+                    {gettext("Sign up")}
                   </.link>
-                  <%= gettext("and get a 30 day free trial. No credit card required.") %>
+                  {gettext("and get a 30 day free trial. No credit card required.")}
                 </p>
               </div>
               <div :if={@current_user} class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
                 <h3 class="font-semibold">
-                  <%= gettext("You're signed in.") %>
+                  {gettext("You're signed in.")}
                 </h3>
                 <p class="pt-2 text-md text-slate-600">
                   <.link href="/home" class="text-black underline">
-                    <%= gettext("Open console") %>
+                    {gettext("Open console")}
                   </.link>
-                  <%= gettext("and follow along with the video.") %>
+                  {gettext("and follow along with the video.")}
                 </p>
               </div>
             </div>
@@ -98,16 +98,16 @@ defmodule OpsmaruWeb.EpisodeLive do
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
               <div class="flex items-center">
                 <div class="text-3xl font-semibold -mb-1 mr-4 text-slate-400">
-                  <%= @episode.section.index %>.<%= @episode.index %>
+                  {@episode.section.index}.{@episode.index}
                 </div>
-                <h1 class="text-3xl font-semibold -mb-1"><%= @episode.title %></h1>
+                <h1 class="text-3xl font-semibold -mb-1">{@episode.title}</h1>
               </div>
               <div class="mt-8 prose max-w-max">
-                <%= raw(render_markdown(@episode.content)) %>
+                {raw(render_markdown(@episode.content))}
               </div>
               <hr class="my-16" />
               <div>
-                <h3 class="text-xl font-semibold my-8"><%= gettext("Instructor") %></h3>
+                <h3 class="text-xl font-semibold my-8">{gettext("Instructor")}</h3>
                 <div class="flex items-center">
                   <div>
                     <img
@@ -119,12 +119,12 @@ defmodule OpsmaruWeb.EpisodeLive do
                     />
                   </div>
                   <div class="ml-6">
-                    <p class="text-lg font-medium text-slate-700"><%= @episode.author.name %></p>
-                    <p class="text font-medium text-slate-500"><%= @episode.author.title %></p>
+                    <p class="text-lg font-medium text-slate-700">{@episode.author.name}</p>
+                    <p class="text font-medium text-slate-500">{@episode.author.title}</p>
                   </div>
                 </div>
                 <div class="mt-8 prose max-w-max">
-                  <%= raw(render_markdown(@episode.author.bio)) %>
+                  {raw(render_markdown(@episode.author.bio))}
                 </div>
               </div>
             </div>

@@ -84,25 +84,25 @@ defmodule OpsmaruWeb.HomeLive do
           <div class="px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:max-w-7xl">
               <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-400">
-                <%= gettext("First class Day 2 Ops") %>
+                {gettext("First class Day 2 Ops")}
               </h2>
               <h3 class="mt-2 max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-white sm:text-6xl">
-                <%= gettext("Monitor and observe your infrastructure and applications.") %>
+                {gettext("Monitor and observe your infrastructure and applications.")}
               </h3>
               <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
                 <div class="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl group relative flex flex-col overflow-hidden rounded-lg shadow-sm ring-1 ring-black/5 bg-slate-800 ring-white/15">
                   <div id="access" class="relative h-80 shrink-0" phx-hook="MountAccess"></div>
                   <div class="relative p-10">
                     <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 text-slate-400">
-                      <%= gettext("Access your cluster") %>
+                      {gettext("Access your cluster")}
                     </h3>
                     <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
-                      <%= gettext("SSH / LXD CLI Access") %>
+                      {gettext("SSH / LXD CLI Access")}
                     </p>
                     <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
-                      <%= gettext(
+                      {gettext(
                         "Get full unfettered access to your cluster with SSH or LXD CLI. Whether you want host access via SSH or container access via LXD CLI, Opsmaru has you covered."
-                      ) %>
+                      )}
                     </p>
                   </div>
                 </div>
@@ -119,15 +119,15 @@ defmodule OpsmaruWeb.HomeLive do
                   </div>
                   <div class="relative p-10">
                     <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 text-slate-400">
-                      <%= gettext("Broadcasted Upgrade") %>
+                      {gettext("Broadcasted Upgrade")}
                     </h3>
                     <p class="mt-1 text-2xl/8 font-medium tracking-tight text-white">
-                      <%= gettext("Push updates to your buyers") %>
+                      {gettext("Push updates to your buyers")}
                     </p>
                     <p class="mt-2 max-w-[600px] text-sm/6 text-slate-400">
-                      <%= gettext(
+                      {gettext(
                         "Opsmaru handles upgrades to multiple installations of your applications seamlessly."
-                      ) %>
+                      )}
                     </p>
                   </div>
                 </div>
@@ -145,10 +145,10 @@ defmodule OpsmaruWeb.HomeLive do
           <div class="mx-auto max-w-2xl lg:max-w-7xl">
             <div>
               <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-                <%= gettext("Latest updates") %>
+                {gettext("Latest updates")}
               </h2>
               <h3 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-                <%= gettext("From the blog.") %>
+                {gettext("From the blog.")}
               </h3>
             </div>
           </div>

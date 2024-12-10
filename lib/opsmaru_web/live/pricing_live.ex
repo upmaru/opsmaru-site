@@ -52,12 +52,12 @@ defmodule OpsmaruWeb.PricingLive do
       <div class="mt-16 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h1 class="text-pretty text-4xl font-medium tracking-tighter text-slate-950 data-[dark]:text-white sm:text-6xl">
-            <%= gettext("You'll find we're very generous.") %>
+            {gettext("You'll find we're very generous.")}
           </h1>
           <p class="mt-6 max-w-3xl text-2xl font-medium text-slate-500">
-            <%= gettext(
+            {gettext(
               "Launch with a plan that makes the most sense, grow and adjust as you need. Our pricing goes from costing nothing to an all you can eat model."
-            ) %>
+            )}
           </p>
         </div>
         <div class="mt-16 flex justify-center">
@@ -67,14 +67,14 @@ defmodule OpsmaruWeb.PricingLive do
               class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950"
               data-active={@interval == "month"}
             >
-              <span><%= gettext("Monthly") %></span>
+              <span>{gettext("Monthly")}</span>
             </.link>
             <.link
               patch={~p"/our-product/pricing?interval=year"}
               class="cursor-pointer rounded-full px-2.5 py-1 data-[active]:bg-cyan-300 data-[active]:text-slate-950"
               data-active={@interval == "year"}
             >
-              <span><%= gettext("Yearly") %></span>
+              <span>{gettext("Yearly")}</span>
             </.link>
           </div>
         </div>
@@ -106,7 +106,7 @@ defmodule OpsmaruWeb.PricingLive do
       <div class="py-24 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <table class="w-full text-left">
-            <caption class="sr-only"><%= gettext("Pricing plan comparison") %></caption>
+            <caption class="sr-only">{gettext("Pricing plan comparison")}</caption>
             <colgroup>
               <col class="w-3/5 sm:w-2/5" />
               <col class="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5" />
@@ -118,7 +118,7 @@ defmodule OpsmaruWeb.PricingLive do
                 <td class="p-0"></td>
                 <th :for={product <- @products} class="p-0 data-[selected]:table-cell max-sm:hidden">
                   <div class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-                    <%= product.name %>
+                    {product.name}
                   </div>
                 </th>
               </tr>
@@ -131,13 +131,13 @@ defmodule OpsmaruWeb.PricingLive do
                     href="#"
                     class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
                   >
-                    <%= gettext("Get started") %>
+                    {gettext("Get started")}
                   </a>
                 </td>
               </tr>
               <tr class="max-sm:hidden">
                 <th class="p-0" scope="row">
-                  <span class="sr-only"><%= gettext("Get started") %></span>
+                  <span class="sr-only">{gettext("Get started")}</span>
                 </th>
                 <td
                   :for={_product <- @products}
@@ -147,7 +147,7 @@ defmodule OpsmaruWeb.PricingLive do
                     href="#"
                     class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
                   >
-                    <%= gettext("Get started") %>
+                    {gettext("Get started")}
                   </a>
                 </td>
               </tr>
@@ -156,7 +156,7 @@ defmodule OpsmaruWeb.PricingLive do
               <tr>
                 <th class="px-0 pb-0 pt-10 group-first-of-type:pt-5" colspan="4">
                   <div class="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold">
-                    <%= category.name %>
+                    {category.name}
                   </div>
                 </th>
               </tr>
@@ -189,14 +189,14 @@ defmodule OpsmaruWeb.PricingLive do
                 <figure class="mx-auto flex max-w-xl flex-col gap-16 max-lg:text-center">
                   <blockquote>
                     <p class="relative text-3xl tracking-tight text-white before:absolute before:-translate-x-full before:content-['“'] after:absolute after:content-['”'] lg:text-4xl">
-                      <%= @testimonial.quote %>
+                      {@testimonial.quote}
                     </p>
                   </blockquote>
                   <figcaption class="mt-auto">
-                    <p class="text-sm/6 font-medium text-white"><%= @testimonial.name %></p>
+                    <p class="text-sm/6 font-medium text-white">{@testimonial.name}</p>
                     <p class="text-sm/6 font-medium">
                       <span class="bg-gradient-to-r from-cyan-300 from-[28%] via-purple-400 via-[70%] to-violet-600 bg-clip-text text-transparent">
-                        <%= @testimonial.position %>
+                        {@testimonial.position}
                       </span>
                     </p>
                   </figcaption>

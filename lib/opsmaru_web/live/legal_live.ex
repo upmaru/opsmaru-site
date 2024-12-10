@@ -36,15 +36,15 @@ defmodule OpsmaruWeb.LegalLive do
       <div class="mt-16 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="mt-16 font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-            <%= Calendar.strftime(@main_content.published_at, "%a, %B %d, %Y") %>
+            {Calendar.strftime(@main_content.published_at, "%a, %B %d, %Y")}
           </h2>
           <h1 class="text-pretty text-4xl font-medium tracking-tighter text-slate-950 data-[dark]:text-white sm:text-6xl">
-            <%= @main_section.title %>
+            {@main_section.title}
           </h1>
           <p class="mt-6 max-w-3xl text-2xl font-medium text-slate-500">
-            <%= gettext(
+            {gettext(
               "Please read the following before using our product. By using our product you agree to these terms and conditions."
-            ) %>
+            )}
           </p>
         </div>
       </div>
@@ -53,7 +53,7 @@ defmodule OpsmaruWeb.LegalLive do
           <div class="mt-16 mb-32">
             <div class="max-w-2xl xl:mx-auto">
               <div class="prose prose-slate prose-img:rounded-2xl prose-h2:font-medium lg:prose-lg">
-                <%= raw(render_markdown(@main_content.markdown)) %>
+                {raw(render_markdown(@main_content.markdown))}
               </div>
             </div>
           </div>
