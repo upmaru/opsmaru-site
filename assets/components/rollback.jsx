@@ -56,6 +56,11 @@ export function Timeline() {
           {timelineItems.map((item, index) => 
             <Item key={index} who={item.who} message={item.message} when={item.when} />
           )}
+          <li className="lg:hidden relative flex gap-x-4 py-6">
+            <div className="absolute -bottom-6 left-0 top-0 flex w-6 justify-center">
+              <div className="w-px bg-slate-600"></div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
