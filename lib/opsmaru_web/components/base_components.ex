@@ -44,7 +44,7 @@ defmodule OpsmaruWeb.BaseComponents do
             <.nav class="py-3 group/item relative">
               <.link navigate="/" class="space-x-3 flex">
                 <img src={~p"/site/images/logo.svg"} alt="Opsmaru" class="h-9 overflow-visible" />
-                <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
+                <span class="font-medium text-xl mt-1">{gettext("Opsmaru")}</span>
               </.link>
             </.nav>
           </div>
@@ -54,7 +54,7 @@ defmodule OpsmaruWeb.BaseComponents do
                 navigate={link.path}
                 class="flex items-center px-4 py-3 text-base font-medium text-slate-950 bg-blend-multiply hover:bg-black/[2.5%]"
               >
-                <%= link.title %>
+                {link.title}
               </.link>
             </.nav>
           </nav>
@@ -93,7 +93,7 @@ defmodule OpsmaruWeb.BaseComponents do
         "data-[disabled]:bg-slate-950 hover:bg-slate-800 data-[disabled]:opacity-40"
       ]}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </a>
     """
   end
@@ -110,7 +110,7 @@ defmodule OpsmaruWeb.BaseComponents do
         "data-[disabled]:bg-white/15 data-[hover]:bg-white/20 data-[disabled]:opacity-40"
       ]}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </a>
     """
   end
@@ -149,7 +149,7 @@ defmodule OpsmaruWeb.BaseComponents do
       >
         <path d="M8 0H7V7H0V8H7V15H8V8H15V7H8V0Z"></path>
       </svg>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -164,22 +164,22 @@ defmodule OpsmaruWeb.BaseComponents do
             <div class="relative pb-16 pt-20 text-center sm:py-24">
               <hgroup>
                 <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                  <%= gettext("Get started") %>
+                  {gettext("Get started")}
                 </h2>
                 <p class="mt-6 text-3xl font-medium tracking-tight text-gray-950 sm:text-5xl">
-                  <%= gettext("Ready to deploy?") %>
+                  {gettext("Ready to deploy?")}
                   <br />
-                  <%= gettext("Start your free trial today.") %>
+                  {gettext("Start your free trial today.")}
                 </p>
               </hgroup>
               <p class="mx-auto mt-6 max-w-xs text-sm/6 text-slate-500">
-                <%= gettext(
+                {gettext(
                   "Become a pioneer class customer and adopt a new way to monetize your web apps. Reach new customers and start a revolution with us."
-                ) %>
+                )}
               </p>
               <div class="mt-6">
                 <.button href="/auth/users/log_in">
-                  <%= gettext("Get started") %>
+                  {gettext("Get started")}
                 </.button>
               </div>
             </div>
@@ -212,70 +212,70 @@ defmodule OpsmaruWeb.BaseComponents do
                           alt="Opsmaru"
                           class="h-9 overflow-visible"
                         />
-                        <span class="font-medium text-xl mt-1"><%= gettext("Opsmaru") %></span>
+                        <span class="font-medium text-xl mt-1">{gettext("Opsmaru")}</span>
                       </a>
                     </div>
                   </div>
                   <div class="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
                     <div>
                       <h3 class="text-sm/6 font-medium text-slate-950/50">
-                        <%= gettext("Product") %>
+                        {gettext("Product")}
                       </h3>
                       <ul class="mt-6 space-y-4 text-sm/6">
                         <li>
                           <.link navigate={~p"/our-product/pricing"}>
-                            <%= gettext("Pricing") %>
+                            {gettext("Pricing")}
                           </.link>
                         </li>
                         <li>
                           <a href="/docs/">
-                            <%= gettext("Documentation") %>
+                            {gettext("Documentation")}
                           </a>
                         </li>
                       </ul>
                     </div>
                     <div>
                       <h3 class="text-sm/6 font-medium text-slate-950/50">
-                        <%= gettext("Resources") %>
+                        {gettext("Resources")}
                       </h3>
                       <ul class="mt-6 space-y-4 text-sm/6">
                         <li>
                           <.link navigate={~p"/blog"}>
-                            <%= gettext("Blog") %>
+                            {gettext("Blog")}
                           </.link>
                         </li>
                       </ul>
                     </div>
                     <div>
                       <h3 class="text-sm/6 font-medium text-slate-950/50">
-                        <%= gettext("Support") %>
+                        {gettext("Support")}
                       </h3>
                       <ul class="mt-6 space-y-4 text-sm/6">
                         <li>
                           <a href="https://discord.gg/9ecvvKfBnp" target="_blank">
-                            <%= gettext("Discord") %>
+                            {gettext("Discord")}
                           </a>
                         </li>
                         <li>
                           <a href="https://status.opsmaru.com" target="_blank">
-                            <%= gettext("Status") %>
+                            {gettext("Status")}
                           </a>
                         </li>
                       </ul>
                     </div>
                     <div>
                       <h3 class="text-sm/6 font-medium text-slate-950/50">
-                        <%= gettext("Legal") %>
+                        {gettext("Legal")}
                       </h3>
                       <ul class="mt-6 space-y-4 text-sm/6">
                         <li>
                           <.link navigate={~p"/legal/privacy-policy"}>
-                            <%= gettext("Privacy Policy") %>
+                            {gettext("Privacy Policy")}
                           </.link>
                         </li>
                         <li>
                           <.link navigate={~p"/legal/terms-of-use"}>
-                            <%= gettext("Terms of Use") %>
+                            {gettext("Terms of Use")}
                           </.link>
                         </li>
                       </ul>
@@ -324,7 +324,7 @@ defmodule OpsmaruWeb.BaseComponents do
                     </svg>
                     <div class="text-sm/6 text-gray-950">
                       © <!-- -->
-                      <%= Date.utc_today().year %>
+                      {Date.utc_today().year}
                       <!-- -->Upmaru, Inc.
                     </div>
                   </div>

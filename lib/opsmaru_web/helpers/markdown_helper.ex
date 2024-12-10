@@ -108,9 +108,9 @@ defmodule OpsmaruWeb.MarkdownHelper do
           </svg>
         </div>
         <div class="ml-3">
-          <h5 class="text-sm font-medium text-blue-800"><%= @heading || gettext("Notice") %></h5>
+          <h5 class="text-sm font-medium text-blue-800">{@heading || gettext("Notice")}</h5>
           <div class="content mt-2 text-sm text-blue-700">
-            <%= raw(@content) %>
+            {raw(@content)}
           </div>
         </div>
       </div>
@@ -138,9 +138,9 @@ defmodule OpsmaruWeb.MarkdownHelper do
           </svg>
         </div>
         <div class="ml-3">
-          <h5 class="text-sm font-medium text-amber-800"><%= @heading || gettext("Warning") %></h5>
+          <h5 class="text-sm font-medium text-amber-800">{@heading || gettext("Warning")}</h5>
           <div class="content mt-2 text-sm text-amber-700">
-            <%= raw(@content) %>
+            {raw(@content)}
           </div>
         </div>
       </div>
@@ -153,11 +153,11 @@ defmodule OpsmaruWeb.MarkdownHelper do
     <div class="my-8 bg-slate-100 px-4 rounded-2xl">
       <div>
         <div class="px-4 pt-5 not-prose">
-          <h3 class="text-xl font-semibold text-slate-900"><%= @heading %></h3>
+          <h3 class="text-xl font-semibold text-slate-900">{@heading}</h3>
         </div>
         <div class="px-4 pb-5">
           <div class="objectives-list mt-2 text-md text-slate-500">
-            <%= raw(@content) %>
+            {raw(@content)}
           </div>
         </div>
       </div>

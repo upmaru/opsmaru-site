@@ -1,5 +1,5 @@
 import React from "react";
-import { SignalIcon } from "@heroicons/react/24/solid";
+import { SignalIcon, ServerIcon } from "@heroicons/react/24/solid";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
 
@@ -62,20 +62,16 @@ function Checkmark() {
   );
 }
 
-function Photos() {
+function Servers() {
   return (
     <div className="z-10 col-start-1 row-start-1">
       <div className="mx-auto flex size-full max-w-md items-center justify-around">
-        <img
-          alt=""
-          src="/linked-avatars/customer.jpg"
-          className="size-20 rounded-full bg-white/15 ring-4 ring-white/10"
-        />
-        <img
-          alt=""
-          src="/linked-avatars/manager.jpg"
-          className="size-20 rounded-full bg-white/15 ring-4 ring-white/10"
-        />
+        <div className="size-20 rounded-full bg-slate-900/15 ring-4 ring-slate-700 place-content-center justify-center">
+          <ServerIcon className="h-8 w-8 mx-auto text-slate-500" />
+        </div>
+        <div className="size-20 rounded-full bg-slate-900/15 ring-4 ring-slate-700 place-content-center justify-center">
+          <ServerIcon className="h-8 w-8 mx-auto text-slate-500" />
+        </div>
       </div>
     </div>
   );
@@ -90,7 +86,7 @@ export function Broadcast() {
       className="isolate mx-auto grid h-full grid-cols-1"
     >
       <Rings />
-      {/* <Photos /> */}
+      <Servers />
       <Checkmark />
     </motion.div>
   );

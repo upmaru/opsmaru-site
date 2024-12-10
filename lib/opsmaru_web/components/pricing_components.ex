@@ -28,36 +28,36 @@ defmodule OpsmaruWeb.PricingComponents do
       <div class="grid grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
         <div class="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
           <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-            <%= @price.product.name %>
+            {@price.product.name}
           </h2>
-          <p class="mt-2 text-sm/6 text-slate-950/75"><%= @price.product.description %></p>
+          <p class="mt-2 text-sm/6 text-slate-950/75">{@price.product.description}</p>
           <div class="mt-8 flex items-center gap-4">
             <div class="text-5xl font-medium text-slate-950">
-              <%= Money.to_string(@money, fractional_unit: false) %>
+              {Money.to_string(@money, fractional_unit: false)}
             </div>
             <div class="text-sm/5 text-slate-950/75">
-              <p><%= String.upcase(@price.currency) %></p>
+              <p>{String.upcase(@price.currency)}</p>
               <%= if @metadata.user_count_limit > 1 do %>
                 <p>
-                  <%= gettext("per %{unit_label} per %{interval}",
+                  {gettext("per %{unit_label} per %{interval}",
                     unit_label: @price.product.unit_label,
                     interval: @price.recurring.interval
-                  ) %>
+                  )}
                 </p>
               <% else %>
                 <p>
-                  <%= gettext("per %{interval}", interval: @price.recurring.interval) %>
+                  {gettext("per %{interval}", interval: @price.recurring.interval)}
                 </p>
               <% end %>
             </div>
           </div>
           <div class="mt-8">
             <BaseComponents.button href="/auth/users/register">
-              <%= gettext("Get started") %>
+              {gettext("Get started")}
             </BaseComponents.button>
           </div>
           <div class="mt-8">
-            <h3 class="text-sm/6 font-medium text-slate-950"><%= gettext("What's included:") %></h3>
+            <h3 class="text-sm/6 font-medium text-slate-950">{gettext("What's included:")}</h3>
             <ul class="mt-3 space-y-3">
               <li
                 :for={feature <- @features}
@@ -66,7 +66,7 @@ defmodule OpsmaruWeb.PricingComponents do
                 <span class="inline-flex h-6 items-center">
                   <.icon name="hero-plus" class="shrink-0 text-slate-950/25" />
                 </span>
-                <%= feature.name %>
+                {feature.name}
               </li>
             </ul>
           </div>
@@ -91,16 +91,16 @@ defmodule OpsmaruWeb.PricingComponents do
     ~H"""
     <section id="pricing-faq" class="scroll-mt-8">
       <h2 class="text-center font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500 data-[dark]:text-slate-400">
-        <%= @h2.body %>
+        {@h2.body}
       </h2>
       <div class="mt-2 text-center text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-        <%= @title.body %>
+        {@title.body}
       </div>
       <div class="mx-auto mb-32 mt-16 max-w-xl space-y-12">
         <dl :for={faq <- @faqs}>
-          <dt class="text-sm font-semibold"><%= faq.question %></dt>
+          <dt class="text-sm font-semibold">{faq.question}</dt>
           <dd class="mt-4 text-sm/6 text-slate-600 prose prose-a:text-cyan-500">
-            <%= raw(MDEx.to_html!(faq.answer)) %>
+            {raw(MDEx.to_html!(faq.answer))}
           </dd>
         </dl>
       </div>
@@ -116,7 +116,7 @@ defmodule OpsmaruWeb.PricingComponents do
     ~H"""
     <tr :for={feature <- @features} class="border-b border-gray-100 last:border-none">
       <th class="px-0 py-4 text-sm/6 font-normal text-gray-600">
-        <%= feature.description %>
+        {feature.description}
       </th>
       <.display
         :for={product <- @products}
@@ -134,7 +134,7 @@ defmodule OpsmaruWeb.PricingComponents do
     ~H"""
     <td class="p-4 data-[selected]:table-cell max-sm:hidden">
       <div :if={@feature.display == "remark" && @product_feature} class="text-sm/6">
-        <%= @product_feature.remark %>
+        {@product_feature.remark}
       </div>
       <div :if={@feature.display == "active" && @product_feature} class="text-sm/6">
         <.icon :if={@product_feature.active} name="hero-check" class="h-4 w-4 text-green-600" />

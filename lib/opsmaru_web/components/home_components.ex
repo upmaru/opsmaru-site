@@ -27,18 +27,18 @@ defmodule OpsmaruWeb.HomeComponents do
         phx-hook="MountStaggerIn"
       >
         <span :for={chunk <- String.split(@h1.body, " ")} class="chunk">
-          <%= chunk %>
+          {chunk}
         </span>
       </h1>
       <p class="mt-8 max-w-lg text-xl/7 font-medium text-slate-950/75 sm:text-2xl/8">
-        <%= @description.body %>
+        {@description.body}
       </p>
       <div class="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
         <BaseComponents.button href="/auth/users/log_in">
-          <%= gettext("Get started") %>
+          {gettext("Get started")}
         </BaseComponents.button>
         <BaseComponents.button href={~p"/our-product/pricing"} variant={:secondary}>
-          <%= gettext("See pricing") %>
+          {gettext("See pricing")}
         </BaseComponents.button>
       </div>
     </div>
@@ -60,7 +60,7 @@ defmodule OpsmaruWeb.HomeComponents do
       <div class="pb-24 px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-slate-950 sm:text-6xl">
-            <%= @h2.body %>
+            {@h2.body}
           </h2>
         </div>
       </div>
@@ -82,10 +82,10 @@ defmodule OpsmaruWeb.HomeComponents do
               </div>
               <div class="slide-caption mt-12 mx-auto text-center bg-slate-100 w-fit px-8 py-4 rounded-full">
                 <h2 class="slide-title bg-gradient-to-br from-blue-500 from-[28%] via-purple-400 via-[70%] to-violet-600 font-semibold text-transparent bg-clip-text text-2xl">
-                  <%= slide.title %>
+                  {slide.title}
                 </h2>
                 <p class="text-slate-950 font-light text-md font-semibold">
-                  <%= slide.subtitle %>
+                  {slide.subtitle}
                 </p>
               </div>
             </div>
@@ -112,10 +112,10 @@ defmodule OpsmaruWeb.HomeComponents do
     <div class="mt-16 px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-7xl">
         <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500">
-          <%= @h2.body %>
+          {@h2.body}
         </h2>
         <h3 class="mt-2 max-w-3xl text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-          <%= @description.body %>
+          {@description.body}
         </h3>
         <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
           <.top_left
@@ -242,13 +242,13 @@ defmodule OpsmaruWeb.HomeComponents do
     ~H"""
     <div class="relative p-10">
       <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-        <%= @card.heading %>
+        {@card.heading}
       </h3>
       <p class="mt-1 text-2xl/8 font-medium tracking-tight text-gray-950 group-data-[dark]:text-white">
-        <%= @card.title %>
+        {@card.title}
       </p>
       <p class="mt-2 max-w-[600px] text-sm/6 text-gray-600 group-data-[dark]:text-gray-400">
-        <%= @card.description %>
+        {@card.description}
       </p>
     </div>
     """

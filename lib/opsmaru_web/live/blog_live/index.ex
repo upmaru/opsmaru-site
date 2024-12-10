@@ -58,7 +58,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
               class="gap-1 inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
             >
               <.icon name="hero-rss" class="w-4 h-4" />
-              <%= gettext("RSS Feed") %>
+              {gettext("RSS Feed")}
             </.link>
           </div>
           <div class="mt-6">

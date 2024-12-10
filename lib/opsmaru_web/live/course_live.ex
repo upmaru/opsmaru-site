@@ -46,13 +46,13 @@ defmodule OpsmaruWeb.CourseLive do
       <div class="px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-7xl">
           <h2 class="mt-16 font-mono text-xs/5 font-semibold uppercase tracking-widest text-gray-500 data-[dark]:text-gray-400">
-            <%= gettext("How to") %>
+            {gettext("How to")}
           </h2>
           <h1 class="mt-2 text-pretty text-4xl font-medium tracking-tighter text-gray-950 data-[dark]:text-white sm:text-6xl">
-            <%= @course.title %>
+            {@course.title}
           </h1>
           <p class="mt-6 max-w-3xl text-xl font-medium text-gray-500">
-            <%= @course.description %>
+            {@course.description}
           </p>
         </div>
       </div>
@@ -81,14 +81,14 @@ defmodule OpsmaruWeb.CourseLive do
                     }
                     alt={@course.author.avatar.alt}
                   />
-                  <h3 class="mt-6 text-sm font-medium text-gray-900"><%= @course.author.name %></h3>
+                  <h3 class="mt-6 text-sm font-medium text-gray-900">{@course.author.name}</h3>
                   <dl class="mt-1 flex grow flex-col justify-between">
-                    <dt class="sr-only"><%= gettext("Title") %></dt>
-                    <dd class="text-sm text-gray-500"><%= @course.author.title %></dd>
-                    <dt class="sr-only"><%= gettext("Role") %></dt>
+                    <dt class="sr-only">{gettext("Title")}</dt>
+                    <dd class="text-sm text-gray-500">{@course.author.title}</dd>
+                    <dt class="sr-only">{gettext("Role")}</dt>
                     <dd class="mt-3">
                       <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                        <%= gettext("Instructor") %>
+                        {gettext("Instructor")}
                       </span>
                     </dd>
                   </dl>
@@ -98,38 +98,38 @@ defmodule OpsmaruWeb.CourseLive do
                   navigate={~p"/how-to/#{@course.slug}/#{@first_episode.slug}"}
                   class="px-5 py-5 bg-slate-950 text-md font-semibold text-white rounded-b-2xl"
                 >
-                  <%= gettext("Start course") %>
+                  {gettext("Start course")}
                 </.link>
               </div>
               <div :if={!@current_user} class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
                 <h3 class="font-semibold">
-                  <%= gettext("Don't have an account?") %>
+                  {gettext("Don't have an account?")}
                 </h3>
                 <p class="pt-2 text-md text-slate-600">
                   <.link href="/auth/users/register" class="text-black underline">
-                    <%= gettext("Sign up") %>
+                    {gettext("Sign up")}
                   </.link>
-                  <%= gettext("and get a 30 day free trial. No credit card required.") %>
+                  {gettext("and get a 30 day free trial. No credit card required.")}
                 </p>
               </div>
               <div :if={@current_user} class="mt-8 bg-slate-100 rounded-xl px-5 py-4">
                 <h3 class="font-semibold">
-                  <%= gettext("You're signed in.") %>
+                  {gettext("You're signed in.")}
                 </h3>
                 <p class="pt-2 text-md text-slate-600">
                   <.link href="/home" class="text-black underline">
-                    <%= gettext("Open console") %>
+                    {gettext("Open console")}
                   </.link>
-                  <%= gettext("and follow along with the video.") %>
+                  {gettext("and follow along with the video.")}
                 </p>
               </div>
             </div>
 
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-              <h2 class="text-3xl font-semibold"><%= gettext("Course Overview") %></h2>
+              <h2 class="text-3xl font-semibold">{gettext("Course Overview")}</h2>
 
               <div class="mt-8 prose max-w-max">
-                <%= raw(render_markdown(@course.overview)) %>
+                {raw(render_markdown(@course.overview))}
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@ defmodule OpsmaruWeb.CourseLive do
             <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
               <div class="lg:max-w-2xl">
                 <h3 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-500">
-                  <%= gettext("Course episodes") %>
+                  {gettext("Course episodes")}
                 </h3>
                 <div :if={Enum.count(@sections) > 0} class="mt-8">
                   <CourseComponents.playlist course={@course} sections={@sections} />
@@ -154,7 +154,7 @@ defmodule OpsmaruWeb.CourseLive do
                       </div>
                       <div class="ml-3">
                         <p class="text-base text-blue-700">
-                          <%= gettext("Course content coming soon...") %>
+                          {gettext("Course content coming soon...")}
                         </p>
                       </div>
                     </div>
