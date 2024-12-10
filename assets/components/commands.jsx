@@ -142,18 +142,18 @@ export function Commands() {
     <div className="flex px-10 gap-x-4 mt-4">
       <Window width={800} height={600} className="z-0 absolute left-1/2 -translate-x-1/2 -bottom-8"/>
       {tabs.map((tab, index) => 
-      <button key={`demo-${index}`} onClick={() => setActiveTab(index) } data-active={activeTab === index} className="text-left border border-slate-700 rounded-lg p-2 md:p-4 z-10 bg-slate-800/90 hover:bg-slate-700/90 hover:border-slate-400 data-[active=true]:bg-slate-500/90 data-[active=true]:border-white">
+      <button key={`demo-${index}`} onClick={() => setActiveTab(index) } data-active={activeTab === index} className="text-left text-sm md:text-base border border-slate-700 rounded-lg p-2 md:p-4 z-10 bg-slate-800/90 hover:bg-slate-700/90 hover:border-slate-400 data-[active=true]:bg-slate-500/90 data-[active=true]:border-white">
         <h2 className="text-white font-semibold">{tab.title}</h2>
         <p className="hidden mt-4 text-white md:block">{tab.description}</p>
       </button>)}
       <div ref={scope} key={activeTab} className="absolute inset-0 px-6">
         <div className="relative w-full h-full overflow-hidden">
-          <div className="absolute left-3 bottom-0 mb-2 text-xs font-mono overflow-hidden text-slate-500">
+          <div className="absolute left-0 md:left-3 bottom-0 mb-2 text-xs font-mono overflow-hidden text-slate-500">
             {activeOutput?.split("\n\n").map((line, index) => 
               <div className="my-6" key={index}>{line.split("\n").map((l, idx) => <motion.p initial={{opacity: 0}} className="output" key={`line-${idx}`}>{l}</motion.p>)}</div>
             )}
           </div>
-          <div className="absolute left-3 bottom-0.5 text-xs text-slate-500 font-mono">
+          <div className="absolute left-0 md:left-3 bottom-0.5 text-[9px] sm:text-xs text-slate-500 font-mono">
             {activeCommand?.split('').map((char, index) => <motion.span initial={{opacity: 0}} key={`demo-${char}-${index}`} className='text-slate-400'>{char}</motion.span>)}
           </div>
         </div>
