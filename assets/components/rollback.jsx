@@ -45,10 +45,10 @@ function Item({ who, message, when }) {
 
 export function Timeline() {
   return (
-    <div className="absolute -right-2 -top-14 bg-slate-900 w-96 h-96 rounded-bl-xl ring-1 ring-slate-700 overflow-hidden">
-      <div className="p-8">
+    <div className="absolute inset-0 top-8 z-10 flex items-center justify-center bg-slate-900 ring-1 ring-slate-700 overflow-hidden">
+      <div className="relative p-8">
         <ul role="list" className="space-y-4">
-          <li className="relative flex gap-x-4 py-4">
+          <li className="relative flex gap-x-4 py-6">
             <div className="absolute -bottom-6 left-0 top-0 flex w-6 justify-center">
               <div className="w-px bg-slate-600"></div>
             </div>
