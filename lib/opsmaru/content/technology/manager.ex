@@ -16,7 +16,7 @@ defmodule Opsmaru.Content.Technology.Manager do
     end_index = Keyword.get(options, :end_index, 5)
 
     query = ~S"""
-      *[_type == "technology"][0..$end_index] | order(index asc) {
+      *[_type == "technology"] | order(index asc) [0..$end_index] {
         ...,
         category -> {...},
         "logo": {"url": logo.asset -> url, "alt": logo.alt}
