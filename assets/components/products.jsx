@@ -6,11 +6,11 @@ import {
   ChevronUpDownIcon,
 } from '@heroicons/react/16/solid'
 
-function Products({ products, selected }) {
+function Products({ products, interval, selected }) {
   return (
     <Menu>
       <MenuButton className="flex items-center justify-between gap-2 font-medium">
-        {products.find(({ slug }) => slug === selected)?.name || products[0].name}
+        {products.find(({ reference }) => reference === selected)?.name || products[0].name}
         <ChevronUpDownIcon className="size-4 fill-slate-900" />
       </MenuButton>
       <MenuItems
@@ -20,7 +20,7 @@ function Products({ products, selected }) {
         {products.map((product) => (
           <MenuItem key={`product-${product.index}`}>
             <a 
-              href={`/our-product/pricing?product=${product.reference}`}
+              href={`/our-product/pricing?interval=${interval}&product=${product.reference}`}
               data-phx-link="patch"
               data-phx-link-state="push"
               data-selected={product.reference === selected ? true : undefined}
@@ -39,9 +39,9 @@ function Products({ products, selected }) {
 export function mountProducts() {
   const domNode = this.el;
   const root = createRoot(domNode);
-  let { products, selected } = this.el.dataset;
+  let { products, interval, selected } = this.el.dataset;
 
   products = JSON.parse(products);
 
-  root.render(<Products products={products} selected={selected} />)
+  root.render(<Products products={products} interval={interval} selected={selected} />)
 }

@@ -111,6 +111,7 @@ defmodule OpsmaruWeb.PricingComponents do
   attr :products, :list, required: true
   attr :features, :list, required: true
   attr :product_features, :list, required: true
+  attr :focus_product, :string, default: nil
 
   def matrix(assigns) do
     ~H"""
@@ -120,7 +121,9 @@ defmodule OpsmaruWeb.PricingComponents do
       </th>
       <.display
         :for={product <- @products}
+        product={product}
         feature={feature}
+        focus_product={@focus_product}
         product_feature={match_product_feature(@product_features, product, feature)}
       />
     </tr>
@@ -128,11 +131,16 @@ defmodule OpsmaruWeb.PricingComponents do
   end
 
   attr :feature, Content.Feature, required: true
+  attr :product, Content.Product, required: true
   attr :product_feature, Products.Feature, default: nil
+  attr :focus_product, :string, default: nil
 
   def display(assigns) do
     ~H"""
-    <td class="p-4 data-[selected]:table-cell max-sm:hidden">
+    <td
+      data-selected={"#{@focus_product == @product.reference}"}
+      class="p-4 data-[selected='true']:table-cell max-sm:hidden"
+    >
       <div :if={@feature.display == "remark" && @product_feature} class="text-sm/6">
         {@product_feature.remark}
       </div>

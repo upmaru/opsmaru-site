@@ -171,6 +171,7 @@ defmodule OpsmaruWeb.PricingLive do
               </tr>
               <PricingComponents.matrix
                 products={@products}
+                focus_product={@focus_product}
                 features={category.features}
                 product_features={@product_features}
               />
