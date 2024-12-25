@@ -127,12 +127,12 @@ defmodule OpsmaruWeb.PricingLive do
                   <div class="relative inline-block"></div>
                 </td>
                 <td class="p-0 text-right">
-                  <a
-                    href="#"
+                  <.link
+                    href="/auth/users/register"
                     class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
                   >
                     {gettext("Get started")}
-                  </a>
+                  </.link>
                 </td>
               </tr>
               <tr class="max-sm:hidden">
@@ -143,12 +143,12 @@ defmodule OpsmaruWeb.PricingLive do
                   :for={_product <- @products}
                   class="px-0 pb-0 pt-4 data-[selected]:table-cell max-sm:hidden"
                 >
-                  <a
-                    href="#"
+                  <.link
+                    href="/auth/users/register"
                     class="inline-flex items-center justify-center px-2 py-[calc(theme(spacing.[1.5])-1px)] rounded-lg border border-transparent shadow ring-1 ring-black/10 whitespace-nowrap text-sm font-medium text-gray-950 data-[disabled]:bg-transparent data-[hover]:bg-gray-50 data-[disabled]:opacity-40"
                   >
                     {gettext("Get started")}
-                  </a>
+                  </.link>
                 </td>
               </tr>
             </thead>
