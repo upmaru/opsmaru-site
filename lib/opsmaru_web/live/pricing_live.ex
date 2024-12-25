@@ -130,7 +130,9 @@ defmodule OpsmaruWeb.PricingLive do
                     class="relative inline-block"
                     data-products={Jason.encode_to_iodata!(@products)}
                     data-interval={@interval}
-                    data-selected={@focus_product} phx-hook="MountProducts">
+                    data-selected={@focus_product}
+                    phx-hook="MountProducts"
+                  >
                   </div>
                 </td>
                 <td class="p-0 text-right">
@@ -227,7 +229,6 @@ defmodule OpsmaruWeb.PricingLive do
 
   @impl true
   def handle_params(%{"interval" => interval} = params, _uri, %{assigns: assigns} = socket) do
-
     prices = load_prices(interval)
 
     active_products_names = Enum.map(prices, & &1.product.name)
