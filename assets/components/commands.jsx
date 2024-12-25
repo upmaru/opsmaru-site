@@ -1,21 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { createRoot } from "react-dom/client";
+import { createRoot } from "react-dom/client"
 import { motion, useAnimate, stagger } from 'framer-motion'
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1, 
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
-
-const character = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 }
-}
 
 const tabs = [
   {
