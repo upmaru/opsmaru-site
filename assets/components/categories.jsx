@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   CheckIcon,

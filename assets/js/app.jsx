@@ -35,6 +35,7 @@ import { Technologies } from '../components/technologies';
 import { SSHAccess } from '../components/access'; 
 import { Timeline } from '../components/rollback';
 import { mountCommands } from '../components/commands';
+import { mountProducts } from '../components/products';
 
 function mountTimeline() {
   const domNode = this.el;
@@ -167,6 +168,11 @@ Hooks.MountPlayer = {
 Hooks.MountCategories = {
   mounted: mountCategories,
   updated: mountCategories,
+}
+
+Hooks.MountProducts = {
+  mounted: mountProducts,
+  updated: mountProducts,
 }
 
 let csrfToken = document

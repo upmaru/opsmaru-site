@@ -45,6 +45,7 @@ defmodule OpsmaruWeb.PricingLive do
   attr :main_nav, Content.Navigation, required: true
   attr :interval, :string, default: "month"
   attr :products, :list, default: []
+  attr :focus_product, :string, default: nil
 
   def render(assigns) do
     ~H"""
@@ -124,7 +125,13 @@ defmodule OpsmaruWeb.PricingLive do
               </tr>
               <tr class="sm:hidden">
                 <td class="p-0">
-                  <div class="relative inline-block"></div>
+                  <div
+                    id="products-mobile-nav"
+                    class="relative inline-block"
+                    data-products={Jason.encode_to_iodata!(@products)}
+                    data-interval={@interval}
+                    data-selected={@focus_product} phx-hook="MountProducts">
+                  </div>
                 </td>
                 <td class="p-0 text-right">
                   <.link
@@ -219,7 +226,8 @@ defmodule OpsmaruWeb.PricingLive do
   end
 
   @impl true
-  def handle_params(%{"interval" => interval}, _uri, %{assigns: assigns} = socket) do
+  def handle_params(%{"interval" => interval} = params, _uri, %{assigns: assigns} = socket) do
+
     prices = load_prices(interval)
 
     active_products_names = Enum.map(prices, & &1.product.name)
@@ -232,16 +240,19 @@ defmodule OpsmaruWeb.PricingLive do
         product.reference in active_products_names
       end)
 
+    focus_product = Map.get(params, "product", List.first(products).reference)
+
     socket =
       socket
       |> assign(:prices, prices)
       |> assign(:interval, interval)
       |> assign(:products, products)
+      |> assign(:focus_product, focus_product)
 
     {:noreply, socket}
   end
 
-  def handle_params(_, _uri, %{assigns: assigns} = socket) do
+  def handle_params(params, _uri, %{assigns: assigns} = socket) do
     prices = load_prices()
     active_products_names = Enum.map(prices, & &1.product.name)
 
@@ -253,11 +264,14 @@ defmodule OpsmaruWeb.PricingLive do
         product.reference in active_products_names
       end)
 
+    focus_product = Map.get(params, "product", List.first(products).reference)
+
     socket =
       socket
       |> assign(:prices, prices)
       |> assign(:interval, "month")
       |> assign(:products, products)
+      |> assign(:focus_product, focus_product)
 
     {:noreply, socket}
   end
