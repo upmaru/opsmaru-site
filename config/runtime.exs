@@ -25,6 +25,9 @@ config :opsmaru, Opsmaru.Sanity,
   project_id: System.get_env("SANITY_PROJECT_ID"),
   dataset: System.get_env("SANITY_DATASET")
 
+config :opsmaru, Opsmaru.Robot,
+  indexing: System.get_env("ENABLE_ROBOT_INDEX") == "true"
+
 config :stripity_stripe,
   api_version: "2022-11-15",
   api_key: System.get_env("STRIPE_SECRET")
