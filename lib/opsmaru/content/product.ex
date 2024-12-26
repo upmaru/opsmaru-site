@@ -2,6 +2,8 @@ defmodule Opsmaru.Content.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:index, :reference, :name]}
+
   @valid_attrs ~w(id index reference name)a
 
   embedded_schema do

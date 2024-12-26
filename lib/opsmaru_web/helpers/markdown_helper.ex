@@ -5,7 +5,7 @@ defmodule OpsmaruWeb.MarkdownHelper do
 
   def render_markdown(content) do
     opts = [
-      extension: [autolink: true],
+      extension: [autolink: true, table: true],
       render: [unsafe_: true],
       features: [syntax_highlight_theme: "tokyonight_moon"]
     ]
