@@ -10,13 +10,16 @@
       <meta property="og:url" content={@canonical_url} />
       <link rel="canonical" href={@canonical_url} />
     <% end %>
-    <%= if assigns[:page_description] do %>
-      <meta property="og:description" content={@page_description} />
-    <% end %>
     <meta
-      name="robots"
-      content={if Robot.enable_indexing?(@conn), do: "index", else: "noindex"}
+      property="og:description"
+      content={assigns[:page_description] || "Deploy and monetize your web application."}
     />
+    <meta
+      name="description"
+      content={assigns[:page_description] || "Deploy and monetize your web application."}
+    />
+    <meta property="og:type" content={assigns[:page_type] || "website"} />
+    <meta name="robots" content={if Robot.enable_indexing?(@conn), do: "index", else: "noindex"} />
     <link rel="apple-touch-icon" sizes="180x180" href={~p"/site/images/apple-touch-icon.png"} />
     <link rel="icon" type="image/png" sizes="32x32" href={~p"/site/images/favicon-32x32.png"} />
     <link rel="icon" type="image/png" sizes="16x16" href={~p"/site/images/favicon-16x16.png"} />
@@ -26,7 +29,8 @@
     <.live_title>
       {assigns[:page_title] || "Opsmaru"}
     </.live_title>
-    <meta property="og:title" content={assigns[:page_title]} />
+    <meta property="og:title" {assigns[:page_title] || "Opsmaru"} />
+    <meta property="og:image" {assigns[:page_cover] || ~p"/site/images/default-shot.png"} />
     <link
       rel="stylesheet"
       href="https://api.fontshare.com/css?f%5B%5D=switzer@400,500,600,700&amp;display=swap"
