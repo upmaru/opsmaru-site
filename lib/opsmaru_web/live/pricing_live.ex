@@ -26,10 +26,13 @@ defmodule OpsmaruWeb.PricingLive do
     %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
     selected_testimonial = Enum.random(testimonials)
+    page_cover = Map.get(page, :cover, %{})
 
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover[:url])
       |> assign(:prices, prices)
       |> assign(:page, page)
       |> assign(:faqs, faqs)

@@ -18,6 +18,7 @@ defmodule Opsmaru.Content.Page.Manager do
       ~S"""
       *[_type == "page" && slug.current == $slug][0]{
         ...,
+        "cover": {"url": cover.asset -> url, "alt": cover.alt},
         "sections": *[ _type == "pageSection" && references(^._id) ]{
           ...,
           "contents": *[ _type == "pageContent" && references(^._id) ]{

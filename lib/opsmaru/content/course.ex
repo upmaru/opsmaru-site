@@ -32,7 +32,7 @@ defmodule Opsmaru.Content.Course do
       params
       |> Map.put("id", id)
       |> Map.put("slug", slug)
-      |> Map.put("cover", build_cover(cover_params))
+      |> Map.put("cover", Image.params(cover_params))
 
     course
     |> cast(params, ~w(id title slug description overview)a)
@@ -48,9 +48,4 @@ defmodule Opsmaru.Content.Course do
     |> changeset(params)
     |> apply_action!(:insert)
   end
-
-  defp build_cover(%{"url" => nil}), do: nil
-
-  defp build_cover(%{"url" => url, "alt" => alt} = params) when is_binary(url) and is_binary(alt),
-    do: params
 end

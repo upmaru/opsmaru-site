@@ -17,9 +17,13 @@ defmodule OpsmaruWeb.LegalLive do
       main_content =
         Enum.find(main_section.contents, &(&1.slug == "#{slug}-main-content"))
 
+      page_cover = Map.get(page, :cover, %{})
+
       socket =
         socket
         |> assign(:page_title, page.title)
+        |> assign(:page_description, page.description)
+        |> assign(:page_cover_url, page_cover[:url])
         |> assign(:page, page)
         |> assign(:main_section, main_section)
         |> assign(:main_content, main_content)

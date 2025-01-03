@@ -15,9 +15,13 @@ defmodule OpsmaruWeb.BlogLive.Index do
     %{data: featured_posts} = Content.featured_posts(perspective: assigns.perspective)
     %{data: categories} = Posts.list_categories(perspective: assigns.perspective)
 
+    page_cover = Map.get(page, :cover, %{})
+
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover[:url])
       |> assign(:page, page)
       |> assign(:header_section, header_section)
       |> assign(:featured_posts, featured_posts)
