@@ -102,7 +102,7 @@ defmodule OpsmaruWeb.EpisodeLive do
                 </div>
                 <h1 class="text-3xl font-semibold -mb-1">{@episode.title}</h1>
               </div>
-              <div class="mt-8 prose max-w-max">
+              <div class="mt-8 prose prose-img:rounded-2xl max-w-max">
                 {raw(render_markdown(@episode.content))}
               </div>
               <hr class="my-16" />
