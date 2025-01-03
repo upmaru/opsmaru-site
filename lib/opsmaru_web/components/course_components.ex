@@ -16,9 +16,9 @@ defmodule OpsmaruWeb.CourseComponents do
 
   def playlist(assigns) do
     ~H"""
-    <ul class="divide-y divide-slate-100">
+    <ul>
       <li :for={section <- @sections}>
-        <h4 class="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold">
+        <h4 class="-mx-4 rounded-lg bg-slate-50 px-4 py-3 text-sm/6 font-semibold">
           {gettext("Chapter")} {section.index}
           <.icon name="hero-ellipsis-vertical" class="w-3 h-3 text-slate-700" />
           {section.chapter.title}
@@ -26,7 +26,7 @@ defmodule OpsmaruWeb.CourseComponents do
         <ul>
           <li
             :for={episode <- section.chapter.episodes}
-            class="border-b border-dotted border-gray-200 text-sm/6 font-normal"
+            class="border-b border-dotted border-slate-200 last:border-none text-sm/6 font-normal"
           >
             <.link
               :if={is_nil(@current_episode) || @current_episode.id != episode.id}
