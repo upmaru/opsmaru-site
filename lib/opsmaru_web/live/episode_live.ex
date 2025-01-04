@@ -23,9 +23,13 @@ defmodule OpsmaruWeb.EpisodeLive do
     %{data: sections} =
       Courses.list_sections(course_id: course.id, perspective: assigns.perspective)
 
+    course_cover = Map.get(course, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, "#{episode.title} - #{course.title} - Opsmaru")
+      |> assign(:page_description, course.description)
+      |> assign(:page_cover_url, course_cover.url)
       |> assign(:course, course)
       |> assign(:episode, episode)
       |> assign(:sections, sections)
