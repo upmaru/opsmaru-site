@@ -172,4 +172,9 @@ defmodule OpsmaruWeb.CourseLive do
     </div>
     """
   end
+
+  @impl true
+  def handle_params(_params, url, socket) do
+    {:noreply, assign(socket, :canonical_url, url)}
+  end
 end
