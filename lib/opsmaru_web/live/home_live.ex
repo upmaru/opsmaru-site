@@ -2,6 +2,7 @@ defmodule OpsmaruWeb.HomeLive do
   use OpsmaruWeb, :live_view
 
   alias Opsmaru.Content
+  alias Opsmaru.Content.Image
 
   alias OpsmaruWeb.BaseComponents
   alias OpsmaruWeb.HomeComponents
@@ -21,9 +22,13 @@ defmodule OpsmaruWeb.HomeLive do
 
     %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
+    page_cover = Map.get(page, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover.url)
       |> assign(:page, page)
       |> assign(:hero_section, hero_section)
       |> assign(:slides_section, slides_section)

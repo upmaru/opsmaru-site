@@ -2,6 +2,7 @@ defmodule OpsmaruWeb.LegalLive do
   use OpsmaruWeb, :live_view
 
   alias Opsmaru.Content
+  alias Opsmaru.Content.Image
 
   import OpsmaruWeb.MarkdownHelper
 
@@ -17,9 +18,13 @@ defmodule OpsmaruWeb.LegalLive do
       main_content =
         Enum.find(main_section.contents, &(&1.slug == "#{slug}-main-content"))
 
+      page_cover = Map.get(page, :cover) || %Image{}
+
       socket =
         socket
         |> assign(:page_title, page.title)
+        |> assign(:page_description, page.description)
+        |> assign(:page_cover_url, page_cover.url)
         |> assign(:page, page)
         |> assign(:main_section, main_section)
         |> assign(:main_content, main_content)

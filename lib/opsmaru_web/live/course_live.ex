@@ -26,9 +26,13 @@ defmodule OpsmaruWeb.CourseLive do
         nil
       end
 
+    course_cover = Map.get(course, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, "#{course.title} - Course - Opsmaru")
+      |> assign(:page_description, course.description)
+      |> assign(:page_cover_url, course_cover.url)
       |> assign(:course, course)
       |> assign(:sections, sections)
       |> assign(:first_episode, first_episode)

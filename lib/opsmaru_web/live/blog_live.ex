@@ -9,9 +9,13 @@ defmodule OpsmaruWeb.BlogLive do
   def mount(%{"id" => slug}, _session, %{assigns: assigns} = socket) do
     %{data: post} = Content.show_post(slug, perspective: assigns.perspective)
 
+    post_cover = Map.get(post, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, post.title)
+      |> assign(:page_description, post.blurb)
+      |> assign(:page_cover_url, post_cover.url)
       |> assign(:post, post)
 
     {:ok, socket}

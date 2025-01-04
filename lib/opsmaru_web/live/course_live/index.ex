@@ -5,6 +5,8 @@ defmodule OpsmaruWeb.CourseLive.Index do
   alias Opsmaru.Courses
   alias Opsmaru.Pages
 
+  alias Opsmaru.Content.Image
+
   alias OpsmaruWeb.CourseComponents
 
   @page_slug "learn"
@@ -24,9 +26,13 @@ defmodule OpsmaruWeb.CourseLive.Index do
     %{data: categories} =
       Courses.list_categories(featured: false, perspective: assigns.perspective)
 
+    page_cover = Map.get(page, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover.url)
       |> assign(:page, page)
       |> assign(:header_section, header_section)
       |> assign(:get_support_section, get_support_section)
