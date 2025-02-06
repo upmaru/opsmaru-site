@@ -47,9 +47,11 @@ if config_env() == :prod do
   host = System.get_env("PHX_HOST") || "example.com"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
+  static_assets_host = System.get_env("STATIC_ASSETS_HOST")
+
   config :opsmaru, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-  config :opsmaru, OpsmaruWeb.Endpoint,
+  endpoint_config = [
     url: [host: host, port: 443, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -61,6 +63,18 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base,
     check_origin: Enum.uniq(["https://#{host}", "https://preview.opsmaru.com"])
+  ]
+
+  endpoint_config =
+    if static_assets_host do
+      static_url = [host: static_assets_host, port: 443, scheme: "https"]
+
+      Keyword.merge(endpoint_config, static_url: static_url)
+    else
+      endpoint_config
+    end
+
+  config :opsmaru, OpsmaruWeb.Endpoint, endpoint_config
 
   config :opsmaru, Opsmaru.Guardian,
     issuer: "instellar",
