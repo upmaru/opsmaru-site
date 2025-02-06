@@ -135,7 +135,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
     {:noreply, socket}
   end
 
-  def handle_params(params, _url, %{assigns: assigns} = socket) do
+  def handle_params(params, url, %{assigns: assigns} = socket) do
     category = Map.get(params, "category")
 
     current_path =
@@ -163,6 +163,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:category, category)
       |> assign(:posts_count, posts_count)
       |> assign(:pages, ceil(posts_count / @per_page))
+      |> assign(:canonical_url, url)
 
     {:noreply, socket}
   end
