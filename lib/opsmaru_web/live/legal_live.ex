@@ -10,6 +10,7 @@ defmodule OpsmaruWeb.LegalLive do
     defexception message: "Legal page not found", plug_status: 404
   end
 
+  @impl true
   def mount(%{"id" => slug}, _session, socket) do
     with %{data: %Content.Page{} = page} <- Content.show_page(slug) do
       main_section =
@@ -35,6 +36,7 @@ defmodule OpsmaruWeb.LegalLive do
     end
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>

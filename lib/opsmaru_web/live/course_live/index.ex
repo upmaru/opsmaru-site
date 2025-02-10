@@ -11,6 +11,7 @@ defmodule OpsmaruWeb.CourseLive.Index do
 
   @page_slug "learn"
 
+  @impl true
   def mount(_params, _session, %{assigns: assigns} = socket) do
     %{data: page} = Content.show_page(@page_slug, perspective: assigns.perspective)
 
@@ -47,6 +48,7 @@ defmodule OpsmaruWeb.CourseLive.Index do
   attr :featured_categories, :list, required: true
   attr :technologies, :list, required: true
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>

@@ -6,6 +6,7 @@ defmodule OpsmaruWeb.BlogLive do
 
   import OpsmaruWeb.MarkdownHelper
 
+  @impl true
   def mount(%{"id" => slug}, _session, %{assigns: assigns} = socket) do
     %{data: post} = Content.show_post(slug, perspective: assigns.perspective)
 
@@ -22,7 +23,9 @@ defmodule OpsmaruWeb.BlogLive do
   end
 
   attr :mobile_nav_active, :boolean, default: false
+  attr :post, Content.Post, required: true
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>

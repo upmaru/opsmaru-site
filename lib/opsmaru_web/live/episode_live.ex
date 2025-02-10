@@ -10,6 +10,7 @@ defmodule OpsmaruWeb.EpisodeLive do
 
   import OpsmaruWeb.MarkdownHelper
 
+  @impl true
   def mount(
         %{"course_id" => course_slug, "id" => episode_slug},
         _session,
@@ -42,6 +43,7 @@ defmodule OpsmaruWeb.EpisodeLive do
   attr :episode, Courses.Episode, required: true
   attr :sections, :list, required: true
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>

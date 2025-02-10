@@ -8,6 +8,7 @@ defmodule OpsmaruWeb.HomeLive do
   alias OpsmaruWeb.HomeComponents
   alias OpsmaruWeb.BlogComponents
 
+  @impl true
   def mount(_params, _session, %{assigns: assigns} = socket) do
     %{data: page} = Content.show_page("home", perspective: assigns.perspective)
 
@@ -48,6 +49,7 @@ defmodule OpsmaruWeb.HomeLive do
   attr :featured_posts, :list, default: []
   attr :perspective, :string, default: "published"
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>

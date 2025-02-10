@@ -11,6 +11,7 @@ defmodule OpsmaruWeb.CourseLive do
 
   import OpsmaruWeb.MarkdownHelper
 
+  @impl true
   def mount(%{"id" => slug}, _session, %{assigns: assigns} = socket) do
     %{data: course} = Content.show_course(slug, perspective: assigns.perspective)
 
@@ -44,6 +45,7 @@ defmodule OpsmaruWeb.CourseLive do
   attr :sections, :list, required: true
   attr :first_episode, Courses.Episode, default: nil
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>
