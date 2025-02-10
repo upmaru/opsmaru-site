@@ -2,11 +2,13 @@ defmodule OpsmaruWeb.HomeLive do
   use OpsmaruWeb, :live_view
 
   alias Opsmaru.Content
+  alias Opsmaru.Content.Image
 
   alias OpsmaruWeb.BaseComponents
   alias OpsmaruWeb.HomeComponents
   alias OpsmaruWeb.BlogComponents
 
+  @impl true
   def mount(_params, _session, %{assigns: assigns} = socket) do
     %{data: page} = Content.show_page("home", perspective: assigns.perspective)
 
@@ -21,9 +23,13 @@ defmodule OpsmaruWeb.HomeLive do
 
     %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
+    page_cover = Map.get(page, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover.url)
       |> assign(:page, page)
       |> assign(:hero_section, hero_section)
       |> assign(:slides_section, slides_section)
@@ -43,6 +49,7 @@ defmodule OpsmaruWeb.HomeLive do
   attr :featured_posts, :list, default: []
   attr :perspective, :string, default: "published"
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>
@@ -184,5 +191,10 @@ defmodule OpsmaruWeb.HomeLive do
       <BaseComponents.footer />
     </div>
     """
+  end
+
+  @impl true
+  def handle_params(_params, url, socket) do
+    {:noreply, assign(socket, :canonical_url, url)}
   end
 end

@@ -22,4 +22,9 @@ defmodule Opsmaru.Content.Image do
     %{uri | query: URI.encode_query(options)}
     |> URI.to_string()
   end
+
+  def params(%{"url" => nil}), do: nil
+
+  def params(%{"url" => url, "alt" => alt} = params) when is_binary(url) and is_binary(alt),
+    do: params
 end

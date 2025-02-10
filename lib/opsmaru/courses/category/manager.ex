@@ -16,7 +16,7 @@ defmodule Opsmaru.Courses.Category.Manager do
     query = ~s"""
     *[_type == "courseCategory" && featured == $featured] | order(index asc){
       ...,
-      "courses": *[ _type == "course" && references(^._id) ] {
+      "courses": *[ _type == "course" && references(^._id) ] | order(index asc) {
         ...,
         author -> {..., "avatar": {"url": avatar.asset -> url, "alt": avatar.alt}},
         "cover": {"url": cover.asset -> url, "alt": cover.alt},

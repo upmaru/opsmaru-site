@@ -4,6 +4,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
   alias Opsmaru.Content
   alias Opsmaru.Pages
   alias Opsmaru.Posts
+  alias Opsmaru.Content.Image
 
   alias OpsmaruWeb.BlogComponents
 
@@ -15,9 +16,13 @@ defmodule OpsmaruWeb.BlogLive.Index do
     %{data: featured_posts} = Content.featured_posts(perspective: assigns.perspective)
     %{data: categories} = Posts.list_categories(perspective: assigns.perspective)
 
+    page_cover = Map.get(page, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover.url)
       |> assign(:page, page)
       |> assign(:header_section, header_section)
       |> assign(:featured_posts, featured_posts)
@@ -130,7 +135,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
     {:noreply, socket}
   end
 
-  def handle_params(params, _url, %{assigns: assigns} = socket) do
+  def handle_params(params, url, %{assigns: assigns} = socket) do
     category = Map.get(params, "category")
 
     current_path =
@@ -158,6 +163,7 @@ defmodule OpsmaruWeb.BlogLive.Index do
       |> assign(:category, category)
       |> assign(:posts_count, posts_count)
       |> assign(:pages, ceil(posts_count / @per_page))
+      |> assign(:canonical_url, url)
 
     {:noreply, socket}
   end

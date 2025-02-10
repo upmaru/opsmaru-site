@@ -99,6 +99,7 @@ defmodule OpsmaruWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      alias OpsmaruWeb.Robot
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end

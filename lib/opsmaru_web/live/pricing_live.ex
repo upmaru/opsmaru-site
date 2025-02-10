@@ -26,10 +26,13 @@ defmodule OpsmaruWeb.PricingLive do
     %{data: testimonials} = Content.list_testimonials(perspective: assigns.perspective)
 
     selected_testimonial = Enum.random(testimonials)
+    page_cover = Map.get(page, :cover) || %Image{}
 
     socket =
       socket
       |> assign(:page_title, page.title)
+      |> assign(:page_description, page.description)
+      |> assign(:page_cover_url, page_cover.url)
       |> assign(:prices, prices)
       |> assign(:page, page)
       |> assign(:faqs, faqs)
@@ -254,7 +257,7 @@ defmodule OpsmaruWeb.PricingLive do
     {:noreply, socket}
   end
 
-  def handle_params(params, _uri, %{assigns: assigns} = socket) do
+  def handle_params(params, url, %{assigns: assigns} = socket) do
     prices = load_prices()
     active_products_names = Enum.map(prices, & &1.product.name)
 
@@ -274,6 +277,7 @@ defmodule OpsmaruWeb.PricingLive do
       |> assign(:interval, "month")
       |> assign(:products, products)
       |> assign(:focus_product, focus_product)
+      |> assign(:canonical_url, url)
 
     {:noreply, socket}
   end

@@ -10,6 +10,7 @@ defmodule OpsmaruWeb.EpisodeLive do
 
   import OpsmaruWeb.MarkdownHelper
 
+  @impl true
   def mount(
         %{"course_id" => course_slug, "id" => episode_slug},
         _session,
@@ -23,9 +24,13 @@ defmodule OpsmaruWeb.EpisodeLive do
     %{data: sections} =
       Courses.list_sections(course_id: course.id, perspective: assigns.perspective)
 
+    course_cover = Map.get(course, :cover) || %Image{}
+
     socket =
       socket
       |> assign(:page_title, "#{episode.title} - #{course.title} - Opsmaru")
+      |> assign(:page_description, course.description)
+      |> assign(:page_cover_url, course_cover.url)
       |> assign(:course, course)
       |> assign(:episode, episode)
       |> assign(:sections, sections)
@@ -38,6 +43,7 @@ defmodule OpsmaruWeb.EpisodeLive do
   attr :episode, Courses.Episode, required: true
   attr :sections, :list, required: true
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>
@@ -133,5 +139,10 @@ defmodule OpsmaruWeb.EpisodeLive do
       </div>
     </div>
     """
+  end
+
+  @impl true
+  def handle_params(_params, url, socket) do
+    {:noreply, assign(socket, :canonical_url, url)}
   end
 end

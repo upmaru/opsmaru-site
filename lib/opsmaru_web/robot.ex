@@ -1,4 +1,4 @@
-defmodule Opsmaru.Robot do
+defmodule OpsmaruWeb.Robot do
   def enable_indexing?(conn) do
     not String.contains?(conn.host, "preview") && config(:indexing)
   end
