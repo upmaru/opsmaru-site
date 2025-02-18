@@ -44,5 +44,11 @@
   </head>
   <body class="text-slate-950 antialiased">
     {@inner_content}
+    <div
+      id="cookie-consent"
+      phx-hook="MountCookieConsent"
+      class="pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-6 z-20"
+    >
+    </div>
   </body>
 </html>
