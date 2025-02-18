@@ -23,6 +23,7 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 import React from "react";
 import { createRoot } from "react-dom/client";
+import CookieConsent from "react-cookie-consent";
 
 import {animate, stagger} from 'motion';
 
@@ -173,6 +174,29 @@ Hooks.MountCategories = {
 Hooks.MountProducts = {
   mounted: mountProducts,
   updated: mountProducts,
+}
+
+function mountCookieConsent() {
+  const el = this.el;
+  const root = createRoot(el);
+  
+
+  root.render(
+    <CookieConsent disableStyles={true} 
+      containerClasses="pointer-events-auto max-w-xl rounded-xl bg-white/90 p-6 shadow-lg ring-1 ring-slate-900/10"
+      buttonWrapperClasses="mt-4 flex items-center gap-x-5"
+      buttonClasses="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+      >
+      <p className="text-sm/6 text-slate-900">
+        We use cookies to ensure you get the best experience on our website and application. Our baseline functionality like authentication and login depends on cookies.
+      </p>
+    </CookieConsent>
+  );
+}
+
+Hooks.MountCookieConsent = {
+  mounted: mountCookieConsent,
+  updated: mountCookieConsent,
 }
 
 let csrfToken = document
