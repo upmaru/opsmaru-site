@@ -106,7 +106,7 @@ defmodule Opsmaru.Content.Post.Manager do
     %Response{data: %{post | content: full_content}, perspective: perspective}
   end
 
-  @spec feed(Keyword.t()) :: [%Post{}]
+  @spec feed(Keyword.t()) :: %{data: [%Post{}], perspective: String.t()}
   @decorate cacheable(cache: Cache, match: &sanity_cache?/1, opts: [ttl: :timer.hours(24)])
   def feed(options \\ []) do
     perspective = Keyword.get(options, :perspective, "published")
