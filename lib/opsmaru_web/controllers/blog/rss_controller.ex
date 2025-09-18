@@ -6,7 +6,7 @@ defmodule OpsmaruWeb.Blog.RssController do
   plug :put_layout, false
 
   def index(conn, _params) do
-    posts = Content.posts_feed()
+    %{data: posts} = Content.posts_feed()
 
     conn
     |> put_resp_content_type("application/rss+xml")
