@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import { targets } from '../data/compute-targets';
+---
+<div class="compute-map" data-compute-map>
+  <div class="map-toolbar"><span><span class="status-dot"></span> THE COMPUTE FABRIC</span><span class="map-illustration">Architecture preview</span></div>
+  <div class="map-canvas">
+    <div class="agent-node"><span class="node-icon"><Icon name="terminal" size={19} /></span><div><strong>Your AI agent</strong><span>Intent in. Compute out.</span></div><span class="protocol-tag">MCP / REST</span></div>
+    <div class="map-connector vertical"><span></span></div>
+    <div class="control-node">
+      <div class="control-heading"><img src="/images/opsmaru-logo.svg" width="32" height="32" alt="" /><strong>opsmaru</strong><span class="badge badge-outline">Control plane</span></div>
+      <div class="control-functions"><span>Authorize</span><span>Schedule</span><span>Orchestrate</span></div>
+    </div>
+    <div class="normalization-layer"><span class="layer-line"></span><span><Icon name="layers" size={15} /> INCUS NORMALIZATION LAYER</span><span class="layer-line"></span></div>
+    <div class="target-switcher" role="group" aria-label="Explore compute targets">
+      {targets.map((target, i) => <button type="button" class:list={['target-button', { 'is-selected': i === 0 }]} data-target={target.id} aria-pressed={i === 0} aria-controls="target-detail"><Icon name={target.icon} size={19} /><span>{target.label}</span><span class="target-light"></span></button>)}
+    </div>
+    <div id="target-detail" class="target-detail" aria-live="polite" aria-atomic="true">
+      <div class="target-detail-title"><span class="status-dot"></span><strong data-target-name>{targets[0].name}</strong><code data-target-path>{targets[0].short}</code></div>
+      <p data-target-description>{targets[0].description}</p>
+    </div>
+  </div>
+  <div class="map-footer"><Icon name="shield" size={14} /><span>Explicit permissions. Isolated workloads.</span><span class="map-coordinate">01 — ∞</span></div>
+</div>
+<script>
+  import { targets } from '../data/compute-targets';
+  document.querySelectorAll<HTMLElement>('[data-compute-map]').forEach((map) => {
+    map.querySelectorAll<HTMLButtonElement>('[data-target]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = targets.find((item) => item.id === button.getAttribute('data-target'));
+        if (!target) return;
+        map.querySelectorAll('[data-target]').forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle('is-selected', selected);
+          item.setAttribute('aria-pressed', String(selected));
+        });
+        const fields = { name: target.name, path: target.short, description: target.description };
+        Object.entries(fields).forEach(([key, value]) => {
+          const field = map.querySelector(`[data-target-${key}]`);
+          if (field) field.textContent = value;
+        });
+      });
+    });
+  });
+</script>

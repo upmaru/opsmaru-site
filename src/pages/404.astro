@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+---
+<Layout title="Page not found — Opsmaru" noindex>
+  <main id="main" class="page-width not-found">
+    <a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="34" height="34" alt="" /><span>opsmaru.</span></a>
+    <span class="eyebrow">404 / NO COMPUTE AT THESE COORDINATES</span>
+    <h1>This page is<br /><span class="gradient-text">off the grid.</span></h1>
+    <p>The page you’re looking for doesn’t exist. Head back to the platform to find your way.</p>
+    <a class="btn btn-primary" href="/">Back to Opsmaru <Icon name="arrow" size={18} /></a>
+  </main>
+</Layout>

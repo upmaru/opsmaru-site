@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import ComputeMap from '../components/ComputeMap.astro';
+
+const repo = 'https://github.com/upmaru/opsmaru';
+const client = 'https://github.com/upmaru/opsmaru-incus';
+const features = [
+  { number: '01', icon: 'shield' as const, title: 'A sandbox. Not your host.', description: 'Give agents a dedicated place to build, execute, and experiment. Incus containers and virtual machines form the isolation boundary; explicit grants define what an agent can do.', tags: ['Containers + VMs', 'Scoped access'] },
+  { number: '02', icon: 'layers' as const, title: 'One contract. Any environment.', description: 'Incus normalizes the infrastructure underneath. The shared operation contract preserves native projects, instance identities, and results instead of inventing another hypervisor API.', tags: ['Native Incus semantics', 'MCP + REST direction'] },
+  { number: '03', icon: 'globe' as const, title: 'Start local. Grow outward.', description: 'Bring an existing Incus setup today at the client layer. The roadmap connects registered hosts and adds cloud provisioning, so your agent’s compute can grow beyond a single machine.', tags: ['Local-first foundation', 'Cloud-ready architecture'] },
+];
+const steps = [
+  { number: '01', title: 'Bring or provision compute', text: 'Use your existing Incus environment. Planned provider integrations will provision VMs on DigitalOcean, AWS, and GCP with Incus ready to go.', label: 'YOUR INFRASTRUCTURE' },
+  { number: '02', title: 'Connect the control plane', text: 'Register Incus targets with Opsmaru. The central design supports verified HTTPS for reachable hosts and outbound connectors for private networks.', label: 'ONE NORMALIZATION LAYER' },
+  { number: '03', title: 'Let your agent get to work', text: 'An agent requests compute through a unified interface. Opsmaru’s roadmap adds scheduling and orchestration across the authorized compute pool.', label: 'AGENT-DRIVEN EXECUTION' },
+];
+const faqs = [
+  { q: 'Is Opsmaru a cloud provider?', a: 'No. Opsmaru is the control-plane layer for compute you own or provision. Incus provides a common interface to containers and virtual machines across local machines and cloud hosts. You keep your infrastructure and provider relationships.' },
+  { q: 'Why build on Incus?', a: 'Incus already provides a mature control plane for system containers and virtual machines, including projects, profiles, storage, networking, and native operation tracking. Opsmaru builds an agent-facing layer on those semantics rather than replacing them with a second workload manager.' },
+  { q: 'How is agent access constrained?', a: 'The shared operations require host-supplied identity, explicit scopes, bounded execution, and named confirmation for destructive actions. Agents do not choose backend credentials or arbitrary socket paths. Isolation still depends on the host, Incus configuration, workload type, and the permissions you grant—it is not a blanket security guarantee.' },
+  { q: 'What can I use today?', a: 'The opsmaru-incus Elixir library is published on Hex. It provides the native client, shared operation descriptors, and an embeddable gateway. Its documentation separates fixture coverage from real-backend acceptance. The central Opsmaru service, target registration, external authentication, provider provisioning, and scheduler are still in development or planning.' },
+];
+---
+<Layout>
+  <div class="site-shell">
+    <header class="site-header">
+      <nav class="navbar page-width" aria-label="Main navigation">
+        <a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="34" height="34" alt="" /><span>opsmaru<span class="brand-period">.</span></span></a>
+        <div class="desktop-nav"><a href="#platform">Platform</a><a href="#how-it-works">How it works</a><a href="#roadmap">Roadmap</a></div>
+        <a class="nav-github" href={repo}><Icon name="github" size={18} /><span>GitHub</span><Icon name="external" size={13} /></a>
+        <details class="mobile-nav dropdown dropdown-end">
+          <summary class="btn btn-ghost btn-sm" aria-label="Open navigation"><span class="menu-lines" aria-hidden="true"></span></summary>
+          <ul class="menu dropdown-content"><li><a href="#platform">Platform</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href={repo}>GitHub</a></li></ul>
+        </details>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero-section page-width" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <a class="eyebrow hero-eyebrow" href="#roadmap"><span class="status-dot"></span> BUILDING IN THE OPEN <Icon name="arrow" size={14} /></a>
+          <h1 id="hero-title">Agents need<br /> a place to<br /> <span class="gradient-text">do real work.</span></h1>
+          <p class="hero-subtitle">The universal compute substrate for agents.</p>
+          <p class="hero-description">Safe sandboxes. One interface. Your infrastructure.<br class="desktop-break" /> From local Incus to cloud compute, Opsmaru is building the control plane that turns agent intent into execution.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#how-it-works">Explore the platform <Icon name="arrow" size={18} /></a><a class="btn btn-ghost" href={repo}>Follow the build <Icon name="github" size={18} /></a></div>
+          <div class="hero-footnote"><span class="tiny-cross">+</span><span>Local to cloud. Normalized by Incus.</span></div>
+        </div>
+        <div class="hero-visual"><ComputeMap /></div>
+      </section>
+
+      <section class="infrastructure-strip" aria-label="Infrastructure direction">
+        <div class="page-width infrastructure-inner"><p>YOUR COMPUTE.<br /><strong>ONE COMMON LANGUAGE.</strong></p><div class="provider-list"><span><Icon name="terminal" size={21} /> Local Incus</span><span class="provider-do"><i aria-hidden="true"></i> DigitalOcean</span><span class="provider-aws">aws<span class="aws-smile" aria-hidden="true"></span></span><span><span class="gcp-mark" aria-hidden="true">G</span> Google Cloud</span></div><span class="provider-note">Cloud provisioning<br />on the roadmap</span></div>
+      </section>
+
+      <section id="platform" class="section page-width" aria-labelledby="platform-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> THE PLATFORM</p><h2 id="platform-title">Intelligence is portable.<br /><span class="text-muted">Compute should be, too.</span></h2></div><p class="section-intro">Your agent shouldn’t need a different playbook for every environment. Give it a consistent way to work, wherever the compute lives.</p></div>
+        <div class="feature-grid">{features.map((feature) => <article class="card feature-card"><div class="feature-top"><span class="feature-icon"><Icon name={feature.icon} size={25} /></span><span class="feature-number">{feature.number}</span></div><h3>{feature.title}</h3><p>{feature.description}</p><div class="feature-tags">{feature.tags.map((tag) => <span class="badge badge-ghost">{tag}</span>)}</div></article>)}</div>
+      </section>
+
+      <section id="how-it-works" class="workflow-section section" aria-labelledby="workflow-title">
+        <div class="page-width">
+          <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> FROM INTENT TO EXECUTION</p><h2 id="workflow-title">You bring the agent.<br /><span class="text-muted">We’re building the substrate.</span></h2></div><span class="badge badge-outline roadmap-badge">Platform direction</span></div>
+          <div class="workflow-grid"><ol class="workflow-steps">{steps.map((step) => <li><span class="step-number">{step.number}</span><div><span class="step-label">{step.label}</span><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol>
+            <div class="execution-panel">
+              <div class="execution-title"><Icon name="code" size={16} /><span>THE AGENT’S MENTAL MODEL</span><span class="illustrative-label">Illustrative workflow</span></div>
+              <div class="intent-block"><span class="code-label">01 / INTENT</span><p>“Give me an isolated environment<br />to build and test this project.”</p></div>
+              <div class="execution-flow"><span></span><Icon name="chevron" size={16} /><span></span></div>
+              <div class="contract-block"><span class="code-label">02 / OPSMARU</span><div><span>identity</span><strong>verified caller</strong></div><div><span>target</span><strong>authorized Incus host</strong></div><div><span>environment</span><strong>isolated container or VM</strong></div><div><span>execution</span><strong>bounded, observable work</strong></div></div>
+              <div class="result-block"><Icon name="terminal" size={18} /><span>Less infrastructure glue.<br /><strong>More work getting done.</strong></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="principles-section page-width" aria-labelledby="principles-title"><div class="principles-copy"><p class="eyebrow"><span class="section-slash">/</span> BUILT ON REAL BOUNDARIES</p><h2 id="principles-title">Power for agents.<br /><span class="text-muted">Control for you.</span></h2><p>Autonomy shouldn’t mean handing over your host. The foundation favors explicit authority, bounded execution, and honest outcomes.</p><a class="text-link" href={`${client}/blob/main/docs/incus-operations.md`}>Read the operation contracts <Icon name="arrow" size={17} /></a></div><div class="principle-list"><article><Icon name="shield" size={22} /><div><h3>Permission before execution</h3><p>Host-bound identity and operation scopes are checked before backend access. Destructive operations require explicit confirmation.</p></div></article><article><Icon name="terminal" size={22} /><div><h3>Bounded by design</h3><p>Guest execution has limits on inputs, captured output, and duration. Agents work inside named instances, not an unrestricted host shell.</p></div></article><article><Icon name="layers" size={22} /><div><h3>Native state. Honest results.</h3><p>Accepted is not completed. Native operation IDs stay visible, and potentially accepted mutations are never blindly replayed.</p></div></article></div></section>
+
+      <section id="roadmap" class="section page-width" aria-labelledby="roadmap-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> BUILDING THE SUBSTRATE</p><h2 id="roadmap-title">A clear direction.<br /><span class="text-muted">An open build.</span></h2></div><p class="section-intro">The native foundation is available. We’re building toward a unified agent compute platform, one layer at a time.</p></div>
+        <div class="roadmap-grid"><article class="card roadmap-card available"><div class="roadmap-card-top"><span class="roadmap-index">LAYER 01</span><span class="badge badge-success badge-outline"><span class="status-dot"></span> Available</span></div><h3>The Incus foundation</h3><p>A portable Elixir client, shared agent-operation contracts, and a host-mounted native gateway.</p><ul><li><Icon name="check" size={15} /> Unix socket + verified HTTPS</li><li><Icon name="check" size={15} /> Scoped, bounded operations</li><li><Icon name="check" size={15} /> Explicit coverage and evidence</li></ul><a class="text-link" href={client}>Explore opsmaru-incus <Icon name="external" size={15} /></a></article>
+        <article class="card roadmap-card"><div class="roadmap-card-top"><span class="roadmap-index">LAYER 02</span><span class="badge badge-info badge-outline">In development</span></div><h3>The central control plane</h3><p>A single MCP / REST gateway for authorized, registered Incus targets.</p><ul><li>Target registry + project permissions</li><li>External OIDC / OAuth identity</li><li>Direct HTTPS + outbound connectors</li></ul><a class="text-link" href={`${repo}/tree/develop/openspec/changes`}>Read the plans <Icon name="external" size={15} /></a></article>
+        <article class="card roadmap-card"><div class="roadmap-card-top"><span class="roadmap-index">LAYER 03</span><span class="badge badge-outline">Planned</span></div><h3>Agent-driven orchestration</h3><p>Turn agent instructions into provisioned environments across local and cloud compute.</p><ul><li>Cloud VMs with Incus out of the box</li><li>Automatic host registration</li><li>Compute scheduling + orchestration</li></ul><a class="text-link" href={`${repo}/issues`}>Join the conversation <Icon name="arrow" size={15} /></a></article></div>
+        <p class="roadmap-note"><Icon name="code" size={15} /> Availability is not a claim of complete Incus parity or production acceptance. See the repositories for current implementation and verification scope.</p>
+      </section>
+
+      <section class="faq-section page-width" aria-labelledby="faq-title"><div><p class="eyebrow"><span class="section-slash">/</span> A FEW MORE DETAILS</p><h2 id="faq-title">Good questions.</h2></div><div class="faq-list">{faqs.map((faq) => <details class="collapse collapse-plus"><summary class="collapse-title">{faq.q}</summary><div class="collapse-content"><p>{faq.a}</p></div></details>)}</div></section>
+
+      <section class="closing-section page-width" aria-labelledby="closing-title"><div class="closing-panel"><div class="closing-orbit" aria-hidden="true"><img src="/images/opsmaru-logo.svg" width="160" height="160" alt="" loading="lazy" /></div><div class="closing-content"><p class="eyebrow">THE NEXT LAYER OF AGENT INFRASTRUCTURE</p><h2 id="closing-title">Give your agents<br /><span class="gradient-text">room to work.</span></h2><p>Local roots. Cloud reach. One compute substrate.</p><div class="hero-actions"><a class="btn btn-primary" href={repo}>Build with us <Icon name="github" size={18} /></a><a class="btn btn-ghost" href={client}>Explore the foundation <Icon name="arrow" size={18} /></a></div></div></div></section>
+    </main>
+
+    <footer class="site-footer page-width"><div class="footer-top"><a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="29" height="29" alt="" /><span>opsmaru<span class="brand-period">.</span></span></a><p>The universal compute substrate for agents.</p><div><a href={repo}>GitHub <Icon name="external" size={13} /></a><a href={`${client}/tree/main/docs`}>Documentation <Icon name="external" size={13} /></a></div></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Upmaru. Built for what’s next.</span><span>Powered by Incus <span class="tiny-cross">+</span> Made for agents</span></div></footer>
+  </div>
+</Layout>
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.mobile-nav a').forEach((link) => {
+    link.addEventListener('click', () => link.closest('details')?.removeAttribute('open'));
+  });
+</script>
