@@ -38,6 +38,7 @@ The tests start a dedicated **local** Wrangler server on port 8791; that port mu
 - Compatibility date: `2026-11-13`
 - Workers observability and traces enabled
 - `workers.dev` and public version preview URLs disabled
+- An empty `previews` block, required by `npx wrangler preview`, which Workers Builds runs for non-production branches. Previews reuse the top-level assets and get no public `workers.dev` URL while `preview_urls` is `false`
 
 This is an entirely pre-rendered Astro site. Per [Cloudflare's static Astro guidance](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/#if-you-have-a-static-site), it does not need an SSR adapter, Worker handler, Node.js compatibility flag, runtime bindings, or secrets. Static requests do not execute application Worker code; do not expect custom application logs or spans for those requests.
 

@@ -8,6 +8,10 @@
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
+  // Workers Builds runs `npx wrangler preview` for non-production branches,
+  // which requires this block. Previews inherit the top-level assets; with
+  // preview_urls false they get no public workers.dev URL.
+  "previews": {},
   "routes": [
     { "pattern": "opsmaru.dev", "custom_domain": true }
   ],
