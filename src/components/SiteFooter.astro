@@ -1,0 +1,13 @@
+---
+import Icon from './Icon.astro';
+const repo = 'https://github.com/upmaru/opsmaru';
+const client = 'https://github.com/upmaru/opsmaru-incus';
+---
+<footer class="site-footer page-width">
+  <div class="footer-top">
+    <a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="29" height="29" alt="" /><span>opsmaru<span class="brand-period">.</span></span></a>
+    <p>The universal compute substrate for agents.</p>
+    <div><a href="/macus">Macus</a><a href={repo}>GitHub <Icon name="external" size={13} /></a><a href={`${client}/tree/main/docs`}>Documentation <Icon name="external" size={13} /></a></div>
+  </div>
+  <div class="footer-bottom"><span>© {new Date().getFullYear()} Upmaru. Built for what’s next.</span><span>Powered by Incus <span class="tiny-cross">+</span> Made for agents</span></div>
+</footer>

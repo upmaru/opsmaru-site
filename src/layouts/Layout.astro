@@ -6,13 +6,19 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  image?: string;
+  imageAlt?: string;
 }
 const {
   title = 'Opsmaru — The universal compute substrate for agents',
   description = 'A safe place for agents to do real work. Opsmaru is building one compute interface for local and cloud sandboxes, with Incus as the universal control plane.',
   noindex = false,
+  image = '/images/social-card.png',
+  imageAlt = 'Opsmaru. The universal compute substrate for agents. Local to cloud, normalized by Incus.',
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// build.format 'file' emits /macus.html; canonical URLs use the clean path Workers serves.
+const cleanPath = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/');
+const canonical = new URL(cleanPath || '/', Astro.site);
 ---
 <!doctype html>
 <html lang="en" data-theme="night">
@@ -31,10 +37,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/images/social-card.png', Astro.site)} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Opsmaru. The universal compute substrate for agents. Local to cloud, normalized by Incus." />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
   </head>

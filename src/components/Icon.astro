@@ -1,6 +1,7 @@
 ---
 interface Props {
-  name: 'arrow' | 'external' | 'github' | 'terminal' | 'server' | 'shield' | 'layers' | 'globe' | 'check' | 'code' | 'chevron';
+  name: 'arrow' | 'external' | 'github' | 'terminal' | 'server' | 'shield' | 'layers' | 'globe' | 'check' | 'code' | 'chevron'
+    | 'laptop' | 'download' | 'search' | 'play' | 'package' | 'refresh' | 'key' | 'database' | 'copy';
   size?: number;
   class?: string;
 }
@@ -17,6 +18,15 @@ const paths: Record<Props['name'], string> = {
   check: 'm5 12 4 4L19 6',
   code: 'm8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16',
   chevron: 'm9 5 7 7-7 7',
+  laptop: 'M5 5h14v10H5zM2 19h20M9 15l-1 4m7-4 1 4',
+  download: 'M12 3v12m-5-5 5 5 5-5M4 21h16',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5-2 5 5',
+  play: 'M7 4v16l13-8L7 4Z',
+  package: 'm12 3 9 5v8l-9 5-9-5V8l9-5Zm0 0v0M3 8l9 5 9-5M12 13v8',
+  refresh: 'M20 11a8 8 0 0 0-14.9-3M4 4v4h4m-4 5a8 8 0 0 0 14.9 3M20 20v-4h-4',
+  key: 'M15 9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-3 3v9m0-4h3m-3 2h2',
+  database: 'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Zm0 0v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3',
+  copy: 'M9 9h11v11H9zM5 15H4V4h11v1',
 };
 ---
 <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>

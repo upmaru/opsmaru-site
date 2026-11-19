@@ -2,55 +2,63 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import ComputeMap from '../components/ComputeMap.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { macusStatus } from '../data/macus-release';
 
 const repo = 'https://github.com/upmaru/opsmaru';
 const client = 'https://github.com/upmaru/opsmaru-incus';
+const dex = 'https://github.com/kritama/tama-dex';
 const features = [
-  { number: '01', icon: 'shield' as const, title: 'A sandbox. Not your host.', description: 'Give agents a dedicated place to build, execute, and experiment. Incus containers and virtual machines form the isolation boundary; explicit grants define what an agent can do.', tags: ['Containers + VMs', 'Scoped access'] },
-  { number: '02', icon: 'layers' as const, title: 'One contract. Any environment.', description: 'Incus normalizes the infrastructure underneath. The shared operation contract preserves native projects, instance identities, and results instead of inventing another hypervisor API.', tags: ['Native Incus semantics', 'MCP + REST direction'] },
-  { number: '03', icon: 'globe' as const, title: 'Start local. Grow outward.', description: 'Bring an existing Incus setup today at the client layer. The roadmap connects registered hosts and adds cloud provisioning, so your agent’s compute can grow beyond a single machine.', tags: ['Local-first foundation', 'Cloud-ready architecture'] },
+  { number: '01', icon: 'shield' as const, title: 'A sandbox. Not your host.', description: 'Give agents a dedicated place to build, execute, and experiment. Incus containers and virtual machines form the isolation boundary; scoped credentials define what an agent can see and do.', tags: ['Containers + VMs', 'Scoped access'] },
+  { number: '02', icon: 'layers' as const, title: 'One contract. Any environment.', description: 'Incus normalizes the infrastructure underneath. Shared operations preserve native projects, instance identities and operation IDs instead of inventing another hypervisor API.', tags: ['Native Incus semantics', 'MCP + REST'] },
+  { number: '03', icon: 'globe' as const, title: 'Start local. Grow outward.', description: 'Use Incus on Linux, or run it on your Mac with Macus. The roadmap registers those hosts centrally and provisions cloud VMs, so your agent’s compute can grow beyond one machine.', tags: ['Linux + Mac today', 'Cloud on the roadmap'] },
 ];
 const steps = [
-  { number: '01', title: 'Bring or provision compute', text: 'Use your existing Incus environment. Planned provider integrations will provision VMs on DigitalOcean, AWS, and GCP with Incus ready to go.', label: 'YOUR INFRASTRUCTURE' },
-  { number: '02', title: 'Connect the control plane', text: 'Register Incus targets with Opsmaru. The central design supports verified HTTPS for reachable hosts and outbound connectors for private networks.', label: 'ONE NORMALIZATION LAYER' },
-  { number: '03', title: 'Let your agent get to work', text: 'An agent requests compute through a unified interface. Opsmaru’s roadmap adds scheduling and orchestration across the authorized compute pool.', label: 'AGENT-DRIVEN EXECUTION' },
+  { number: '01', title: 'Bring or provision compute', text: 'Point Opsmaru at an Incus server on Linux, start Macus on an Apple Silicon Mac, or (planned) let Opsmaru create a cloud VM with Incus ready to go.', label: 'YOUR INFRASTRUCTURE' },
+  { number: '02', title: 'Register it once', text: 'Reachable hosts connect over direct HTTPS with a pinned certificate. Hosts behind NAT use an outbound connector. Either way, the target speaks native Incus.', label: 'ONE NORMALIZATION LAYER' },
+  { number: '03', title: 'Let your agent search and execute', text: 'The agent finds the operation it needs with search, then runs it with execute. Scopes, confirmation and bounds are enforced on every call.', label: 'AGENT-DRIVEN EXECUTION' },
 ];
+const agentPoints = [
+  { icon: 'search' as const, title: 'Search reveals only what’s allowed', text: 'Full-text search across every operation catalogue, ranked together. Results are filtered by the caller’s verified scopes, so an agent never discovers what it can’t run.' },
+  { icon: 'shield' as const, title: 'Execute checks every call', text: 'Scopes are checked again, destructive operations must repeat their target as confirmation, and input is validated against the operation’s schema before anything is dispatched.' },
+  { icon: 'refresh' as const, title: 'Reconcile, don’t retry', text: 'Every failure says whether it reached the backend. If it may have taken effect, the agent inspects state instead of replaying a mutation.' },
+];
+const stack = [
+  { name: 'opsmaru-incus', href: client, role: 'Foundation library', description: 'A native Incus client for Elixir with an embeddable gateway. Publishes 32 composite and 274 native operations as machine-readable operation documents.', status: 'Available', meta: 'Hex 0.2', tone: 'available' },
+  { name: 'tama-dex', href: dex, role: 'Operation index', description: 'Indexes operation catalogues into SQLite and serves them through two MCP tools, search and execute, instead of one tool per operation.', status: 'Available', meta: 'Hex 0.1', tone: 'available' },
+  { name: 'Macus', href: '/macus', role: 'Mac compute host', description: 'A Linux Incus host on Apple Silicon. One command boots it; one local HTTPS endpoint serves native Incus, VM controls and MCP.', status: macusStatus === 'available' ? 'Available' : 'Preview', meta: macusStatus === 'available' ? 'macOS 15+' : 'Distribution soon', tone: macusStatus === 'available' ? 'available' : 'preview' },
+  { name: 'Opsmaru central', href: `${repo}/tree/develop/openspec/changes`, role: 'Control plane', description: 'One MCP / REST gateway for registered targets: a target registry, external OIDC / OAuth identity, project grants, direct HTTPS and outbound connectors, and macus connect.', status: 'In development', meta: 'Phoenix', tone: 'development' },
+  { name: 'Cloud provisioning', href: `${repo}/tree/develop/openspec/changes`, role: 'Compute on demand', description: 'Create a VM on AWS, GCP or DigitalOcean through native API adapters, bootstrap Incus with cloud-init, and register it with a one-use enrolment token.', status: 'Planned', meta: 'Proposed', tone: 'planned' },
+  { name: 'Placement + orchestration', href: `${repo}/issues`, role: 'Across the pool', description: 'Turn agent intent into environments placed across every authorized host, local and cloud.', status: 'Later', meta: 'Vision', tone: 'planned' },
+] as const;
 const faqs = [
-  { q: 'Is Opsmaru a cloud provider?', a: 'No. Opsmaru is the control-plane layer for compute you own or provision. Incus provides a common interface to containers and virtual machines across local machines and cloud hosts. You keep your infrastructure and provider relationships.' },
-  { q: 'Why build on Incus?', a: 'Incus already provides a mature control plane for system containers and virtual machines, including projects, profiles, storage, networking, and native operation tracking. Opsmaru builds an agent-facing layer on those semantics rather than replacing them with a second workload manager.' },
-  { q: 'How is agent access constrained?', a: 'The shared operations require host-supplied identity, explicit scopes, bounded execution, and named confirmation for destructive actions. Agents do not choose backend credentials or arbitrary socket paths. Isolation still depends on the host, Incus configuration, workload type, and the permissions you grant—it is not a blanket security guarantee.' },
-  { q: 'What can I use today?', a: 'The opsmaru-incus Elixir library is published on Hex. It provides the native client, shared operation descriptors, and an embeddable gateway. Its documentation separates fixture coverage from real-backend acceptance. The central Opsmaru service, target registration, external authentication, provider provisioning, and scheduler are still in development or planning.' },
+  { q: 'Is Opsmaru a cloud provider?', a: 'No. Opsmaru is the control-plane layer for compute you own or provision. Incus provides a common interface to containers and virtual machines across Linux machines, Macs and cloud hosts. You keep your infrastructure and provider relationships.' },
+  { q: 'Why only two MCP tools?', a: 'A host can expose hundreds of operations. One MCP tool per operation floods the agent’s context and makes every source invent its own format. With tama-dex, every source publishes a standard operation document and the agent sees just search and execute. Search ranks operations across all catalogues and shows only those the caller’s scopes allow.' },
+  { q: 'Do I need a Linux server to try it?', a: 'No. Macus runs a Linux Incus host on an Apple Silicon Mac with macOS 15 or later. One command, macus start, downloads a verified appliance, boots it with Apple’s Virtualization.framework and connects the standard Incus client.' },
+  { q: 'How is agent access constrained?', a: 'Operations require host-supplied identity, explicit scopes, bounded execution, and named confirmation for destructive actions. Agents do not choose backend credentials or arbitrary socket paths. Isolation still depends on the host, Incus configuration, workload type, and the permissions you grant. It is not a blanket security guarantee.' },
+  { q: 'What can I use today?', a: 'The opsmaru_incus and tama_dex Elixir libraries are published on Hex. Macus can be built from source today, with prebuilt distribution coming next. The central Opsmaru service, target registration, external authentication, cloud provisioning and scheduling are still in development or planning.' },
 ];
 ---
 <Layout>
   <div class="site-shell">
-    <header class="site-header">
-      <nav class="navbar page-width" aria-label="Main navigation">
-        <a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="34" height="34" alt="" /><span>opsmaru<span class="brand-period">.</span></span></a>
-        <div class="desktop-nav"><a href="#platform">Platform</a><a href="#how-it-works">How it works</a><a href="#roadmap">Roadmap</a></div>
-        <a class="nav-github" href={repo}><Icon name="github" size={18} /><span>GitHub</span><Icon name="external" size={13} /></a>
-        <details class="mobile-nav dropdown dropdown-end">
-          <summary class="btn btn-ghost btn-sm" aria-label="Open navigation"><span class="menu-lines" aria-hidden="true"></span></summary>
-          <ul class="menu dropdown-content"><li><a href="#platform">Platform</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href={repo}>GitHub</a></li></ul>
-        </details>
-      </nav>
-    </header>
+    <SiteHeader />
 
     <main id="main">
       <section class="hero-section page-width" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <a class="eyebrow hero-eyebrow" href="#roadmap"><span class="status-dot"></span> BUILDING IN THE OPEN <Icon name="arrow" size={14} /></a>
+          <a class="eyebrow hero-eyebrow" href="/macus"><span class="status-dot"></span> NEW: MACUS FOR APPLE SILICON <Icon name="arrow" size={14} /></a>
           <h1 id="hero-title">Agents need<br /> a place to<br /> <span class="gradient-text">do real work.</span></h1>
           <p class="hero-subtitle">The universal compute substrate for agents.</p>
-          <p class="hero-description">Safe sandboxes. One interface. Your infrastructure.<br class="desktop-break" /> From local Incus to cloud compute, Opsmaru is building the control plane that turns agent intent into execution.</p>
-          <div class="hero-actions"><a class="btn btn-primary" href="#how-it-works">Explore the platform <Icon name="arrow" size={18} /></a><a class="btn btn-ghost" href={repo}>Follow the build <Icon name="github" size={18} /></a></div>
-          <div class="hero-footnote"><span class="tiny-cross">+</span><span>Local to cloud. Normalized by Incus.</span></div>
+          <p class="hero-description">Safe sandboxes. Two tools. Your infrastructure.<br class="desktop-break" /> From Linux and Mac to cloud compute, Opsmaru is building the control plane that turns agent intent into execution.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#how-it-works">Explore the platform <Icon name="arrow" size={18} /></a><a class="btn btn-ghost" href="/macus">Run it on your Mac <Icon name="laptop" size={18} /></a></div>
+          <div class="hero-footnote"><span class="tiny-cross">+</span><span>Linux, Mac or cloud. Normalized by Incus.</span></div>
         </div>
         <div class="hero-visual"><ComputeMap /></div>
       </section>
 
       <section class="infrastructure-strip" aria-label="Infrastructure direction">
-        <div class="page-width infrastructure-inner"><p>YOUR COMPUTE.<br /><strong>ONE COMMON LANGUAGE.</strong></p><div class="provider-list"><span><Icon name="terminal" size={21} /> Local Incus</span><span class="provider-do"><i aria-hidden="true"></i> DigitalOcean</span><span class="provider-aws">aws<span class="aws-smile" aria-hidden="true"></span></span><span><span class="gcp-mark" aria-hidden="true">G</span> Google Cloud</span></div><span class="provider-note">Cloud provisioning<br />on the roadmap</span></div>
+        <div class="page-width infrastructure-inner"><p>YOUR COMPUTE.<br /><strong>ONE COMMON LANGUAGE.</strong></p><div class="provider-list"><span><Icon name="terminal" size={21} /> Linux Incus</span><a class="provider-mac" href="/macus"><Icon name="laptop" size={21} /> Mac via Macus</a><span class="provider-do"><i aria-hidden="true"></i> DigitalOcean</span><span class="provider-aws">aws<span class="aws-smile" aria-hidden="true"></span></span><span><span class="gcp-mark" aria-hidden="true">G</span> Google Cloud</span></div><span class="provider-note">Cloud provisioning<br />on the roadmap</span></div>
       </section>
 
       <section id="platform" class="section page-width" aria-labelledby="platform-title">
@@ -58,41 +66,82 @@ const faqs = [
         <div class="feature-grid">{features.map((feature) => <article class="card feature-card"><div class="feature-top"><span class="feature-icon"><Icon name={feature.icon} size={25} /></span><span class="feature-number">{feature.number}</span></div><h3>{feature.title}</h3><p>{feature.description}</p><div class="feature-tags">{feature.tags.map((tag) => <span class="badge badge-ghost">{tag}</span>)}</div></article>)}</div>
       </section>
 
-      <section id="how-it-works" class="workflow-section section" aria-labelledby="workflow-title">
-        <div class="page-width">
-          <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> FROM INTENT TO EXECUTION</p><h2 id="workflow-title">You bring the agent.<br /><span class="text-muted">We’re building the substrate.</span></h2></div><span class="badge badge-outline roadmap-badge">Platform direction</span></div>
-          <div class="workflow-grid"><ol class="workflow-steps">{steps.map((step) => <li><span class="step-number">{step.number}</span><div><span class="step-label">{step.label}</span><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol>
-            <div class="execution-panel">
-              <div class="execution-title"><Icon name="code" size={16} /><span>THE AGENT’S MENTAL MODEL</span><span class="illustrative-label">Illustrative workflow</span></div>
-              <div class="intent-block"><span class="code-label">01 / INTENT</span><p>“Give me an isolated environment<br />to build and test this project.”</p></div>
-              <div class="execution-flow"><span></span><Icon name="chevron" size={16} /><span></span></div>
-              <div class="contract-block"><span class="code-label">02 / OPSMARU</span><div><span>identity</span><strong>verified caller</strong></div><div><span>target</span><strong>authorized Incus host</strong></div><div><span>environment</span><strong>isolated container or VM</strong></div><div><span>execution</span><strong>bounded, observable work</strong></div></div>
-              <div class="result-block"><Icon name="terminal" size={18} /><span>Less infrastructure glue.<br /><strong>More work getting done.</strong></span></div>
+      <section id="agents" class="agents-section section" aria-labelledby="agents-title">
+        <div class="page-width agents-grid">
+          <div class="agents-copy">
+            <p class="eyebrow"><span class="section-slash">/</span> THE AGENT INTERFACE</p>
+            <h2 id="agents-title">Two tools.<br /><span class="text-muted">Every operation.</span></h2>
+            <p class="agents-intro">Agents don’t need hundreds of tools in their context. Every source, from the Incus client to a host’s own runtime, publishes one standard operation document. The agent sees exactly two tools.</p>
+            <div class="agent-points">{agentPoints.map((point) => <article><span class="feature-icon"><Icon name={point.icon} size={20} /></span><div><h3>{point.title}</h3><p>{point.text}</p></div></article>)}</div>
+            <a class="text-link" href={dex}>How tama-dex indexes operations <Icon name="external" size={15} /></a>
+          </div>
+          <div class="mcp-panel" role="img" aria-label="Illustration: an agent lists two tools, searches for operations to list instances, and executes the matching Incus operation.">
+            <div class="execution-title" aria-hidden="true"><Icon name="code" size={16} /><span>MCP SESSION</span><span class="illustrative-label">Illustrative</span></div>
+            <div class="mcp-body" aria-hidden="true">
+              <div class="mcp-step"><span class="code-label">tools/list</span><div class="tool-chips"><span><Icon name="search" size={14} /> search</span><span><Icon name="play" size={14} /> execute</span></div></div>
+              <div class="mcp-step"><span class="code-label">search</span><code class="mcp-query">“list running instances”</code>
+                <ul class="mcp-results"><li><span>opsmaru_incus</span><strong>incus_instance_list</strong><em>incus.read</em></li><li><span>opsmaru_incus</span><strong>incus_instance_state_get</strong><em>incus.read</em></li><li><span>macus</span><strong>macus_runtime_status</strong><em>runtime.read</em></li></ul>
+              </div>
+              <div class="mcp-step"><span class="code-label">execute</span><code class="mcp-query">opsmaru_incus · incus_instance_list</code></div>
             </div>
+            <div class="result-block" aria-hidden="true"><Icon name="check" size={18} /><span>Scopes checked. Input validated.<br /><strong>Native operation ID returned.</strong></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="section page-width" aria-labelledby="workflow-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> FROM INTENT TO EXECUTION</p><h2 id="workflow-title">You bring the agent.<br /><span class="text-muted">We’re building the substrate.</span></h2></div><span class="badge badge-outline roadmap-badge">Platform direction</span></div>
+        <div class="workflow-grid"><ol class="workflow-steps">{steps.map((step) => <li><span class="step-number">{step.number}</span><div><span class="step-label">{step.label}</span><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol>
+          <div class="execution-panel">
+            <div class="execution-title"><Icon name="code" size={16} /><span>THE AGENT’S MENTAL MODEL</span><span class="illustrative-label">Illustrative workflow</span></div>
+            <div class="intent-block"><span class="code-label">01 / INTENT</span><p>“Give me an isolated environment<br />to build and test this project.”</p></div>
+            <div class="execution-flow"><span></span><Icon name="chevron" size={16} /><span></span></div>
+            <div class="contract-block"><span class="code-label">02 / OPSMARU</span><div><span>identity</span><strong>verified caller + scopes</strong></div><div><span>target</span><strong>authorized Incus host</strong></div><div><span>environment</span><strong>isolated container or VM</strong></div><div><span>execution</span><strong>bounded, observable work</strong></div></div>
+            <div class="result-block"><Icon name="terminal" size={18} /><span>Less infrastructure glue.<br /><strong>More work getting done.</strong></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="macus" class="macus-teaser-section page-width" aria-labelledby="macus-teaser-title">
+        <div class="macus-teaser">
+          <div class="macus-teaser-copy">
+            <p class="eyebrow"><span class="section-slash">/</span> MACUS <span class:list={['badge', 'badge-outline', macusStatus === 'available' ? 'badge-success' : 'badge-info']}>{macusStatus === 'available' ? 'Available' : 'Preview'}</span></p>
+            <h2 id="macus-teaser-title">Your Mac is<br /><span class="text-muted">a compute target.</span></h2>
+            <p>Macus boots a real Linux Incus host on Apple Silicon using Apple’s Virtualization.framework. No GUI, no SSH, no Docker Desktop. Just Incus, a local HTTPS endpoint, and agent tools at <code>/mcp</code>.</p>
+            <div class="hero-actions"><a class="btn btn-primary" href="/macus">Meet Macus <Icon name="arrow" size={18} /></a><a class="btn btn-ghost" href="/macus#install">Install options <Icon name="download" size={18} /></a></div>
+          </div>
+          <div class="terminal-panel" role="img" aria-label="Illustration: running macus start, then launching a Debian container with the standard Incus client.">
+            <div class="terminal-bar" aria-hidden="true"><span></span><span></span><span></span><em>zsh</em></div>
+            <pre aria-hidden="true"><span class="t-prompt">$</span> macus start
+<span class="t-ok">✓</span> Host checked         <span class="t-dim">apple-vz supported</span>
+<span class="t-ok">✓</span> Appliance verified   <span class="t-dim">pinned digest</span>
+<span class="t-ok">✓</span> Services active      <span class="t-dim">runtime + server</span>
+<span class="t-ok">✓</span> Incus ready          <span class="t-dim">zfs storage</span>
+<span class="t-ok">✓</span> Client registered    <span class="t-dim">remote "macus"</span>
+<span class="t-prompt">$</span> incus launch images:debian/13 macus:dev
+<span class="t-dim">Launching dev</span></pre>
           </div>
         </div>
       </section>
 
       <section class="principles-section page-width" aria-labelledby="principles-title"><div class="principles-copy"><p class="eyebrow"><span class="section-slash">/</span> BUILT ON REAL BOUNDARIES</p><h2 id="principles-title">Power for agents.<br /><span class="text-muted">Control for you.</span></h2><p>Autonomy shouldn’t mean handing over your host. The foundation favors explicit authority, bounded execution, and honest outcomes.</p><a class="text-link" href={`${client}/blob/main/docs/incus-operations.md`}>Read the operation contracts <Icon name="arrow" size={17} /></a></div><div class="principle-list"><article><Icon name="shield" size={22} /><div><h3>Permission before execution</h3><p>Host-bound identity and operation scopes are checked before backend access. Destructive operations require explicit confirmation.</p></div></article><article><Icon name="terminal" size={22} /><div><h3>Bounded by design</h3><p>Guest execution has limits on inputs, captured output, and duration. Agents work inside named instances, not an unrestricted host shell.</p></div></article><article><Icon name="layers" size={22} /><div><h3>Native state. Honest results.</h3><p>Accepted is not completed. Native operation IDs stay visible, and potentially accepted mutations are never blindly replayed.</p></div></article></div></section>
 
-      <section id="roadmap" class="section page-width" aria-labelledby="roadmap-title">
-        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> BUILDING THE SUBSTRATE</p><h2 id="roadmap-title">A clear direction.<br /><span class="text-muted">An open build.</span></h2></div><p class="section-intro">The native foundation is available. We’re building toward a unified agent compute platform, one layer at a time.</p></div>
-        <div class="roadmap-grid"><article class="card roadmap-card available"><div class="roadmap-card-top"><span class="roadmap-index">LAYER 01</span><span class="badge badge-success badge-outline"><span class="status-dot"></span> Available</span></div><h3>The Incus foundation</h3><p>A portable Elixir client, shared agent-operation contracts, and a host-mounted native gateway.</p><ul><li><Icon name="check" size={15} /> Unix socket + verified HTTPS</li><li><Icon name="check" size={15} /> Scoped, bounded operations</li><li><Icon name="check" size={15} /> Explicit coverage and evidence</li></ul><a class="text-link" href={client}>Explore opsmaru-incus <Icon name="external" size={15} /></a></article>
-        <article class="card roadmap-card"><div class="roadmap-card-top"><span class="roadmap-index">LAYER 02</span><span class="badge badge-info badge-outline">In development</span></div><h3>The central control plane</h3><p>A single MCP / REST gateway for authorized, registered Incus targets.</p><ul><li>Target registry + project permissions</li><li>External OIDC / OAuth identity</li><li>Direct HTTPS + outbound connectors</li></ul><a class="text-link" href={`${repo}/tree/develop/openspec/changes`}>Read the plans <Icon name="external" size={15} /></a></article>
-        <article class="card roadmap-card"><div class="roadmap-card-top"><span class="roadmap-index">LAYER 03</span><span class="badge badge-outline">Planned</span></div><h3>Agent-driven orchestration</h3><p>Turn agent instructions into provisioned environments across local and cloud compute.</p><ul><li>Cloud VMs with Incus out of the box</li><li>Automatic host registration</li><li>Compute scheduling + orchestration</li></ul><a class="text-link" href={`${repo}/issues`}>Join the conversation <Icon name="arrow" size={15} /></a></article></div>
-        <p class="roadmap-note"><Icon name="code" size={15} /> Availability is not a claim of complete Incus parity or production acceptance. See the repositories for current implementation and verification scope.</p>
+      <section id="stack" class="section page-width" aria-labelledby="stack-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> THE STACK</p><h2 id="stack-title">Built in layers.<br /><span class="text-muted">Shipped in the open.</span></h2></div><p class="section-intro">The foundation is published. Macus is next. Each layer above builds on the same Incus operations and the same agent interface.</p></div>
+        <ol class="stack-list">{stack.map((layer, i) => <li class:list={['stack-row', `is-${layer.tone}`]}>
+          <span class="stack-index">{String(i + 1).padStart(2, '0')}</span>
+          <div class="stack-name"><a href={layer.href}>{layer.name}{layer.href.startsWith('http') && <Icon name="external" size={13} />}</a><span>{layer.role}</span></div>
+          <p>{layer.description}</p>
+          <div class="stack-status"><span class:list={['badge', 'badge-outline', { 'badge-success': layer.tone === 'available', 'badge-info': layer.tone === 'preview' || layer.tone === 'development' }]}>{layer.tone === 'available' && <span class="status-dot"></span>}{layer.status}</span><span class="stack-meta">{layer.meta}</span></div>
+        </li>)}</ol>
+        <p class="roadmap-note"><Icon name="code" size={15} /> Availability is not a claim of complete Incus parity or production acceptance. Cloud providers are advertised only after live acceptance. See each repository for current implementation and verification scope.</p>
       </section>
 
       <section class="faq-section page-width" aria-labelledby="faq-title"><div><p class="eyebrow"><span class="section-slash">/</span> A FEW MORE DETAILS</p><h2 id="faq-title">Good questions.</h2></div><div class="faq-list">{faqs.map((faq) => <details class="collapse collapse-plus"><summary class="collapse-title">{faq.q}</summary><div class="collapse-content"><p>{faq.a}</p></div></details>)}</div></section>
 
-      <section class="closing-section page-width" aria-labelledby="closing-title"><div class="closing-panel"><div class="closing-orbit" aria-hidden="true"><img src="/images/opsmaru-logo.svg" width="160" height="160" alt="" loading="lazy" /></div><div class="closing-content"><p class="eyebrow">THE NEXT LAYER OF AGENT INFRASTRUCTURE</p><h2 id="closing-title">Give your agents<br /><span class="gradient-text">room to work.</span></h2><p>Local roots. Cloud reach. One compute substrate.</p><div class="hero-actions"><a class="btn btn-primary" href={repo}>Build with us <Icon name="github" size={18} /></a><a class="btn btn-ghost" href={client}>Explore the foundation <Icon name="arrow" size={18} /></a></div></div></div></section>
+      <section class="closing-section page-width" aria-labelledby="closing-title"><div class="closing-panel"><div class="closing-orbit" aria-hidden="true"><img src="/images/opsmaru-logo.svg" width="160" height="160" alt="" loading="lazy" /></div><div class="closing-content"><p class="eyebrow">THE NEXT LAYER OF AGENT INFRASTRUCTURE</p><h2 id="closing-title">Give your agents<br /><span class="gradient-text">room to work.</span></h2><p>Local roots. Cloud reach. One compute substrate.</p><div class="hero-actions"><a class="btn btn-primary" href={repo}>Build with us <Icon name="github" size={18} /></a><a class="btn btn-ghost" href="/macus">Get Macus <Icon name="arrow" size={18} /></a></div></div></div></section>
     </main>
 
-    <footer class="site-footer page-width"><div class="footer-top"><a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="29" height="29" alt="" /><span>opsmaru<span class="brand-period">.</span></span></a><p>The universal compute substrate for agents.</p><div><a href={repo}>GitHub <Icon name="external" size={13} /></a><a href={`${client}/tree/main/docs`}>Documentation <Icon name="external" size={13} /></a></div></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Upmaru. Built for what’s next.</span><span>Powered by Incus <span class="tiny-cross">+</span> Made for agents</span></div></footer>
+    <SiteFooter />
   </div>
 </Layout>
-<script>
-  document.querySelectorAll<HTMLAnchorElement>('.mobile-nav a').forEach((link) => {
-    link.addEventListener('click', () => link.closest('details')?.removeAttribute('open'));
-  });
-</script>

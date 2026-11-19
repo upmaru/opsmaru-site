@@ -1,0 +1,33 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  code: string;
+  label?: string;
+  muted?: boolean;
+}
+const { code, label, muted = false } = Astro.props;
+---
+<div class:list={['code-block', { 'is-muted': muted }]} data-code-block>
+  {label && <span class="code-block-label">{label}</span>}
+  <pre tabindex="0"><code>{code}</code></pre>
+  <button type="button" class="code-copy" data-copy hidden aria-label={`Copy ${label ?? 'command'}`}><Icon name="copy" size={15} /><span data-copy-text>Copy</span></button>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-code-block]').forEach((block) => {
+    const button = block.querySelector<HTMLButtonElement>('[data-copy]');
+    const code = block.querySelector('code')?.textContent ?? '';
+    if (!button || !navigator.clipboard) return;
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      const text = button.querySelector('[data-copy-text]');
+      try {
+        await navigator.clipboard.writeText(code);
+        if (text) text.textContent = 'Copied';
+      } catch {
+        if (text) text.textContent = 'Copy failed';
+      }
+      setTimeout(() => { if (text) text.textContent = 'Copy'; }, 1800);
+    });
+  });
+</script>

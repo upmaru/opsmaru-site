@@ -1,0 +1,219 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import { macusRelease, macusRepo, macusReleasesUrl, macusRequirements, macusStatus } from '../data/macus-release';
+
+const { download, homebrew, version } = macusRelease;
+const available = macusStatus === 'available';
+const docs = `${macusRepo}/blob/develop/docs`;
+const statusLabel = available ? `AVAILABLE${version ? ` · v${version}` : ''}` : 'PREVIEW · DISTRIBUTION COMING SOON';
+const primary = download.available && download.url
+  ? { href: download.url, label: 'Download for macOS', icon: 'download' as const }
+  : { href: '#install', label: available ? 'Install Macus' : 'Install options', icon: 'arrow' as const };
+
+const stages = [
+  { title: 'Check the host', text: 'Confirms Apple Silicon virtualization support and the executable’s virtualization entitlement before anything changes.' },
+  { title: 'Verify the appliance', text: 'Downloads the pinned Alpine Linux appliance and checks it against the digest built into Macus.' },
+  { title: 'Activate services', text: 'Registers two per-user launchd services: the Swift runtime that owns the VM, and the Macus server.' },
+  { title: 'Boot Linux + Incus', text: 'Creates the VM, initializes ZFS storage and Incus, and waits for live readiness, not just a running process.' },
+  { title: 'Connect your client', text: 'Adds the standard incus client as remote “macus” and enrolls its certificate with the server.' },
+];
+const features = [
+  { icon: 'terminal' as const, title: 'Standard Incus, unmodified', text: 'Use the incus client you already know. Instances, images, profiles, projects, networks and storage all behave as native Incus, including exec over WebSockets.' },
+  { icon: 'database' as const, title: 'Persistent by default', text: 'Workloads live on a ZFS pool on a separate data disk. They survive guest restarts, daemon restarts and package upgrades, and repeating macus start never replaces a disk.' },
+  { icon: 'refresh' as const, title: 'Out of your way', text: 'launchd keeps both services running after you close the terminal. Repeating macus start reuses everything already set up, and never reboots a ready guest.' },
+];
+const scopes = [
+  { scope: 'incus.read', text: 'Inspect servers, projects, instances, images, networks and storage' },
+  { scope: 'incus.write', text: 'Create and change instances, images and snapshots' },
+  { scope: 'incus.exec', text: 'Run one bounded command in a named instance' },
+  { scope: 'incus.delete', text: 'Delete workloads (confirmed)' },
+  { scope: 'runtime.read', text: 'Read VM status, progress, health and capabilities' },
+  { scope: 'runtime.write', text: 'Start, stop and restart the Linux appliance' },
+];
+const next = [
+  { title: 'Prebuilt appliance images', text: 'Locked, pre-qualified Linux images so first boot installs nothing, with an opt-in newer-kernel channel.', status: 'In progress' },
+  { title: 'Signed, notarized downloads', text: 'A Developer ID–signed macOS download alongside the Homebrew tap.', status: 'In progress' },
+  { title: 'macus connect', text: 'Optionally register your Mac with central Opsmaru, so its Incus joins your other targets. Local use keeps working without it.', status: 'Planned' },
+  { title: 'Automatic appliance upgrades', text: 'Move the Linux root image forward without touching your data disk.', status: 'Planned' },
+];
+const faqs = [
+  { q: 'Is this Docker Desktop?', a: 'No. Macus runs Incus, which manages full system containers and virtual machines. You use the standard Incus client and API. Docker or Compose compatibility is not part of Macus.' },
+  { q: 'Do I need a GUI, SSH or a separate VM app?', a: 'No. Macus is headless and uses Apple’s Virtualization.framework directly. Everything goes through the macus and incus commands, or the local HTTPS endpoint.' },
+  { q: 'Can I run virtual machines inside Macus?', a: 'Containers work on every supported Mac. Incus VMs inside the appliance need nested virtualization from the host and usable KVM in the guest. Macus detects this at runtime and reports what it observed instead of guessing.' },
+  { q: 'Does closing the terminal stop it?', a: 'No. macus start hands both services to launchd, so they keep running. Use macus runtime stop to shut down the Linux guest.' },
+  { q: 'What happens to my workloads when I upgrade or uninstall?', a: 'They stay. Upgrades and removal never delete the runtime disks or your Incus configuration. Stop the runtime and unload its service before changing the package, then run macus start again.' },
+  { q: 'Is it the same as Opsmaru?', a: 'Macus is one compute host in the Opsmaru stack. It embeds the same opsmaru_incus library and agent interface that central Opsmaru uses, and works standalone today. Registering a Mac with central Opsmaru is planned.' },
+];
+const sourceSteps = `git clone --branch develop \\
+  https://github.com/upmaru/macus.git
+cd macus
+Packaging/install-local.sh
+export PATH="$HOME/.local/bin:$PATH"
+macus start`;
+const tokenCommand = `macus server token issue --principal agent \\
+  --scope incus.read --scope runtime.read \\
+  --expires-in 7d --output /Users/you/agent.token`;
+---
+<Layout
+  title="Macus — A Linux Incus host on your Mac"
+  description="Macus boots a Linux Incus host on Apple Silicon with Apple's Virtualization.framework. One command sets it up; one local HTTPS endpoint serves native Incus, VM controls and agent tools over MCP."
+  image="/images/macus-social-card.png"
+  imageAlt="Macus. A Linux Incus host on your Mac, in one command."
+>
+  <div class="site-shell">
+    <SiteHeader base="/" current="macus" />
+
+    <main id="main">
+      <section class="hero-section macus-hero page-width" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <a class="eyebrow hero-eyebrow" href="#install"><span class:list={['status-dot', { 'is-preview': !available }]}></span> {statusLabel} <Icon name="arrow" size={14} /></a>
+          <h1 id="hero-title">Linux compute<br /> on your Mac.<br /> <span class="gradient-text">One command.</span></h1>
+          <p class="hero-subtitle">A Linux Incus host for Apple Silicon.</p>
+          <p class="hero-description">Macus boots a real Linux VM with Apple’s Virtualization.framework, runs Incus inside it, and gives you, and your agents, one local HTTPS endpoint.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href={primary.href}>{primary.label} <Icon name={primary.icon} size={18} /></a><a class="btn btn-ghost" href={macusRepo}>View on GitHub <Icon name="github" size={18} /></a></div>
+          <ul class="requirement-chips" aria-label="Requirements"><li>Apple Silicon</li><li>macOS 15+</li><li>No GUI. No SSH.</li></ul>
+        </div>
+        <div class="hero-visual">
+          <div class="terminal-panel" role="img" aria-label="Illustration: macus start checks the host, verifies the appliance, activates services, waits for Incus and registers the client. Then incus launch starts a Debian container.">
+            <div class="terminal-bar" aria-hidden="true"><span></span><span></span><span></span><em>macus start</em></div>
+            <pre aria-hidden="true"><span class="t-prompt">$</span> macus start
+<span class="t-ok">✓</span> Host checked         <span class="t-dim">apple-vz supported</span>
+<span class="t-ok">✓</span> Appliance verified   <span class="t-dim">pinned digest</span>
+<span class="t-ok">✓</span> Services active      <span class="t-dim">runtime + server</span>
+<span class="t-ok">✓</span> Incus ready          <span class="t-dim">zfs storage</span>
+<span class="t-ok">✓</span> Client registered    <span class="t-dim">remote "macus"</span>
+
+<span class="t-accent">Macus is ready</span>  <span class="t-dim">https://127.0.0.1:8443</span>
+
+<span class="t-prompt">$</span> incus launch images:debian/13 macus:dev
+<span class="t-prompt">$</span> incus exec macus:dev -- uname -m
+aarch64</pre>
+            <div class="terminal-foot" aria-hidden="true"><span>Illustrative output</span><span>arm64 · linux</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how" class="workflow-section section" aria-labelledby="how-title">
+        <div class="page-width">
+          <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> WHAT MACUS START DOES</p><h2 id="how-title">Five stages.<br /><span class="text-muted">Zero hand-holding.</span></h2></div><p class="section-intro">Success means live Incus readiness and a working client, not merely that a process launched. If a step fails, start tells you what it left running.</p></div>
+          <ol class="stage-grid">{stages.map((stage, i) => <li><span class="step-number">{String(i + 1).padStart(2, '0')}</span><h3>{stage.title}</h3><p>{stage.text}</p></li>)}</ol>
+        </div>
+      </section>
+
+      <section id="architecture" class="section page-width" aria-labelledby="architecture-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> ARCHITECTURE</p><h2 id="architecture-title">One endpoint in.<br /><span class="text-muted">Private sockets behind it.</span></h2></div><p class="section-intro">Clients only ever talk to the Macus server. It authenticates the caller before reaching the private sockets that lead into the Linux guest.</p></div>
+        <figure class="arch-diagram">
+          <div class="arch-row arch-clients">
+            <span class="arch-row-label">CLIENTS</span>
+            <div class="arch-nodes"><div class="arch-node"><Icon name="terminal" size={17} /><strong>incus</strong><span>standard client</span></div><div class="arch-node"><Icon name="laptop" size={17} /><strong>macus</strong><span>CLI</span></div><div class="arch-node"><Icon name="code" size={17} /><strong>AI agent</strong><span>MCP client</span></div></div>
+          </div>
+          <div class="arch-link"><span>HTTPS · TLS 1.3 · pinned certificate</span></div>
+          <div class="arch-boundary"><span class="arch-boundary-label">YOUR MAC · macOS</span>
+            <div class="arch-server">
+              <div class="arch-server-head"><img src="/images/opsmaru-logo.svg" width="24" height="24" alt="" /><strong>Macus server</strong><code>127.0.0.1:8443</code></div>
+              <div class="arch-routes"><div><code>/1.0</code><span>Native Incus API</span></div><div><code>/runtime</code><span>VM lifecycle</span></div><div><code>/mcp</code><span>search · execute</span></div></div>
+            </div>
+            <div class="arch-link small"><span>runtime.sock · incus.sock</span></div>
+            <div class="arch-node arch-runtime"><Icon name="server" size={17} /><strong>Swift runtime service</strong><span>Virtualization.framework</span></div>
+            <div class="arch-link small"><span>vsock</span></div>
+            <div class="arch-guest"><span class="arch-boundary-label">LINUX GUEST · Alpine</span>
+              <div class="arch-nodes"><div class="arch-node"><Icon name="layers" size={17} /><strong>Incus</strong><span>containers + VMs</span></div><div class="arch-node"><Icon name="database" size={17} /><strong>ZFS pool</strong><span>separate data disk</span></div></div>
+            </div>
+          </div>
+          <figcaption>Default local setup. LAN or remote HTTPS can be enabled explicitly with your own address and certificate.</figcaption>
+        </figure>
+      </section>
+
+      <section id="agents" class="agents-section section" aria-labelledby="agents-title">
+        <div class="page-width agents-grid">
+          <div class="agents-copy">
+            <p class="eyebrow"><span class="section-slash">/</span> BUILT FOR AGENTS</p>
+            <h2 id="agents-title">Give an agent<br /><span class="text-muted">exactly what it needs.</span></h2>
+            <p class="agents-intro">The <code>/mcp</code> endpoint advertises two tools, search and execute, over every Incus operation plus Macus’s own runtime operations. A scoped bearer token decides what an agent can see and do. Revoking it ends in-flight requests within seconds.</p>
+            <CodeBlock code={tokenCommand} label="Issue a read-only agent token" />
+            <a class="text-link" href={`${docs}/mcp.md`}>Read the MCP guide <Icon name="external" size={15} /></a>
+          </div>
+          <div class="scope-panel">
+            <div class="execution-title"><Icon name="key" size={16} /><span>TOKEN SCOPES</span><span class="illustrative-label">A scope reveals and permits</span></div>
+            <ul class="scope-list">{scopes.map((item) => <li><code>{item.scope}</code><span>{item.text}</span></li>)}</ul>
+            <div class="result-block"><Icon name="shield" size={18} /><span>Native one-to-one Incus scopes are separate.<br /><strong>Nothing implies them. You grant them by name.</strong></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section page-width" aria-labelledby="features-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> DAY TO DAY</p><h2 id="features-title">It’s just Incus.<br /><span class="text-muted">On a Mac.</span></h2></div></div>
+        <div class="feature-grid">{features.map((feature) => <article class="card feature-card"><div class="feature-top"><span class="feature-icon"><Icon name={feature.icon} size={24} /></span></div><h3>{feature.title}</h3><p>{feature.text}</p></article>)}</div>
+      </section>
+
+      <section id="install" class="install-section section" aria-labelledby="install-title">
+        <div class="page-width">
+          <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> INSTALL</p><h2 id="install-title">{available ? 'Get Macus.' : 'Get ready for Macus.'}<br /><span class="text-muted">{available ? 'Then run one command.' : 'Prebuilt releases are on the way.'}</span></h2></div><p class="section-intro">{available ? 'Pick an install method. Each one gives you the same entitled macus executable and server release.' : 'Signed downloads and the Homebrew tap are being prepared. You can build from source today.'}</p></div>
+          <div class="install-grid">
+            <article class:list={['install-card', { 'is-ready': download.available }]}>
+              <div class="install-card-top"><span class="feature-icon"><Icon name="download" size={22} /></span><span class:list={['badge', 'badge-outline', download.available ? 'badge-success' : 'badge-info']}>{download.available ? 'Available' : 'Coming soon'}</span></div>
+              <h3>Download for macOS</h3>
+              {download.available && download.url ? (
+                <>
+                  <p>A signed and notarized installer{version ? ` for Macus ${version}` : ''}.</p>
+                  <a class="btn btn-primary install-download" href={download.url}>Download {download.fileName} <Icon name="download" size={17} /></a>
+                  {(download.sizeLabel || download.sha256) && <dl class="install-meta">{download.sizeLabel && <><dt>Size</dt><dd>{download.sizeLabel}</dd></>}{download.sha256 && <><dt>SHA-256</dt><dd><code>{download.sha256}</code></dd></>}</dl>}
+                  <ol class="install-steps">{download.steps.map((step) => <li>{step}</li>)}</ol>
+                </>
+              ) : (
+                <>
+                  <p>A Developer ID–signed, notarized macOS download is being prepared. It will appear here and on the GitHub releases page.</p>
+                  <a class="text-link" href={macusReleasesUrl}>Watch releases <Icon name="external" size={15} /></a>
+                </>
+              )}
+            </article>
+            <article class:list={['install-card', { 'is-ready': homebrew.available }]}>
+              <div class="install-card-top"><span class="feature-icon"><Icon name="package" size={22} /></span><span class:list={['badge', 'badge-outline', homebrew.available ? 'badge-success' : 'badge-info']}>{homebrew.available ? 'Available' : 'Coming soon'}</span></div>
+              <h3>Homebrew</h3>
+              <p>{homebrew.available ? 'Prebuilt ARM64 bottles from the Upmaru tap. No Swift toolchain needed.' : 'Prebuilt ARM64 bottles from the Upmaru tap. The formula is published once its bottles pass acceptance.'}</p>
+              <CodeBlock code={homebrew.command} label="Install with Homebrew" muted={!homebrew.available} />
+              {!homebrew.available && <span class="install-hint">This command works once the formula is published.</span>}
+            </article>
+            <article class="install-card is-ready">
+              <div class="install-card-top"><span class="feature-icon"><Icon name="code" size={22} /></span><span class="badge badge-outline badge-success"><span class="status-dot"></span>Available</span></div>
+              <h3>Build from source</h3>
+              <p>Needs Xcode with Swift 6.4. Builds and ad-hoc signs the entitled executable into <code>~/.local</code>.</p>
+              <CodeBlock code={sourceSteps} label="Build and start from source" />
+              <a class="text-link" href={`${macusRepo}#readme`}>Full walkthrough <Icon name="external" size={15} /></a>
+            </article>
+          </div>
+
+          <div class="after-install">
+            <div>
+              <p class="eyebrow"><span class="section-slash">/</span> AFTER INSTALLING</p>
+              <h3>Start once, then use Incus.</h3>
+              <p>The first start downloads the appliance and boots Linux. Later starts reuse what is already there.</p>
+            </div>
+            <CodeBlock code={`macus start\nincus launch images:debian/13 macus:dev\nincus list macus:`} label="First run" />
+          </div>
+
+          <div class="requirements">
+            <h3 id="requirements-title">System requirements</h3>
+            <ul class="requirement-list" aria-labelledby="requirements-title">{macusRequirements.map((item) => <li><Icon name="check" size={16} /><div><strong>{item.label}</strong><span>{item.detail}</span></div></li>)}</ul>
+            <p class="roadmap-note"><Icon name="refresh" size={15} /><span>Upgrading or uninstalling? Stop the runtime and unload its service first. Your disks and Incus configuration are kept. <a class="text-link" href={`${macusRepo}/blob/develop/Packaging/homebrew/README.md#upgrade-and-removal`}>Upgrade and removal steps</a></span></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="next" class="section page-width" aria-labelledby="next-title">
+        <div class="section-heading"><div><p class="eyebrow"><span class="section-slash">/</span> WHAT’S NEXT</p><h2 id="next-title">Shipping next.<br /><span class="text-muted">Planned in the open.</span></h2></div><p class="section-intro">Every change is specified before it’s built. Follow the plans in the Macus repository.</p></div>
+        <div class="next-grid">{next.map((item) => <article class="card roadmap-card"><div class="roadmap-card-top"><span class="roadmap-index">{item.status === 'Planned' ? 'LATER' : 'NEXT'}</span><span class:list={['badge', 'badge-outline', { 'badge-info': item.status === 'In progress' }]}>{item.status}</span></div><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
+      </section>
+
+      <section class="faq-section page-width" aria-labelledby="faq-title"><div><p class="eyebrow"><span class="section-slash">/</span> MACUS FAQ</p><h2 id="faq-title">Good questions.</h2></div><div class="faq-list">{faqs.map((faq) => <details class="collapse collapse-plus"><summary class="collapse-title">{faq.q}</summary><div class="collapse-content"><p>{faq.a}</p></div></details>)}</div></section>
+
+      <section class="closing-section page-width" aria-labelledby="closing-title"><div class="closing-panel"><div class="closing-orbit" aria-hidden="true"><img src="/images/opsmaru-logo.svg" width="160" height="160" alt="" loading="lazy" /></div><div class="closing-content"><p class="eyebrow">PART OF THE OPSMARU COMPUTE SUBSTRATE</p><h2 id="closing-title">Your Mac.<br /><span class="gradient-text">Real Linux compute.</span></h2><p>The same Incus operations and agent interface, from your laptop to the cloud.</p><div class="hero-actions"><a class="btn btn-primary" href={primary.href}>{primary.label} <Icon name={primary.icon} size={18} /></a><a class="btn btn-ghost" href="/">Explore Opsmaru <Icon name="arrow" size={18} /></a></div></div></div></section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>
