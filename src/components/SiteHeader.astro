@@ -1,0 +1,33 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Prefix for in-page anchors: '' on the landing page, '/' elsewhere. */
+  base?: '' | '/';
+  current?: 'home' | 'macus';
+}
+const { base = '', current = 'home' } = Astro.props;
+const repo = 'https://github.com/upmaru/opsmaru';
+const links = [
+  { href: `${base}#platform`, label: 'Platform' },
+  { href: `${base}#agents`, label: 'Agents' },
+  { href: '/macus', label: 'Macus', current: current === 'macus' },
+  { href: `${base}#stack`, label: 'Stack' },
+];
+---
+<header class="site-header">
+  <nav class="navbar page-width" aria-label="Main navigation">
+    <a class="brand" href="/" aria-label="Opsmaru home"><img src="/images/opsmaru-logo.svg" width="34" height="34" alt="" /><span>opsmaru<span class="brand-period">.</span></span></a>
+    <div class="desktop-nav">{links.map((link) => <a href={link.href} aria-current={link.current ? 'page' : undefined}>{link.label}</a>)}</div>
+    <a class="nav-github" href={repo}><Icon name="github" size={18} /><span>GitHub</span><Icon name="external" size={13} /></a>
+    <details class="mobile-nav dropdown dropdown-end">
+      <summary class="btn btn-ghost btn-sm" aria-label="Open navigation"><span class="menu-lines" aria-hidden="true"></span></summary>
+      <ul class="menu dropdown-content">{links.map((link) => <li><a href={link.href} aria-current={link.current ? 'page' : undefined}>{link.label}</a></li>)}<li><a href={repo}>GitHub</a></li></ul>
+    </details>
+  </nav>
+</header>
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.mobile-nav a').forEach((link) => {
+    link.addEventListener('click', () => link.closest('details')?.removeAttribute('open'));
+  });
+</script>
